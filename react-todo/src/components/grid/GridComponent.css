@@ -1,0 +1,12 @@
+/* GridComponent.css */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-gap: 16px;
+    padding: 16px;
+}
+
+.card {
+    border: 1px solid #ccc;
+    padding: 16px;
+}
