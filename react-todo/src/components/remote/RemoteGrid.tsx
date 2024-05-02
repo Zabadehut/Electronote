@@ -1,14 +1,18 @@
 import React, { useCallback } from 'react';
+import { CardDataType } from './RemoteCards';
 
 type RemoteGridProps = {
-    slotCount: number; // Nombre réel de slots
-    addSlot: () => void; // Ajoute un slot
-    removeSlot: () => void; // Retire un slot
+    data: CardDataType[];
+    setData: (value: CardDataType[]) => void;
+    slotCount: number;
+    addSlot: () => void;
+    removeSlot: () => void;
+    modifySlots: () => void;
 };
 
 
-const RemoteGrid: React.FC<RemoteGridProps> = ({ slotCount, modifySlots }) => {
 
+const RemoteGrid: React.FC<RemoteGridProps> = ({ slotCount, modifySlots, addSlot, removeSlot }) => {
     const onAddSlot = useCallback(() => {
         addSlot();
     }, [addSlot]);

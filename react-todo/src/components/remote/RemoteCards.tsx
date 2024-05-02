@@ -18,9 +18,12 @@ export type CardDataType = {
 type RemoteCardsProps = {
     data: CardDataType[];
     setData: (value: CardDataType[]) => void;
+    removeCard: (id: string) => void;
+    onUnlockCard: (id: string) => void;
+    onLockCard: (id: string) => void;
 };
 
-const RemoteCards: React.FC<RemoteCardsProps> = ({ data, setData }) => {
+const RemoteCards: React.FC<RemoteCardsProps> = ({ data, setData, removeCard, onUnlockCard, onLockCard }) => {
 
     const addCard = useCallback((card: Partial<CardDataType>) => {
         const newCard: CardDataType = {
