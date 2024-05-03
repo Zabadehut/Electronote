@@ -4,9 +4,44 @@
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     grid-gap: 16px;
     padding: 16px;
+    position: relative;
+}
+
+.react-grid-item {
+    border: 1px solid black;
+    background-color: white;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.react-grid-item.empty {
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    box-shadow: none;
+}
+
+.grid::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(#808080 0.05em, transparent 0.05em), linear-gradient(90deg, #808080 0.05em, transparent 0.05em);
+    background-size: 3.3333333333em 3.3333333333em;
+    opacity: 0.5;
+    z-index: 0;
 }
 
 .card {
-    border: 1px solid #ccc;
-    padding: 16px;
+    border: 1px solid black;
+    background-color: white;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+    background-color: rgba(133, 90, 175, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 1px;
 }
