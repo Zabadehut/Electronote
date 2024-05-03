@@ -1,22 +1,72 @@
-/* CardId.css */
+/* Style général de la carte */
 .card {
-    border: 1px solid black;
-    background-color: white;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: rgba(133, 90, 175, 0.3);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    padding: 5px;
-    margin: 1px;
+    padding: 10px;
+    position: relative; /* Important pour positionner les IconButton de manière absolue */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    cursor: default;
 }
 
-.card h4 {
-    margin-bottom: 10px;
+/* Effet au survol pour la carte */
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
-.card p {
-    margin-top: 1px;
+/* Styles spécifiques pour les boutons de la carte */
+.card .card-btn {
+    position: absolute;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    opacity: 0; /* Invisible jusqu'au survol */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.card .close-btn {
+    top: 10px;
+    right: 10px;
+}
+
+.card .resize-btn {
+    top: 10px;
+    right: 50px; /* Ajustez cette valeur si nécessaire */
+}
+
+.card .minimize-btn {
+    top: 10px;
+    right: 90px; /* Ajustez cette valeur si nécessaire */
+}
+
+.resize-handle {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.card .resize-handle {
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    width: auto;
+    height: auto;
+    border-radius: 50%;
+    opacity: 0; /* Toujours visible */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.card:hover .card-btn {
+    opacity: 1;
+}
+.card:hover .resize-handle{
+    opacity: 1;
 }

@@ -18,8 +18,13 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@utils/*": ["utils/*"]
+    }
   },
-  "include": ["src", "electron"],
+  "include": ["src/**/*.ts","src/**/*.tsx", "electron"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

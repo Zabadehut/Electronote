@@ -1,47 +1,29 @@
-/* GridComponent.css */
-.grid {
+.grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    grid-gap: 16px;
-    padding: 16px;
-    position: relative;
-}
-
-.react-grid-item {
-    border: 1px solid black;
-    background-color: white;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
-}
-
-.react-grid-item.empty {
-    border: 1px solid #ccc;
-    background-color: #f0f0f0;
-    box-shadow: none;
-}
-
-.grid::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-image: linear-gradient(#808080 0.05em, transparent 0.05em), linear-gradient(90deg, #808080 0.05em, transparent 0.05em);
-    background-size: 3.3333333333em 3.3333333333em;
-    opacity: 0.5;
-    z-index: 0;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adaptez cette valeur selon la largeur minimale désirée pour les cartes */
+    gap: 20px; /* Espacement entre les cartes */
+    padding: 20px; /* Espace autour de la grille */
+    width: 100%; /* Assure que la grille prend toute la largeur disponible */
+    height: auto; /* S'adapte à la hauteur du contenu */
 }
 
 .card {
-    border: 1px solid black;
-    background-color: white;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
-    background-color: rgba(133, 90, 175, 0.3);
+    width: 100%; /* Assurez-vous que la carte prend toute la largeur de son conteneur */
+    height: 100%; /* Assurez-vous que la carte prend toute la hauteur de son conteneur */
+    box-sizing: border-box; /* Inclut padding et border dans la dimension de l'élément */
+}
+
+.react-grid-item {
+    border: 1px solid rgba(159, 63, 63, 0.5); /* Style spécifique pour les items */
+    background-color: white; /* Fond blanc pour une meilleure lisibilité */
+    box-shadow: 5px 5px 15px rgba(159, 63, 63, 0.5); /* Ombre pour du relief */
+}
+
+/* S'assure que le composant de grille remplit le conteneur parent */
+.layout {
+    width: auto; /* Prend toute la largeur du conteneur parent */
+    height: auto; /* S'adapte à la hauteur du contenu, avec un minimum de 100vh */
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
-    padding: 5px;
-    margin: 1px;
+    flex-wrap: wrap; /* Permet aux éléments de grille de passer à la ligne suivante si nécessaire */
 }
