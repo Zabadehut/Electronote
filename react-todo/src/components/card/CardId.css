@@ -26,8 +26,8 @@
     cursor: pointer;
     background-color: transparent;
     border: none;
-    opacity: 0; /* Invisible jusqu'au survol */
     transition: opacity 0.3s ease-in-out;
+    opacity: 0; /* Invisible jusqu'au survol */
 }
 
 .card .close-btn {
@@ -36,13 +36,15 @@
 }
 
 .card .resize-btn {
-    top: 10px;
-    right: 50px; /* Ajustez cette valeur si nécessaire */
+    right: 5px;
+    bottom: 5px;
+    cursor: se-resize;
+    opacity: 1; /* Toujours visible */
 }
 
 .card .minimize-btn {
     top: 10px;
-    right: 90px; /* Ajustez cette valeur si nécessaire */
+    right: 50px;
 }
 
 .resize-handle {
@@ -52,21 +54,19 @@
 }
 
 .card .resize-handle {
-    right: 0;
-    bottom: 0;
-    cursor: pointer;
+    right: 5px;
+    bottom: 5px;
+    cursor: se-resize;
     background-color: transparent;
     border: none;
     width: auto;
     height: auto;
     border-radius: 50%;
-    opacity: 0; /* Toujours visible */
+    opacity: 0; /* Invisible jusqu'au survol */
     transition: opacity 0.3s ease-in-out;
 }
 
-.card:hover .card-btn {
-    opacity: 1;
-}
-.card:hover .resize-handle{
+.card:hover .card-btn,
+.card:hover .resize-handle {
     opacity: 1;
 }
