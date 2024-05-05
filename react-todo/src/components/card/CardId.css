@@ -13,6 +13,7 @@
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     cursor: default;
     color: #fff;
+    overflow: hidden;
 }
 
 /* Effet au survol pour la carte */
