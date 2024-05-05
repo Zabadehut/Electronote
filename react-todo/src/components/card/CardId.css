@@ -1,84 +1,68 @@
 /* Style général de la carte */
 .card {
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: rgba(133, 90, 175, 0.3);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    padding: 10px;
-    position: relative;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-    cursor: default;
-    color: #fff;
-    overflow: hidden;
+    border: 1px solid #ccc; /* Bordure grise claire autour de la carte */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère autour de la carte */
+    background-color: #fff; /* Couleur de fond claire */
+    display: flex; /* Utilise le modèle de boîte flex pour les éléments enfants */
+    flex-direction: column; /* Les enfants sont disposés en colonne */
+    justify-content: center; /* Centre les enfants verticalement */
+    align-items: center; /* Centre les enfants horizontalement */
+    border-radius: 10px; /* Les coins de la carte sont arrondis */
+    padding: 10px; /* Espace intérieur autour du contenu de la carte */
+    position: relative; /* Positionne les éléments relatifs à la carte */
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Transitions douces pour l'ombre et la transformation */
+    cursor: default; /* Le curseur ne change pas au survol */
+    color: #000; /* Texte noir à l'intérieur de la carte */
+    overflow: hidden; /* Cache tout débordement */
 }
 
 /* Effet au survol pour la carte */
 .card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Augmente l'ombre au survol */
+    transform: translateY(-2px); /* Soulève la carte de 2px au survol */
 }
 
 /* Styles spécifiques pour les boutons de la carte */
 .card .card-btn {
-    position: absolute;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    transition: opacity 0.3s ease-in-out;
-    opacity: 0;
+    position: absolute; /* Les boutons sont positionnés absolument par rapport à la carte */
+    cursor: pointer; /* Change le curseur en pointeur */
+    background-color: transparent; /* Fond transparent pour les boutons */
+    border: none; /* Pas de bordure autour des boutons */
+    transition: opacity 0.3s ease-in-out; /* Transition douce pour l'opacité */
+    opacity: 0; /* Les boutons sont initialement cachés */
 }
 
 .card .close-btn {
-    top: 10px;
-    right: 10px;
+    top: 10px; /* Positionne le bouton de fermeture à 10px du haut */
+    right: 10px; /* Positionne le bouton de fermeture à 10px de la droite */
 }
 
 .card .resize-btn {
-    right: 5px;
-    bottom: 5px;
-    cursor: se-resize;
-    opacity: 1;
+    right: 5px; /* Positionne le bouton de redimensionnement à 5px de la droite */
+    bottom: 5px; /* Positionne le bouton de redimensionnement à 5px du bas */
+    cursor: se-resize; /* Le curseur de redimensionnement est "sud-est" */
+    opacity: 1; /* Le bouton de redimensionnement est visible */
 }
 
 .card .minimize-btn {
-    top: 10px;
-    right: 50px;
+    top: 10px; /* Positionne le bouton de minimisation à 10px du haut */
+    right: 50px; /* Positionne le bouton de minimisation à 50px de la droite */
 }
 
 .card .resizeCard {
-    right: 5px;
-    bottom: 5px;
-    cursor: se-resize;
-    background-color: transparent;
-    border: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    opacity: 1;
-    transition: opacity 0.3s ease-in-out;
+    right: 5px; /* Positionne le bouton de redimensionnement à 5px de la droite */
+    bottom: 5px; /* Positionne le bouton de redimensionnement à 5px du bas */
+    cursor: se-resize; /* Le curseur de redimensionnement est "sud-est" */
+    background-color: transparent; /* Fond transparent pour le bouton */
+    border: none; /* Pas de bordure autour du bouton */
+    width: 20px; /* Largeur du bouton de redimensionnement */
+    height: 20px; /* Hauteur du bouton de redimensionnement */
+    border-radius: 50%; /* Le bouton de redimensionnement est circulaire */
+    opacity: 1; /* Le bouton de redimensionnement est visible */
+    transition: opacity 0.3s ease-in-out; /* Transition douce pour l'opacité */
 }
 
 .card:hover .card-btn,
 .card:hover .resize-handle {
-    opacity: 1;
-}
-
-.header-button {
-    color: white;
-    background-color: #282c34;
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-}
-
-.header-button:hover {
-    background-color: #61dafb;
-}
-
-.grid-content {
-    margin-top: 50px; /* pour laisser la place aux boutons */
+    opacity: 1; /* Les boutons deviennent visibles au survol de la carte */
 }
