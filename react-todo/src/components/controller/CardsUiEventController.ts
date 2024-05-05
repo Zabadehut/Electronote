@@ -102,40 +102,75 @@ export class CardsUiEventController {
 
     moveCardsToTopLeft = (): void => {
         const cols = 12;
-        const positions = Array(cols).fill(0);
-        const newData = [...this.cards].sort((a, b) => {
-            if (a.isPinned !== b.isPinned) {
-                return a.isPinned ? -1 : 1;
-            }
-            return a.y - b.y || a.x - b.x;
-        }).map(card => {
-            if (card.isPinned) {
-                // Garder la position pour les cartes verrouillées
-                for (let i = 0; i < card.w; i++) {
-                    positions[card.x + i] = Math.max(positions[card.x + i], card.y + card.h);
-                }
-                return card;
-            }
+        let filledPositions = Array.from({ length: 100 }, () => Array(cols).fill(false));
+        const pinnedCards = this.cards.filter(card => card.isPinned);
+        const unpinnedCards = this.cards.filter(card => !card.isPinned);
 
-            // Trouver la première position vide pour la carte
+        // Trier les cartes non épinglées par taille (les plus grandes d'abord)
+        unpinnedCards.sort((a, b) => (b.w * b.h) - (a.w * a.h));
+
+        // Conserver les positions des cartes épinglées
+        pinnedCards.forEach(card => {
+            for (let x = card.x; x < card.x + card.w; x++) {
+                for (let y = card.y; y < card.y + card.h; y++) {
+                    filledPositions[y][x] = true;
+                }
+            }
+        });
+
+        const newUnpinnedCards = unpinnedCards.map(card => {
             let minX = 0;
-            let minY = Math.max(...positions);
-            for (let x = 0; x <= cols - card.w; x++) {
-                const y = Math.max(...positions.slice(x, x + card.w));
-                if (y < minY) {
-                    minY = y;
-                    minX = x;
+            let minY = 0;
+            let placed = false;
+
+            for (let y = 0; y < filledPositions.length && !placed; y++) {
+                for (let x = 0; x <= cols - card.w && !placed; x++) {
+                    if (filledPositions[y].slice(x, x + card.w).every(cell => !cell)) {
+                        minX = x;
+                        minY = y;
+                        placed = true;
+                    }
                 }
             }
 
-            // Mettre à jour les positions
-            for (let i = 0; i < card.w; i++) {
-                positions[minX + i] = minY + card.h;
+            for (let x = minX; x < minX + card.w; x++) {
+                for (let y = minY; y < minY + card.h; y++) {
+                    filledPositions[y][x] = true;
+                }
             }
 
             return { ...card, x: minX, y: minY };
         });
 
-        this.setCards(newData);
+        // Compact the layout by moving cards up into empty spaces
+        filledPositions = Array.from({ length: 100 }, () => Array(cols).fill(false));
+        pinnedCards.forEach(card => {
+            for (let x = card.x; x < card.x + card.w; x++) {
+                for (let y = card.y; y < card.y + card.h; y++) {
+                    filledPositions[y][x] = true;
+                }
+            }
+        });
+
+        const compactedCards = newUnpinnedCards.map(card => {
+            for (let y = 0; y < filledPositions.length; y++) {
+                for (let x = 0; x <= cols - card.w; x++) {
+                    if (filledPositions[y].slice(x, x + card.w).every(cell => !cell)) {
+                        card.x = x;
+                        card.y = y;
+                        for (let i = x; i < x + card.w; i++) {
+                            for (let j = y; j < y + card.h; j++) {
+                                filledPositions[j][i] = true;
+                            }
+                        }
+                        return card;
+                    }
+                }
+            }
+            return card;
+        });
+
+        this.setCards([...pinnedCards, ...compactedCards]);
     };
+
 }
