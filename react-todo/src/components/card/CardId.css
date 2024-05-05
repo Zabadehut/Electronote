@@ -66,3 +66,19 @@
 .card:hover .resize-handle {
     opacity: 1;
 }
+
+.header-button {
+    color: white;
+    background-color: #282c34;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.header-button:hover {
+    background-color: #61dafb;
+}
+
+.grid-content {
+    margin-top: 50px; /* pour laisser la place aux boutons */
+}

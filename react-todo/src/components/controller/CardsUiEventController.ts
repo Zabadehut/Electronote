@@ -57,47 +57,29 @@ export class CardsUiEventController {
         const minH = 1;
         const cols = 12;
 
-        // Créer une grille de l'écran visible
-        const visibleRows = 10;
-        let grid = Array.from({ length: visibleRows }, () => Array(cols).fill(false));
+        let grid = Array.from({ length: 100 }, () => Array(cols).fill(false));
+        let newCards: React.SetStateAction<CardIdProps[]> = [...this.cards];
 
-        // Remplir la grille avec les positions des cartes existantes
         this.cards.forEach(card => {
             for (let x = card.x; x < card.x + card.w; x++) {
                 for (let y = card.y; y < card.y + card.h; y++) {
-                    if (y < visibleRows) {
-                        grid[y][x] = true;
-                    }
+                    grid[y][x] = true;
                 }
             }
         });
 
-        // Trouver la première position vide dans la grille visible
         let minX = 0;
-        let minY = visibleRows;
-        for (let y = 0; y < visibleRows; y++) {
-            for (let x = 0; x <= cols - minW; x++) {
+        let minY = 0;
+        let placed = false;
+
+        for (let y = 0; y < grid.length && !placed; y++) {
+            for (let x = 0; x <= cols - minW && !placed; x++) {
                 if (grid[y].slice(x, x + minW).every(cell => !cell)) {
                     minX = x;
                     minY = y;
-                    break;
+                    placed = true;
                 }
             }
-            if (minY < visibleRows) {
-                break;
-            }
-        }
-
-        // Si aucun espace n'a été trouvé dans la zone visible, placer la carte en dessous de toutes les autres
-        if (minY == visibleRows) {
-            const positions = Array(cols).fill(0);
-            this.cards.forEach(card => {
-                for (let i = 0; i < card.w; i++) {
-                    positions[card.x + i] = Math.max(positions[card.x + i], card.y + card.h);
-                }
-            });
-            minY = Math.min(...positions);
-            minX = positions.indexOf(minY);
         }
 
         const newCard: CardIdProps = {
@@ -113,8 +95,8 @@ export class CardsUiEventController {
             onCardSizeChange: (id: string, dx: number, dy: number): void => this.resizeCard(id, dx, dy),
         };
 
-        const newData: CardIdProps[] = [...this.cards, newCard];
-        this.setCards(newData);
+        newCards.push(newCard);
+        this.setCards(newCards);
     };
 
 

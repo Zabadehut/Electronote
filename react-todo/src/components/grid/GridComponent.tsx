@@ -20,8 +20,8 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
 
     return (
         <div>
-            <button className="add-card-btn" onClick={() => controller.addCard()}>Ajouter une nouvelle carte</button>
-            <button className="move-cards-btn" onClick={handleMoveCards}>Rassembler les cartes</button>
+            <button className="action-btn" onClick={() => controller.addCard()}>Ajouter une nouvelle carte</button>
+            <button className="action-btn" onClick={handleMoveCards}>Rassembler les cartes</button>
             <div style={{width: '100vw', height: '100vh'}}>
                 <ResponsiveGridLayout
                     className="layout"
