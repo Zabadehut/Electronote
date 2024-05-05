@@ -52,15 +52,41 @@ export class CardsUiEventController {
     addCard = (): void => {
         console.log("addCard");
 
-        // Generates a unique `id`
         const id: string = uuidv4();
-        const {x, y}: { x: number, y: number } = this.getNextPosition();
+        const minW = 1;
+        const minH = 1;
+        const cols = 12;
+
+        // Utiliser une approche similaire pour trouver la première position disponible
+        let minX = 0;
+        let minY = 0;
+        const positions = Array(cols).fill(0);
+
+        this.cards.forEach(card => {
+            for (let i = 0; i < card.w; i++) {
+                positions[card.x + i] = Math.max(positions[card.x + i], card.y + card.h);
+            }
+        });
+
+        for (let x = 0; x <= cols - minW; x++) {
+            const y = Math.max(...positions.slice(x, x + minW));
+            if (y < minY) {
+                minY = y;
+                minX = x;
+            }
+        }
+
+        for (let i = 0; i < minW; i++) {
+            positions[minX + i] = minY + minH;
+        }
 
         const newCard: CardIdProps = {
             ...defaultCardIdProps,
-            id,  // Uses the unique `id`
-            x,
-            y,
+            id,
+            x: minX,
+            y: minY,
+            w: minW,
+            h: minH,
             title: `New Title: ${id}`,
             onRemoveClicked: (id: string): void => this.removeCard(id),
             onPinClicked: (id: string): void => this.pinCard(id),
@@ -73,58 +99,40 @@ export class CardsUiEventController {
 
     moveCardsToTopLeft = (): void => {
         const cols = 12;
-        let filledPositions = Array.from({ length: cols }, () => 0);
-        let nextY = 0;
-        let maxHeight = 0;
-
-        // Trier les cartes pour que les cartes verrouillées soient en premier
-        const sortedCards = [...this.cards].sort((a, b) => {
+        const positions = Array(cols).fill(0);
+        const newData = [...this.cards].sort((a, b) => {
             if (a.isPinned !== b.isPinned) {
                 return a.isPinned ? -1 : 1;
             }
             return a.y - b.y || a.x - b.x;
-        });
-
-        const newData = sortedCards.map(card => {
+        }).map(card => {
             if (card.isPinned) {
-                // Ne pas déplacer les cartes verrouillées
-                for (let i = card.x; i < card.x + card.w; i++) {
-                    filledPositions[i] = Math.max(filledPositions[i], card.y + card.h);
+                // Garder la position pour les cartes verrouillées
+                for (let i = 0; i < card.w; i++) {
+                    positions[card.x + i] = Math.max(positions[card.x + i], card.y + card.h);
                 }
-                nextY = Math.max(nextY, card.y + card.h);
-                maxHeight = Math.max(maxHeight, card.h);
                 return card;
             }
 
-            // Trouver la première position disponible
-            let nextX = 0;
-            let yMin = Math.min(...filledPositions);
-            for (let i = 0; i <= cols - card.w; i++) {
-                if (Array.from({ length: card.w }, (_, j) => filledPositions[i + j])
-                    .every(y => y <= yMin)) {
-                    nextX = i;
-                    break;
+            // Trouver la première position vide pour la carte
+            let minX = 0;
+            let minY = Math.max(...positions);
+            for (let x = 0; x <= cols - card.w; x++) {
+                const y = Math.max(...positions.slice(x, x + card.w));
+                if (y < minY) {
+                    minY = y;
+                    minX = x;
                 }
             }
 
-            // Mettre à jour les positions remplies et passer à la prochaine rangée si nécessaire
-            for (let i = nextX; i < nextX + card.w; i++) {
-                filledPositions[i] = nextY + card.h;
-            }
-            maxHeight = Math.max(maxHeight, card.h);
-            if (nextX + card.w > cols) {
-                nextY += maxHeight;
-                nextX = 0;
-                maxHeight = card.h;
-                for (let i = 0; i < card.w; i++) {
-                    filledPositions[i] = nextY + card.h;
-                }
+            // Mettre à jour les positions
+            for (let i = 0; i < card.w; i++) {
+                positions[minX + i] = minY + card.h;
             }
 
-            return { ...card, x: nextX, y: nextY };
+            return { ...card, x: minX, y: minY };
         });
 
         this.setCards(newData);
     };
-
 }
