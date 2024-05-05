@@ -71,6 +71,7 @@ const CardId: React.FC<CardIdProps> = ({
                 <IconButton
                     onClick={handlePinClick}
                     aria-label="pin card"
+                    className="pin-btn"
                     sx={{ color: 'info.main' }}
                 >
                     <PushPinIcon />

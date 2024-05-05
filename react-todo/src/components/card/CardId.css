@@ -37,11 +37,19 @@
     right: 10px; /* Positionne le bouton de fermeture à 10px de la droite */
 }
 
+
+/*material_UI_btn*/
 .card .resize-btn {
     right: 5px; /* Positionne le bouton de redimensionnement à 5px de la droite */
     bottom: 5px; /* Positionne le bouton de redimensionnement à 5px du bas */
     cursor: se-resize; /* Le curseur de redimensionnement est "sud-est" */
-    opacity: 1; /* Le bouton de redimensionnement est visible */
+    opacity: 0; /* Le bouton de redimensionnement est visible */
+}
+.card .pin-btn {
+    right: 5px; /* Positionne le bouton de redimensionnement à 5px de la droite */
+    top: 5px; /* Positionne le bouton de redimensionnement à 5px du bas */
+    cursor: se-resize; /* Le curseur de redimensionnement est "sud-est" */
+    opacity: 0; /* Le bouton de redimensionnement est visible */
 }
 
 .card .minimize-btn {
@@ -63,6 +71,8 @@
 }
 
 .card:hover .card-btn,
-.card:hover .resize-handle {
+.card:hover .resize-handle,
+.card:hover .resize-btn,
+.card:hover .pin-btn{
     opacity: 1; /* Les boutons deviennent visibles au survol de la carte */
 }
