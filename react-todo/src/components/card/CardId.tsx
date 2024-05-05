@@ -39,7 +39,7 @@ export const defaultCardIdProps: CardIdProps = {
     maxW: Infinity,
     maxH: Infinity,
     isNew: true,
-    isPinned: true,
+    isPinned: false,
     onRemoveClicked: () => {},
     onPinClicked: () => {},
     onCardSizeChange: () => {},
@@ -52,13 +52,24 @@ const CardId: React.FC<CardIdProps> = ({
                                            onPinClicked = () => {},
                                            onCardSizeChange = () => {}
                                        }) => {
+
+    const handlePinClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        onPinClicked(id);
+    };
+
+    const handleResizeClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        onCardSizeChange(id, 1, 1);
+    };
+
     return (
         <div className="card" id={id}>
             <h4>{title}</h4>
             <p>{content}</p>
             <Stack direction="row" spacing={1} sx={{ position: 'absolute', top: 5, right: 5 }}>
                 <IconButton
-                    onClick={() => onPinClicked(id)}
+                    onClick={handlePinClick}
                     aria-label="pin card"
                     sx={{ color: 'info.main' }}
                 >
@@ -67,7 +78,7 @@ const CardId: React.FC<CardIdProps> = ({
             </Stack>
             <Stack direction="row" spacing={1} sx={{ position: 'absolute', bottom: 5, right: 5 }}>
                 <IconButton
-                    onClick={() => onCardSizeChange(id, 1, 1)}
+                    onClick={handleResizeClick}
                     aria-label="resize handle"
                     className="resize-btn"
                     sx={{ color: 'info.main' }}

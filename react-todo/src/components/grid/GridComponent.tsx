@@ -14,6 +14,7 @@ type GridLayoutProps = {
 const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
     const controller = new CardsUiEventController(data, setData);
     const [dragging, setDragging] = useState(false);
+    const [resizing, setResizing] = useState(false);
 
     return (
         <div>
@@ -23,8 +24,8 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                     className="layout"
                     cols={{ lg: 12, md: 10, sm: 8, xs: 4, xxs: 2 }}
                     autoSize={true}
-                    isResizable={true}
-                    isDraggable={!dragging}
+                    isResizable={!resizing}
+                    isDraggable={!dragging && !resizing}
                     compactType={null}
                     preventCollision={true}
                     onLayoutChange={(layout: Layout[]) => {
@@ -46,9 +47,9 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                         });
                         setData(newCards);
                     }}
-                    onResizeStart={() => setDragging(true)}
+                    onResizeStart={() => setResizing(true)}
                     onResizeStop={(_, oldItem, newItem) => {
-                        setDragging(false);
+                        setResizing(false);
                         controller.resizeCard(newItem.i, newItem.w - oldItem.w, newItem.h - oldItem.h);
                     }}
                     onDragStart={() => setDragging(true)}
