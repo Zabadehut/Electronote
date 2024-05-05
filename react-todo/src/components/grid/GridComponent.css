@@ -11,6 +11,7 @@
     z-index: 1;
 }
 
+
 /* Carte individuelle */
 .card {
     width: 100%; /* Assurez-vous que la carte prend toute la largeur de son conteneur */
@@ -18,24 +19,46 @@
     box-sizing: border-box; /* Inclut padding et border dans la dimension de l'élément */
 }
 
-
-.action-btn {
+.header-container {
+    display: flex;
+    justify-content: flex-start; /* Alignement à gauche */
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* légèrement transparent */
     color: white;
-    background-color: #282c34;
+    padding: 10px;
+    z-index: 1000;
+    transition: top 0.3s;
+}
+
+.header-container-btn {
+    padding: 10px;
+    background-color: #3498db;
     border: none;
-    padding: 8px 16px;
+    color: white;
     cursor: pointer;
+    border-radius: 5px;
+    margin: 0 5px; /* Petit espace entre les boutons */
+    opacity: 0.9;
 }
 
-.action-btn:hover {
-    background-color: #61dafb;
+.header-container-btn:hover {
+    opacity: 1;
 }
 
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+.header-hidden {
+    top: -50px; /* Cache le header */
 }
+
+.grid-layout-container {
+    padding-top: 60px; /* Ajustez cela en fonction de la hauteur de votre header */
+    height: calc(100vh - 60px); /* Ajustez cela en fonction de la hauteur de votre header */
+    overflow-y: auto;
+}
+
 
 
 /* S'assure que le composant de grille remplit le conteneur parent */

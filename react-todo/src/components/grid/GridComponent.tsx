@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './GridComponent.css';
 import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
 import CardId, { CardIdProps } from "../card/CardId";
@@ -15,13 +15,37 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
     const controller = new CardsUiEventController(data, setData);
     const [dragging, setDragging] = useState(false);
     const [resizing, setResizing] = useState(false);
-    const handleMoveCards = () => {controller.moveCardsToTopLeft();
+    const [headerVisible, setHeaderVisible] = useState(true);
+    let timeoutId: NodeJS.Timeout;
+
+    const handleMoveCards = () => {
+        controller.moveCardsToTopLeft();
     };
+
+    const handleMouseMove = (e: MouseEvent) => {
+        clearTimeout(timeoutId);
+        if (e.clientY < 100) {
+            setHeaderVisible(true);
+        }
+        timeoutId = setTimeout(() => {
+            setHeaderVisible(false);
+        }, 2000);
+    };
+
+    useEffect(() => {
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            clearTimeout(timeoutId);
+        };
+    }, []);
 
     return (
         <div>
-            <button className="action-btn" onClick={() => controller.addCard()}>Ajouter une nouvelle carte</button>
-            <button className="action-btn" onClick={handleMoveCards}>Rassembler les cartes</button>
+            <div className={`header-container ${headerVisible ? "" : "header-hidden"}`}>
+                <button className="header-container-btn" onClick={() => controller.addCard()}>Ajouter une nouvelle carte</button>
+                <button className="header-container-btn" onClick={handleMoveCards}>Rassembler les cartes</button>
+            </div>
             <div style={{width: '100vw', height: '100vh'}}>
                 <ResponsiveGridLayout
                     className="layout"
@@ -71,6 +95,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
             </div>
         </div>
     );
+
 };
 
 export default GridComponent;
