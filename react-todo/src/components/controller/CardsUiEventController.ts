@@ -3,6 +3,7 @@ import {CardIdProps, defaultCardIdProps} from "../card/CardId.tsx"; // Assurez-v
 import { v4 as uuidv4 } from 'uuid';
 
 
+
 export class CardsUiEventController {
     private readonly cards: CardIdProps[];
     private readonly setCards: React.Dispatch<React.SetStateAction<CardIdProps[]>>;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './GridComponent.css';
 import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
 import CardId, { CardIdProps } from "../card/CardId";
@@ -13,16 +13,18 @@ type GridLayoutProps = {
 
 const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
     const controller = new CardsUiEventController(data, setData);
+    const [dragging, setDragging] = useState(false);
 
     return (
         <div>
-            <button onClick={() => controller.addCard()}>Ajouter une nouvelle carte</button>
+            <button className="add-card-btn" onClick={() => controller.addCard()}>Ajouter une nouvelle carte</button>
             <div style={{ width: '100vw', height: '100vh' }}>
                 <ResponsiveGridLayout
                     className="layout"
                     cols={{ lg: 12, md: 10, sm: 8, xs: 4, xxs: 2 }}
                     autoSize={true}
                     isResizable={true}
+                    isDraggable={!dragging}
                     compactType={null}
                     preventCollision={true}
                     onLayoutChange={(layout: Layout[]) => {
@@ -44,19 +46,23 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                         });
                         setData(newCards);
                     }}
-                    // Capture l'événement de redimensionnement
-                    onResizeStop={(_, oldItem: Layout, newItem: Layout) => {
+                    onResizeStart={() => setDragging(true)}
+                    onResizeStop={(_, oldItem, newItem) => {
+                        setDragging(false);
                         controller.resizeCard(newItem.i, newItem.w - oldItem.w, newItem.h - oldItem.h);
                     }}
+                    onDragStart={() => setDragging(true)}
+                    onDragStop={() => setDragging(false)}
                 >
                     {data.map(item => (
                         <div
                             key={item.id}
-                        data-grid={{ x: item.x, y: item.y, w: item.w, h: item.h, minW: item.minW, minH: item.minH }}
+                            className={`react-grid-item${dragging ? " dragging" : ""}`}
+                            data-grid={{ x: item.x, y: item.y, w: item.w, h: item.h, minW: item.minW, minH: item.minH }}
                         >
-                        <CardId {...item} onCardSizeChange={(id, dx, dy) => controller.resizeCard(id, dx, dy)} />
+                            <CardId {...item} onCardSizeChange={(id, dx, dy) => controller.resizeCard(id, dx, dy)} />
                         </div>
-                        ))}
+                    ))}
                 </ResponsiveGridLayout>
             </div>
         </div>

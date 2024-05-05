@@ -7,11 +7,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 10px;
-    position: relative; /* Important pour positionner les IconButton de manière absolue */
+    position: relative;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     cursor: default;
+    color: #fff;
 }
 
 /* Effet au survol pour la carte */
@@ -27,7 +28,7 @@
     background-color: transparent;
     border: none;
     transition: opacity 0.3s ease-in-out;
-    opacity: 0; /* Invisible jusqu'au survol */
+    opacity: 0;
 }
 
 .card .close-btn {
@@ -39,7 +40,7 @@
     right: 5px;
     bottom: 5px;
     cursor: se-resize;
-    opacity: 1; /* Toujours visible */
+    opacity: 1;
 }
 
 .card .minimize-btn {
@@ -47,22 +48,16 @@
     right: 50px;
 }
 
-.resize-handle {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-}
-
-.card .resize-handle {
+.card .resizeCard {
     right: 5px;
     bottom: 5px;
     cursor: se-resize;
     background-color: transparent;
     border: none;
-    width: auto;
-    height: auto;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    opacity: 0; /* Invisible jusqu'au survol */
+    opacity: 1;
     transition: opacity 0.3s ease-in-out;
 }
 

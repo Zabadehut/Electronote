@@ -37,18 +37,3 @@ html, body, #root {
 .read-the-docs {
   color: #888;
 }
-
-
-.trash-area {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 100px;
-  height: 100px;
-  background-color: #e0e0e0;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-}

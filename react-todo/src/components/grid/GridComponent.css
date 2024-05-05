@@ -1,29 +1,50 @@
+/* Conteneur de la grille */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adaptez cette valeur selon la largeur minimale désirée pour les cartes */
-    gap: 20px; /* Espacement entre les cartes */
-    padding: 20px; /* Espace autour de la grille */
-    width: 100%; /* Assure que la grille prend toute la largeur disponible */
-    height: auto; /* S'adapte à la hauteur du contenu */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    height: auto;
 }
 
+/* Carte individuelle */
 .card {
     width: 100%; /* Assurez-vous que la carte prend toute la largeur de son conteneur */
     height: 100%; /* Assurez-vous que la carte prend toute la hauteur de son conteneur */
     box-sizing: border-box; /* Inclut padding et border dans la dimension de l'élément */
 }
 
-.react-grid-item {
-    border: 1px solid rgba(159, 63, 63, 0.5); /* Style spécifique pour les items */
-    background-color: white; /* Fond blanc pour une meilleure lisibilité */
-    box-shadow: 5px 5px 15px rgba(159, 63, 63, 0.5); /* Ombre pour du relief */
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
+
 
 /* S'assure que le composant de grille remplit le conteneur parent */
 .layout {
-    width: auto; /* Prend toute la largeur du conteneur parent */
-    height: auto; /* S'adapte à la hauteur du contenu, avec un minimum de 100vh */
+    width: 100%;
     min-height: 100vh;
     display: flex;
-    flex-wrap: wrap; /* Permet aux éléments de grille de passer à la ligne suivante si nécessaire */
+    flex-wrap: wrap;
+    background-color: #1c1e26;
+}
+
+.react-grid-item {
+    border: 1px solid rgba(159, 63, 63, 0.5);
+    background-color: #2c2f36;
+    box-shadow: 5px 5px 15px rgba(159, 63, 63, 0.5);
+}
+
+.react-grid-item.react-grid-placeholder {
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 2px dashed #9f3f3f;
+    transition: opacity 0.3s;
+    opacity: 0.5;
+}
+
+.react-grid-item.dragging {
+    opacity: 0.9;
+    cursor: grabbing;
 }
