@@ -70,4 +70,61 @@ export class CardsUiEventController {
         const newData: CardIdProps[] = [...this.cards, newCard];
         this.setCards(newData);
     };
+
+    moveCardsToTopLeft = (): void => {
+        const cols = 12;
+        let filledPositions = Array.from({ length: cols }, () => 0);
+        let nextY = 0;
+        let maxHeight = 0;
+
+        // Trier les cartes pour que les cartes verrouillées soient en premier
+        const sortedCards = [...this.cards].sort((a, b) => {
+            if (a.isPinned !== b.isPinned) {
+                return a.isPinned ? -1 : 1;
+            }
+            return a.y - b.y || a.x - b.x;
+        });
+
+        const newData = sortedCards.map(card => {
+            if (card.isPinned) {
+                // Ne pas déplacer les cartes verrouillées
+                for (let i = card.x; i < card.x + card.w; i++) {
+                    filledPositions[i] = Math.max(filledPositions[i], card.y + card.h);
+                }
+                nextY = Math.max(nextY, card.y + card.h);
+                maxHeight = Math.max(maxHeight, card.h);
+                return card;
+            }
+
+            // Trouver la première position disponible
+            let nextX = 0;
+            let yMin = Math.min(...filledPositions);
+            for (let i = 0; i <= cols - card.w; i++) {
+                if (Array.from({ length: card.w }, (_, j) => filledPositions[i + j])
+                    .every(y => y <= yMin)) {
+                    nextX = i;
+                    break;
+                }
+            }
+
+            // Mettre à jour les positions remplies et passer à la prochaine rangée si nécessaire
+            for (let i = nextX; i < nextX + card.w; i++) {
+                filledPositions[i] = nextY + card.h;
+            }
+            maxHeight = Math.max(maxHeight, card.h);
+            if (nextX + card.w > cols) {
+                nextY += maxHeight;
+                nextX = 0;
+                maxHeight = card.h;
+                for (let i = 0; i < card.w; i++) {
+                    filledPositions[i] = nextY + card.h;
+                }
+            }
+
+            return { ...card, x: nextX, y: nextY };
+        });
+
+        this.setCards(newData);
+    };
+
 }
