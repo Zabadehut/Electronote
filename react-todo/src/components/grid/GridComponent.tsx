@@ -4,6 +4,7 @@ import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
 import CardId, { CardIdProps } from "../card/CardId";
 import { CardsUiEventController } from "../controller/CardsUiEventController";
 
+
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 type GridLayoutProps = {
@@ -13,8 +14,6 @@ type GridLayoutProps = {
 
 const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
     const controller = new CardsUiEventController(data, setData);
-    const [dragging, setDragging] = useState(false);
-    const [resizing, setResizing] = useState(false);
     const [headerVisible, setHeaderVisible] = useState(true);
     let timeoutId: NodeJS.Timeout;
 
@@ -31,7 +30,6 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
             setHeaderVisible(false);
         }, 2000);
     };
-
     useEffect(() => {
         window.addEventListener('mousemove', handleMouseMove);
         return () => {
@@ -52,8 +50,6 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                     breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                     cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                     autoSize={true}
-                    isResizable={!resizing}
-                    isDraggable={!dragging && !resizing}
                     compactType={null}
                     preventCollision={true}
                     onLayoutChange={(layout: Layout[]) => {
@@ -75,18 +71,11 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                         });
                         setData(newCards);
                     }}
-                    onResizeStart={() => setResizing(true)}
-                    onResizeStop={(_, oldItem, newItem) => {
-                        setResizing(false);
-                        controller.resizeCard(newItem.i, newItem.w - oldItem.w, newItem.h - oldItem.h);
-                    }}
-                    onDragStart={() => setDragging(true)}
-                    onDragStop={() => setDragging(false)}
                 >
                     {data.map(item => (
                         <div
                             key={item.id}
-                            className={`react-grid-item${dragging ? " dragging" : ""}`}
+                            className={`react-grid-item`}
                             data-grid={{x: item.x, y: item.y, w: item.w, h: item.h, minW: item.minW, minH: item.minH}}
                         >
                             <CardId {...item}/>
@@ -96,7 +85,5 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
             </div>
         </div>
     );
-
 };
-
 export default GridComponent;
