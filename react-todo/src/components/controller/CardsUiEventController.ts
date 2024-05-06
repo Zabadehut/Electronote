@@ -19,22 +19,6 @@ export class CardsUiEventController {
     }
 
     // Méthodes
-    pinCard = (id: string) => {
-        console.log("pinCard")
-        const newData = this.cards.map(card => {
-            if (card.id === id) {
-                return {...card, isPinned: !card.isPinned};
-            }
-            return card;
-        });
-        this.setCards(newData);
-    };
-
-    removeCard = (id: string) => {
-        console.log("removeCard")
-        const newData = this.cards.filter(card => card.id !== id && !card.isPinned);
-        this.setCards(newData);
-    };
 
     resizeCard = (id: string, dx: number, dy: number) => {
         console.log("resizeCard")
@@ -90,8 +74,8 @@ export class CardsUiEventController {
             w: minW,
             h: minH,
             title: `New Title: ${id}`,
-            onRemoveClicked: (id: string): void => this.removeCard(id),
-            onPinClicked: (id: string): void => this.pinCard(id),
+            //onRemoveClicked: (id: string): void => this.removeCard(id),
+            //onPinClicked: (id: string): void => this.pinCard(id),
             onCardSizeChange: (id: string, dx: number, dy: number): void => this.resizeCard(id, dx, dy),
         };
 
