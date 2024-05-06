@@ -48,10 +48,9 @@
     color: black; /* Couleur du texte noire */
     padding: 10px; /* Espace intérieur autour des éléments */
     z-index: 1000; /* Place le conteneur au-dessus de tout autre élément */
-    transition: top 0.3s; /* Transition douce pour la position */
+    transition: top 0.3s ease; /* Transition douce pour la position */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Légère ombre */
     border-bottom: 1px solid #e0e0e0; /* Ligne de séparation en bas */
-    border-radius: 10px; /* Coins arrondis */
 }
 
 .header-container-btn {
@@ -71,14 +70,15 @@
 }
 
 .header-hidden {
-    top: -50%; /* Cache le header en le déplaçant vers le haut */
+    top: -100%; /*Continuons là où nous nous sommes arrêtés*/
+    height: 0; /* Fixe la hauteur à 0 pour éviter de prendre de l'espace */
+    transition: top 0.3s ease, height 0.3s ease; /* Transition douce pour la position et la hauteur */
 }
 
 .grid-layout-container {
-    padding-top: 60px; /* Espace en haut pour le header */
-    height: calc(100vh - 60px); /* Ajuste la hauteur en fonction du header */
     overflow-y: auto; /* Barre de défilement verticale si nécessaire */
     background-color: #f0f0f0; /* Couleur de fond claire */
+    transition: padding-top 0.3s ease; /* Transition douce pour le padding-top */
 }
 
 /* S'assure que le composant de grille remplit le conteneur parent */

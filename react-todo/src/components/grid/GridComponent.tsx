@@ -15,6 +15,7 @@ type GridLayoutProps = {
 const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
     const controller = new CardsUiEventController(data, setData);
     const [headerVisible, setHeaderVisible] = useState(true);
+    const [headerHeight, setHeaderHeight] = useState(60); // Par défaut à 60px
     let timeoutId: NodeJS.Timeout;
 
     const handleMoveCards = () => {
@@ -31,6 +32,11 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
         }, 2000);
     };
     useEffect(() => {
+        const header = document.querySelector('.header-container');
+        if (header) {
+            setHeaderHeight(header.clientHeight);
+        }
+
         window.addEventListener('mousemove', handleMouseMove);
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
@@ -41,10 +47,12 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
     return (
         <div>
             <div className={`header-container ${headerVisible ? "" : "header-hidden"}`}>
-                <button className="header-container-btn" onClick={() => controller.addCard()}>Ajouter une nouvelle carte</button>
+                <button className="header-container-btn" onClick={() => controller.addCard()}>Ajouter une nouvelle
+                    carte
+                </button>
                 <button className="header-container-btn" onClick={handleMoveCards}>Rassembler les cartes</button>
             </div>
-            <div style={{width: '100vw', height: '100vh'}}>
+            <div  style={{width: '100vw', height: '100vh', paddingTop: headerVisible ? headerHeight : 0}}>
                 <ResponsiveGridLayout
                     className="layout"
                     breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
