@@ -49,7 +49,8 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
             <div style={{width: '100vw', height: '100vh'}}>
                 <ResponsiveGridLayout
                     className="layout"
-                    cols={{lg: 12, md: 10, sm: 8, xs: 4, xxs: 2}}
+                    breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+                    cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                     autoSize={true}
                     isResizable={!resizing}
                     isDraggable={!dragging && !resizing}
@@ -88,7 +89,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                             className={`react-grid-item${dragging ? " dragging" : ""}`}
                             data-grid={{x: item.x, y: item.y, w: item.w, h: item.h, minW: item.minW, minH: item.minH}}
                         >
-                            <CardId {...item} onCardSizeChange={(id, dx, dy) => controller.resizeCard(id, dx, dy)}/>
+                            <CardId {...item}/>
                         </div>
                     ))}
                 </ResponsiveGridLayout>

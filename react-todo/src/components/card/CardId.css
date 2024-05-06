@@ -22,54 +22,13 @@
     transform: translateY(-2px); /* Soulève la carte de 2px au survol */
 }
 
-/* Styles spécifiques pour les boutons de la carte */
-.card .card-btn {
-    position: absolute; /* Les boutons sont positionnés absolument par rapport à la carte */
-    cursor: pointer; /* Change le curseur en pointeur */
-    background-color: transparent; /* Fond transparent pour les boutons */
-    border: none; /* Pas de bordure autour des boutons */
-    transition: opacity 0.3s ease-in-out; /* Transition douce pour l'opacité */
-    opacity: 0; /* Les boutons sont initialement cachés */
-}
-
-.card .close-btn {
-    top: 10px; /* Positionne le bouton de fermeture à 10px du haut */
-    right: 10px; /* Positionne le bouton de fermeture à 10px de la droite */
-}
-
-
 /*material_UI_btn*/
-.card .resize-btn {
-    right: 5px; /* Positionne le bouton de redimensionnement à 5px de la droite */
-    bottom: 5px; /* Positionne le bouton de redimensionnement à 5px du bas */
-    cursor: se-resize; /* Le curseur de redimensionnement est "sud-est" */
-    opacity: 0; /* Le bouton de redimensionnement est visible */
-}
 .card .pin-btn {
     right: 5px; /* Positionne le bouton de redimensionnement à 5px de la droite */
     top: 5px; /* Positionne le bouton de redimensionnement à 5px du bas */
     cursor: se-resize; /* Le curseur de redimensionnement est "sud-est" */
     opacity: 0; /* Le bouton de redimensionnement est visible */
 }
-
-.card .minimize-btn {
-    top: 10px; /* Positionne le bouton de minimisation à 10px du haut */
-    right: 50px; /* Positionne le bouton de minimisation à 50px de la droite */
-}
-
-.card .resizeCard {
-    right: 5px; /* Positionne le bouton de redimensionnement à 5px de la droite */
-    bottom: 5px; /* Positionne le bouton de redimensionnement à 5px du bas */
-    cursor: se-resize; /* Le curseur de redimensionnement est "sud-est" */
-    background-color: transparent; /* Fond transparent pour le bouton */
-    border: none; /* Pas de bordure autour du bouton */
-    width: 20px; /* Largeur du bouton de redimensionnement */
-    height: 20px; /* Hauteur du bouton de redimensionnement */
-    border-radius: 50%; /* Le bouton de redimensionnement est circulaire */
-    opacity: 1; /* Le bouton de redimensionnement est visible */
-    transition: opacity 0.3s ease-in-out; /* Transition douce pour l'opacité */
-}
-
 .card:hover .card-btn,
 .card:hover .resize-handle,
 .card:hover .resize-btn,
