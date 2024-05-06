@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './CardId.css';
 import IconButton from '@mui/material/IconButton';
 import { Stack } from '@mui/material';
 import PushPinIcon from '@mui/icons-material/PushPin';
-import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import { v4 as uuidv4 } from 'uuid';
+import "react-resizable/css/styles.css";
 
 export type CardIdProps = {
     title: string;
@@ -20,9 +20,7 @@ export type CardIdProps = {
     maxH?: number;
     isNew: boolean;
     isPinned: boolean;
-    onRemoveClicked: (id: string) => void;
     onPinClicked?: (id: string) => void;
-    onCardSizeChange?: (id: string, dx: number, dy: number) => void;
 };
 
 const id = uuidv4();
@@ -40,27 +38,22 @@ export const defaultCardIdProps: CardIdProps = {
     maxH: Infinity,
     isNew: true,
     isPinned: false,
-    onRemoveClicked: () => {},
     onPinClicked: () => {},
-    onCardSizeChange: () => {},
 };
 
 const CardId: React.FC<CardIdProps> = ({
                                            id,
                                            title,
                                            content,
+                                           isPinned,
                                            onPinClicked = () => {},
-                                           onCardSizeChange = () => {}
                                        }) => {
+    const [pinned, setPinned] = useState(isPinned);
 
     const handlePinClick = (e: React.MouseEvent) => {
         e.stopPropagation();
+        setPinned(!pinned);
         onPinClicked(id);
-    };
-
-    const handleResizeClick = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        onCardSizeChange(id, 1, 1);
     };
 
     return (
@@ -71,20 +64,10 @@ const CardId: React.FC<CardIdProps> = ({
                 <IconButton
                     onClick={handlePinClick}
                     aria-label="pin card"
-                    className="pin-btn"
+                    className={`pin-btn ${pinned ? "pinned" : ""}`}
                     sx={{ color: 'info.main' }}
                 >
                     <PushPinIcon />
-                </IconButton>
-            </Stack>
-            <Stack direction="row" spacing={1} sx={{ position: 'absolute', bottom: 5, right: 5 }}>
-                <IconButton
-                    onClick={handleResizeClick}
-                    aria-label="resize handle"
-                    className="resize-btn"
-                    sx={{ color: 'info.main' }}
-                >
-                    <AspectRatioIcon />
                 </IconButton>
             </Stack>
         </div>

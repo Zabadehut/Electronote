@@ -74,9 +74,6 @@ export class CardsUiEventController {
             w: minW,
             h: minH,
             title: `New Title: ${id}`,
-            //onRemoveClicked: (id: string): void => this.removeCard(id),
-            //onPinClicked: (id: string): void => this.pinCard(id),
-            onCardSizeChange: (id: string, dx: number, dy: number): void => this.resizeCard(id, dx, dy),
         };
 
         newCards.push(newCard);
