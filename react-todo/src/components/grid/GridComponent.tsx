@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './GridComponent.css';
 import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
 import CardId, { CardIdProps } from "../card/CardId";
 import { CardsUiEventController } from "../controller/CardsUiEventController";
-
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -15,8 +14,9 @@ type GridLayoutProps = {
 const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
     const controller = new CardsUiEventController(data, setData);
     const [headerVisible, setHeaderVisible] = useState(true);
-    const [headerHeight, setHeaderHeight] = useState(60); // Par défaut à 60px
+    const [headerHeight] = useState(60); // Par défaut à 60px
     let timeoutId: NodeJS.Timeout;
+    const mainContainerRef = useRef<HTMLDivElement>(null); // Ref pour le conteneur principal
 
     const handleMoveCards = () => {
         controller.moveCardsToTopLeft();
@@ -26,33 +26,35 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
         clearTimeout(timeoutId);
         if (e.clientY < 100) {
             setHeaderVisible(true);
+        } else {
+            timeoutId = setTimeout(() => {
+                setHeaderVisible(false);
+            }, 2000);
         }
-        timeoutId = setTimeout(() => {
-            setHeaderVisible(false);
-        }, 2000);
     };
+
     useEffect(() => {
-        const header = document.querySelector('.header-container');
-        if (header) {
-            setHeaderHeight(header.clientHeight);
+        // Ajoutez un écouteur d'événements pour la souris
+        window.addEventListener('mousemove', handleMouseMove);
+
+        // Ajuste le paddingTop du conteneur principal quand headerVisible ou headerHeight change
+        if (mainContainerRef.current) {
+            mainContainerRef.current.style.paddingTop = `${headerVisible ? headerHeight : 0}px`;
         }
 
-        window.addEventListener('mousemove', handleMouseMove);
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
             clearTimeout(timeoutId);
         };
-    }, []);
+    }, [headerVisible, headerHeight]); // Ajoutez headerHeight à la liste de dépendances
 
     return (
         <div>
             <div className={`header-container ${headerVisible ? "" : "header-hidden"}`}>
-                <button className="header-container-btn" onClick={() => controller.addCard()}>Ajouter une nouvelle
-                    carte
-                </button>
+                <button className="header-container-btn" onClick={() => controller.addCard()}>Ajouter une nouvelle carte</button>
                 <button className="header-container-btn" onClick={handleMoveCards}>Rassembler les cartes</button>
             </div>
-            <div  style={{width: '100vw', height: '100vh', paddingTop: headerVisible ? headerHeight : 0}}>
+            <div ref={mainContainerRef} style={{width: '100vw', height: '100vh'}}>
                 <ResponsiveGridLayout
                     className="layout"
                     breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
@@ -94,4 +96,5 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
         </div>
     );
 };
+
 export default GridComponent;
