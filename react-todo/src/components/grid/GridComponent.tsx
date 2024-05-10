@@ -1,3 +1,4 @@
+//GridComponent.tsx
 import React, { useState, useEffect, useRef } from 'react';
 import './GridComponent.css';
 import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
@@ -32,6 +33,17 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
             }, 2000);
         }
     };
+
+    const changeCardType = (id: string, newType: CardIdProps['type']) => {
+        const updatedCards = data.map(card => {
+            if (card.id === id) {
+                return { ...card, type: newType };
+            }
+            return card;
+        });
+        setData(updatedCards);
+    };
+
 
     useEffect(() => {
         // Ajoutez un écouteur d'événements pour la souris
@@ -85,10 +97,10 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                     {data.map(item => (
                         <div
                             key={item.id}
-                            className={`react-grid-item`}
-                            data-grid={{x: item.x, y: item.y, w: item.w, h: item.h, minW: item.minW, minH: item.minH}}
+                            className="react-grid-item"
+                            data-grid={{ x: item.x, y: item.y, w: item.w, h: item.h, minW: item.minW, minH: item.minH }}
                         >
-                            <CardId {...item}/>
+                            <CardId {...item} changeCardType={changeCardType} />
                         </div>
                     ))}
                 </ResponsiveGridLayout>
