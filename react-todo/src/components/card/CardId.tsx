@@ -89,7 +89,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
 
     return (
         <div className="card" id={props.id}>
-            {selectedType ? null : <h4>{props.title}</h4>}  // N'afficher le titre que si aucun type n'est sélectionné
+            {selectedType ? null : <h4>{props.title}</h4>}
             {renderCard()}
             {selectedType ? null : (
                 <Stack direction="row" spacing={1} sx={{ position: 'absolute', top: 5, right: 5 }}>
