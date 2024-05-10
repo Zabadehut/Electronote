@@ -8,8 +8,14 @@ import CodeContentCard from './models/CodeContentCard';
 import FileContentCard from './models/FileContentCard';
 import WebContentCard from './models/WebContentCard';
 import WeatherContentCard from './models/WeatherContentCard';
+import SearchContentInApp from './models/SearchContentInApp';
 import "react-resizable/css/styles.css";
 import { SelectChangeEvent } from '@mui/material/Select';
+
+export type CardProps = {
+    title: string;
+    content: string;
+};
 
 export type CardIdProps = {
     title: string;
@@ -26,7 +32,8 @@ export type CardIdProps = {
     isNew: boolean;
     isPinned: boolean;
     onPinClicked?: (id: string) => void;
-    type: 'text' | 'code' | 'file' | 'web' | 'weather';
+    type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'Search';
+    cards: CardProps[];  // Ajout de la propriété cards
 };
 
 const id = uuidv4();
@@ -46,6 +53,7 @@ export const defaultCardIdProps: CardIdProps = {
     isPinned: false,
     onPinClicked: () => {},
     type: 'text',
+    cards: []  // Initialiser avec un tableau vide ou des données appropriées
 };
 
 const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: CardIdProps['type']) => void }> = (props) => {
@@ -73,17 +81,20 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
 
         switch (selectedType) {
             case 'text':
-                return <TextContentCard {...props} textContent={props.content} />;
+                // @ts-ignore
+                return <TextContentCard {...props}/>;
             case 'code':
                 return <CodeContentCard {...props} />;
             case 'file':
                 return <FileContentCard {...props} />;
             case 'web':
-                return <WebContentCard {...props} />;
+                return <WebContentCard query={props.content} />;
             case 'weather':
                 return <WeatherContentCard {...props} />;
+            case 'Search':
+                return <SearchContentInApp cards={props.cards} />;
             default:
-                return <div>{props.content}</div>;
+                return <div>Unsupported card type</div>;
         }
     };
 
@@ -102,6 +113,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                 <div>
                     <Select value={selectedType} onChange={handleChangeType} displayEmpty inputProps={{ 'aria-label': 'Without label' }} sx={{ mt: 2, minWidth: 120 }}>
                         <MenuItem value=""><em>None</em></MenuItem>
+                        <MenuItem value="Search">Text</MenuItem>
                         <MenuItem value="text">Text</MenuItem>
                         <MenuItem value="code">Code</MenuItem>
                         <MenuItem value="file">File</MenuItem>

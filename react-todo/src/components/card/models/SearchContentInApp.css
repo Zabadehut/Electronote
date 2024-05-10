@@ -1,0 +1,12 @@
+.search-content-app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.search-content-app .MuiTextField-root {
+    width: 50%; /* Ajustez selon la largeur désirée */
+    margin-bottom: 20px;
+}
