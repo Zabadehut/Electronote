@@ -98,7 +98,16 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                         <div
                             key={item.id}
                             className="react-grid-item"
-                            data-grid={{ x: item.x, y: item.y, w: item.w, h: item.h, minW: item.minW, minH: item.minH }}
+                            data-grid={{
+                                x: item.x,
+                                y: item.y,
+                                w: item.w,
+                                h: item.h,
+                                minW: item.minW,
+                                minH: item.minH,
+                                isDraggable: !item.disableDragAndDrop, // Utilise la propriété pour contrôler le drag and drop
+                                isResizable: !item.disableDragAndDrop  // Utilise la même propriété pour contrôler le resizing
+                            }}
                         >
                             <CardId {...item} changeCardType={changeCardType} />
                         </div>

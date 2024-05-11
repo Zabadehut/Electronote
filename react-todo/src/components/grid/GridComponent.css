@@ -36,6 +36,15 @@
     overflow: hidden; /* Cache tout débordement */
 }
 
+.drag-handle {
+    cursor: move; /* Change le curseur pour indiquer une capacité de déplacement */
+    padding: 4px;
+    background-color: #ccc;
+    color: #333;
+    text-align: center;
+    border-radius: 3px;
+}
+
 .header-container {
     display: flex; /* Utilise le modèle de boîte flex pour le conteneur */
     justify-content: flex-start; /* Aligne les éléments horizontalement au début */
