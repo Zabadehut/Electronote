@@ -1,4 +1,3 @@
-//GridComponent.tsx
 import React, { useState, useEffect, useRef } from 'react';
 import './GridComponent.css';
 import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
@@ -15,9 +14,25 @@ type GridLayoutProps = {
 const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
     const controller = new CardsUiEventController(data, setData);
     const [headerVisible, setHeaderVisible] = useState(true);
-    const [headerHeight] = useState(60); // Par défaut à 60px
+    const [headerHeight] = useState(60); // Default height
     let timeoutId: NodeJS.Timeout;
-    const mainContainerRef = useRef<HTMLDivElement>(null); // Ref pour le conteneur principal
+    const mainContainerRef = useRef<HTMLDivElement>(null); // Ref for the main container
+    const [isDraggable, setIsDraggable] = useState(true); // State to control dragging
+
+    const toggleDraggable = () => {
+        setIsDraggable(!isDraggable); // Toggle the draggable state
+    };
+
+    const changeCardType = (id: string, newType: CardIdProps['type']) => {
+        const updatedCards = data.map(card => {
+            if (card.id === id) {
+                return { ...card, type: newType };
+            }
+            return card;
+        });
+        setData(updatedCards);
+    };
+
 
     const handleMoveCards = () => {
         controller.moveCardsToTopLeft();
@@ -34,62 +49,38 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
         }
     };
 
-    const changeCardType = (id: string, newType: CardIdProps['type']) => {
-        const updatedCards = data.map(card => {
-            if (card.id === id) {
-                return { ...card, type: newType };
-            }
-            return card;
-        });
-        setData(updatedCards);
-    };
-
-
     useEffect(() => {
-        // Ajoutez un écouteur d'événements pour la souris
         window.addEventListener('mousemove', handleMouseMove);
-
-        // Ajuste le paddingTop du conteneur principal quand headerVisible ou headerHeight change
         if (mainContainerRef.current) {
             mainContainerRef.current.style.paddingTop = `${headerVisible ? headerHeight : 0}px`;
         }
-
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
             clearTimeout(timeoutId);
         };
-    }, [headerVisible, headerHeight]); // Ajoutez headerHeight à la liste de dépendances
+    }, [headerVisible, headerHeight]);
 
     return (
         <div>
             <div className={`header-container ${headerVisible ? "" : "header-hidden"}`}>
-                <button className="header-container-btn" onClick={() => controller.addCard()}>Ajouter une nouvelle carte</button>
-                <button className="header-container-btn" onClick={handleMoveCards}>Rassembler les cartes</button>
+                <button className="header-container-btn" onClick={toggleDraggable}>{isDraggable ? "Locked Cards" : " Delocked Cards"}</button>
+                <button className="header-container-btn" onClick={() => controller.addCard()}>Add New Card</button>
+                <button className="header-container-btn" onClick={handleMoveCards}>Gather Cards</button>
             </div>
-            <div ref={mainContainerRef} style={{width: '100vw', height: '100vh'}}>
+            <div ref={mainContainerRef} style={{ width: '100vw', height: '100vh' }}>
                 <ResponsiveGridLayout
                     className="layout"
+                    isDraggable={isDraggable}
                     breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                     cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                     autoSize={true}
                     compactType={null}
                     preventCollision={true}
                     onLayoutChange={(layout: Layout[]) => {
-                        const newCards = layout.map(({i, x, y, w, h}) => {
+                        const newCards = layout.map(({ i, x, y, w, h }) => {
                             const card = data.find(d => d.id === i);
-                            if (!card) {
-                                throw new Error(`Card not found for id ${i}`);
-                            }
-                            return {
-                                ...card,
-                                x,
-                                y,
-                                w,
-                                h,
-                                title: card.title || 'Default Title',
-                                content: card.content || 'Default Content',
-                                id: card.id
-                            };
+                            if (!card) throw new Error(`Card not found for id ${i}`);
+                            return { ...card, x, y, w, h, title: card.title || 'Default Title', content: card.content || 'Default Content', id: card.id };
                         });
                         setData(newCards);
                     }}
@@ -97,19 +88,17 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                     {data.map(item => (
                         <div
                             key={item.id}
-                            className="react-grid-item"
+                            className={`react-grid-item ${!isDraggable ? 'locked' : ''}`}
                             data-grid={{
                                 x: item.x,
                                 y: item.y,
                                 w: item.w,
                                 h: item.h,
-                                minW: item.minW,
-                                minH: item.minH,
-                                isDraggable: !item.disableDragAndDrop, // Utilise la propriété pour contrôler le drag and drop
-                                isResizable: !item.disableDragAndDrop  // Utilise la même propriété pour contrôler le resizing
+                                isDraggable,
+                                isResizable: isDraggable
                             }}
                         >
-                            <CardId {...item} changeCardType={changeCardType} />
+                            <CardId {...item} changeCardType={changeCardType}/>
                         </div>
                     ))}
                 </ResponsiveGridLayout>
@@ -119,3 +108,5 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
 };
 
 export default GridComponent;
+
+

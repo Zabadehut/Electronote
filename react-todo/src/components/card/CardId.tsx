@@ -33,7 +33,8 @@ export type CardIdProps = {
     isPinned: boolean;
     disableDragAndDrop?: boolean;
     onPinClicked?: (id: string) => void;
-    type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'Search' | 'note';
+    type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'Search' | 'note' | 'none';
+
     cards: CardProps[];
 };
 
@@ -56,6 +57,7 @@ export const defaultCardIdProps: CardIdProps = {
 const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: CardIdProps['type']) => void }> = (props) => {
     const [pinned, setPinned] = useState(props.isPinned);
     const [selectedType, setSelectedType] = useState(props.type);
+    const [isDraggable, setIsDraggable] = useState(true); // Utilisé pour contrôler le drag au niveau de chaque carte
 
     const handlePinClick = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -63,30 +65,33 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         props.onPinClicked?.(props.id);
     };
 
-
-
     const handleChangeType = (event: SelectChangeEvent<string>) => {
         const newType = event.target.value as CardIdProps['type'];
         setSelectedType(newType);
         props.changeCardType(props.id, newType);
     };
 
+    // Fonctions pour activer/désactiver le glisser-déposer
+    const disableDrag = () => setIsDraggable(false);
+    const enableDrag = () => setIsDraggable(true);
+
     const renderCard = () => {
+        const cardProps = {...props, isDraggable, onDisableDrag: disableDrag, onEnableDrag: enableDrag};
         switch (selectedType) {
             case 'text':
-                return <TextContentCard {...props}/>;
+                return <TextContentCard {...cardProps}/>;
             case 'code':
-                return <CodeContentCard {...props} />;
+                return <CodeContentCard {...cardProps} />;
             case 'file':
-                return <FileContentCard {...props} />;
+                return <FileContentCard {...cardProps} />;
             case 'web':
                 return <WebContentCard query={props.content} />;
             case 'weather':
-                return <WeatherContentCard {...props} />;
+                return <WeatherContentCard {...cardProps} />;
             case 'note':
-                return <NoteTakingCard query={props.cards} />;
+                return <NoteTakingCard query={props.cards} onDisableDrag={disableDrag} onEnableDrag={enableDrag} />;
             case 'Search':
-                return <SearchContentInApp cards={props.cards} />;
+                return <SearchContentInApp {...cardProps} />;
             default:
                 return <div>Unsupported card type</div>;
         }
