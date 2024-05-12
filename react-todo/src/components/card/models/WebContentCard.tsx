@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, Typography, Link, Box, CircularProgress } from '@mui/material';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Card, CardContent, CardHeader, Typography, Link, Box, CircularProgress, TextField, Button } from '@mui/material';
+import './WebContentCard.css'
 
 interface ResultItem {
     link: string;
@@ -9,9 +10,12 @@ interface ResultItem {
 
 interface WebContentCardProps {
     query: string;
+    onDisableDrag: () => void;
+    onEnableDrag: () => void;
 }
 
 const WebContentCard: React.FC<WebContentCardProps> = ({ query }) => {
+    const [searchQuery, setSearchQuery] = useState(query);  // Modifié pour permettre la mise à jour de searchQuery
     const [results, setResults] = useState<ResultItem[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -19,41 +23,59 @@ const WebContentCard: React.FC<WebContentCardProps> = ({ query }) => {
     const fetchResults = async () => {
         setLoading(true);
         setError(null);
-        const url = `https://www.googleapis.com/customsearch/v1?key=AIzaSyCJzTcuByky_0jz2omwCrm40AK1eAACKkA&cx=YOUR_CX&q=${encodeURIComponent(query)}`;
-        console.log("Fetching URL:", url);
-
+        const url = `https://www.googleapis.com/customsearch/v1?key=AIzaSyCJzTcuByky_0jz2omwCrm40AK1eAACKkA&cx=9525498c6235349b4&q=${encodeURIComponent(searchQuery)}`;
         try {
             const response = await fetch(url);
             const data = await response.json();
-            console.log("Response data:", data);
-
             if (response.ok) {
                 setResults(data.items || []);
             } else {
                 setError(data.error.message || 'Erreur lors de la récupération des données');
             }
         } catch (err: any) {
-            console.error("Error fetching data:", err);
-            setError('Erreur lors de la connexion au service de recherche');  // Utilisation d'un message générique pour l'erreur
+            setError('Erreur lors de la connexion au service de recherche');
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        if (query) {
-            fetchResults();
-        }
-    }, [query]);
+        fetchResults();
+    }, []);
+
+    const handleSearchSubmit = useCallback((event: React.FormEvent) => {
+        event.preventDefault();
+        fetchResults();
+    }, [searchQuery]);
+
+    const handleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(event.target.value);
+    }, []);
+
+    // Fonction pour arrêter la propagation des événements de souris
+    const handleMouseInteraction = (event: React.MouseEvent) => {
+        event.stopPropagation();
+    };
 
     return (
-        <Card raised>
-            <CardHeader title={`Résultats de recherche pour : ${query}`} />
+        <Card raised onClick={handleMouseInteraction} onMouseDown={handleMouseInteraction}>
+            <CardHeader title={`Recherche Web`} />
             <CardContent>
+                <form onSubmit={handleSearchSubmit}>
+                    <TextField
+                        fullWidth
+                        label="Search Query"
+                        value={searchQuery}
+                        onChange={handleInputChange}  // Ajouté pour gérer les modifications de l'entrée
+                        variant="outlined"
+                        margin="normal"
+                    />
+                    <Button type="submit" variant="contained" color="primary">
+                        Rechercher
+                    </Button>
+                </form>
                 {loading ? (
-                    <Box display="flex" justifyContent="center">
-                        <CircularProgress />
-                    </Box>
+                    <Box display="flex" justifyContent="center"><CircularProgress /></Box>
                 ) : error ? (
                     <Typography color="error">{error}</Typography>
                 ) : (

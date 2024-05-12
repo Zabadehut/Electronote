@@ -35,6 +35,7 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
     "@electron-forge/plugin-fuses": "^7.4.0",
     "@electron/fuses": "^1.8.0",
+    "@types/fabric": "^5.3.7",
     "@types/react": "^18.2.64",
     "@types/react-dom": "^18.2.21",
     "@types/react-grid-layout": "^1.3.5",

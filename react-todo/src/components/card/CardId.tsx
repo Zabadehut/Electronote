@@ -12,6 +12,7 @@ import NoteTakingCard from "./models/NoteTakingCard.tsx";
 import { SelectChangeEvent } from '@mui/material/Select';
 import "react-resizable/css/styles.css";
 
+
 export type CardProps = {
     title: string;
     content: string;
@@ -59,7 +60,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
     const [selectedType, setSelectedType] = useState(props.type);
     const [isDraggable, setIsDraggable] = useState(true); // Utilisé pour contrôler le drag au niveau de chaque carte
 
-    const handlePinClick = (e: React.MouseEvent) => {
+    const handlePinClick = (e: React.MouseEvent<HTMLElement>) => {
         e.stopPropagation();
         setPinned(!pinned);
         props.onPinClicked?.(props.id);
@@ -70,6 +71,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         setSelectedType(newType);
         props.changeCardType(props.id, newType);
     };
+
 
     // Fonctions pour activer/désactiver le glisser-déposer
     const disableDrag = () => setIsDraggable(false);
@@ -85,7 +87,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
             case 'file':
                 return <FileContentCard {...cardProps} />;
             case 'web':
-                return <WebContentCard query={props.content} />;
+                return <WebContentCard query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag}/>;
             case 'weather':
                 return <WeatherContentCard {...cardProps} />;
             case 'note':
