@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Card, CardContent, CardHeader, Typography, Link, Box, CircularProgress, TextField, Button } from '@mui/material';
 import './WebContentCard.css'
 
@@ -39,13 +39,11 @@ const WebContentCard: React.FC<WebContentCardProps> = ({ query }) => {
         }
     };
 
-    useEffect(() => {
-        fetchResults();
-    }, []);
-
     const handleSearchSubmit = useCallback((event: React.FormEvent) => {
         event.preventDefault();
-        fetchResults();
+        if (searchQuery.trim() !== '') {
+            fetchResults();
+        }
     }, [searchQuery]);
 
     const handleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
