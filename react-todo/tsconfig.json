@@ -25,6 +25,6 @@
       "@utils/*": ["utils/*"]
     }
   },
-  "include": ["src/**/*.ts","src/**/*.tsx", "electron"],
+  "include": ["src/**/*.ts","src/**/*.tsx", "electron", "src/**/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
