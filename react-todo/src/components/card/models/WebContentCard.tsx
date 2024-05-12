@@ -1,27 +1,73 @@
-import React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
-import './WebContentCard.css';
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, Typography, Link, Box, CircularProgress } from '@mui/material';
+
+interface ResultItem {
+    link: string;
+    title: string;
+    snippet: string;
+}
 
 interface WebContentCardProps {
     query: string;
 }
 
 const WebContentCard: React.FC<WebContentCardProps> = ({ query }) => {
-    const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+    const [results, setResults] = useState<ResultItem[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchResults = async () => {
+        setLoading(true);
+        setError(null);
+        const url = `https://www.googleapis.com/customsearch/v1?key=AIzaSyCJzTcuByky_0jz2omwCrm40AK1eAACKkA&cx=YOUR_CX&q=${encodeURIComponent(query)}`;
+        console.log("Fetching URL:", url);
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            console.log("Response data:", data);
+
+            if (response.ok) {
+                setResults(data.items || []);
+            } else {
+                setError(data.error.message || 'Erreur lors de la récupération des données');
+            }
+        } catch (err: any) {
+            console.error("Error fetching data:", err);
+            setError('Erreur lors de la connexion au service de recherche');  // Utilisation d'un message générique pour l'erreur
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        if (query) {
+            fetchResults();
+        }
+    }, [query]);
 
     return (
-        <Card className="web-content-card">
-            <CardHeader title={`Google Search: ${query}`} />
-            <CardContent style={{ flexGrow: 1, padding: 0 }}>
-                <iframe
-                    src={googleSearchUrl}
-                    title="Google Search"
-                    className="web-content-iframe"
-                    style={{ width: '100%', height: '100%', border: 'none' }}
-                    allowFullScreen
-                />
+        <Card raised>
+            <CardHeader title={`Résultats de recherche pour : ${query}`} />
+            <CardContent>
+                {loading ? (
+                    <Box display="flex" justifyContent="center">
+                        <CircularProgress />
+                    </Box>
+                ) : error ? (
+                    <Typography color="error">{error}</Typography>
+                ) : (
+                    <ul>
+                        {results.map((result, index) => (
+                            <li key={index}>
+                                <Link href={result.link} target="_blank" rel="noopener noreferrer" color="primary">
+                                    {result.title}
+                                </Link>
+                                <Typography variant="body2" color="textSecondary">{result.snippet}</Typography>
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </CardContent>
         </Card>
     );
