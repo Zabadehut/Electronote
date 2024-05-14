@@ -18,13 +18,16 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
     const [editedContent, setEditedContent] = useState(note.content);
 
     useEffect(() => {
-        setNote({
-            ...note,
-            id: props.id
-        });
-    }, [props.id]);
+        if (props.id !== note.id) {
+            setNote({
+                ...note,
+                id: props.id,
+                content: "Type here..."  // Reset content si nécessaire
+            });
+        }
+    }, [props.id, note.id]);
 
-    const handleEditClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleEditClick = () => {
         setIsEditing(true);
     };
 

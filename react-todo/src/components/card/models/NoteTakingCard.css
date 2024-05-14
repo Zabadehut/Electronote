@@ -1,23 +1,24 @@
 .note-taking-card {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background: #f4f4f8;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 100%;  /* Assurez-vous que c'est bien 100% de son parent */
+    height: auto; /* ou fixez une hauteur spécifique si nécessaire */
+    padding: 10px;
+    box-sizing: border-box;
 }
 
+.note-taking-card textarea,
 .note-taking-card button {
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    width: 100%;    /* Adaptation des enfants à la largeur de la carte */
+    margin: 5px 0;  /* Espacement pour clarté */
 }
 
-.note-taking-card button:hover {
-    background-color: #0056b3;
+
+.note-taking-card textarea {
+    width: 100%;
+    min-height: 150px; /* Hauteur minimale */
+    max-height: 300px; /* Hauteur maximale avant de commencer à défiler */
+    height: auto; /* S'ajuste au contenu */
+    overflow-y: auto; /* Permet le défilement vertical si nécessaire */
+    resize: none; /* Empêche l'utilisateur de redimensionner le textarea */
 }
