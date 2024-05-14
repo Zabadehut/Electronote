@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import { Card, CardContent, CardHeader, Typography, CircularProgress, TextField, Button } from '@mui/material';
 import axios from 'axios';
+import { Card, CardContent, CardHeader, Typography, CircularProgress, TextField, Button } from '@mui/material';
 import './WeatherContentCard.css';
 import Clock from './Clock';   // Importation correcte du composant Clock
 
@@ -10,7 +10,14 @@ interface WeatherData {
     wind_speed: number;
 }
 
-const WeatherContentCard: React.FC = () => {
+/*no drag&drop on class*/
+interface WeatherContent {
+    query: string;
+    onDisableDrag: () => void;
+    onEnableDrag: () => void;
+}
+
+const WeatherContentCard: React.FC<WeatherContent> = ({ onDisableDrag, onEnableDrag }) => {
     const [city, setCity] = useState<string>("Dijon");
     const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
@@ -43,8 +50,14 @@ const WeatherContentCard: React.FC = () => {
         setCity(event.target.value);
     }, []);
 
+    // Fonction pour arrêter la propagation des événements de souris
+    const handleMouseInteraction = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        onDisableDrag();
+    };
+
     return (
-        <Card raised>
+        <Card raised onClick={handleMouseInteraction} onMouseDown={handleMouseInteraction} onMouseUp={onEnableDrag}>
             <CardHeader title="Weather Information" />
             <CardContent>
                 <Clock />
