@@ -1,24 +1,36 @@
 .note-taking-card {
     display: flex;
     flex-direction: column;
-    width: 100%;  /* Assurez-vous que c'est bien 100% de son parent */
-    height: auto; /* ou fixez une hauteur spécifique si nécessaire */
+    width: 100%; /* Utilise toute la largeur du parent */
+    height: 100%; /* Utilise toute la hauteur du parent */
     padding: 10px;
     box-sizing: border-box;
+    overflow: hidden; /* Empêche les débordements non désirés */
 }
 
-.note-taking-card textarea,
-.note-taking-card button {
-    width: 100%;    /* Adaptation des enfants à la largeur de la carte */
-    margin: 5px 0;  /* Espacement pour clarté */
+.note-taking-card-content {
+    flex: 1; /* Utilise tout l'espace vertical disponible */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Permet le défilement vertical si nécessaire */
 }
 
+.note-taking-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0; /* Ajuste l'espacement autour des contrôles */
+}
 
 .note-taking-card textarea {
+    flex: 1;  /* Occupe tout l'espace disponible restant */
     width: 100%;
-    min-height: 150px; /* Hauteur minimale */
-    max-height: 300px; /* Hauteur maximale avant de commencer à défiler */
-    height: auto; /* S'ajuste au contenu */
+    resize: none; /* Empêche le redimensionnement manuel */
+    box-sizing: border-box; /* Inclut le padding et la bordure dans la taille calculée */
     overflow-y: auto; /* Permet le défilement vertical si nécessaire */
-    resize: none; /* Empêche l'utilisateur de redimensionner le textarea */
+}
+
+.note-taking-card-info {
+    font-size: 0.85em; /* Ajustement de la taille de la police pour les compteurs */
+    text-align: center; /* Centrage des compteurs */
 }
