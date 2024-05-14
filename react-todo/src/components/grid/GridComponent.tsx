@@ -75,7 +75,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                     cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                     autoSize={true}
                     compactType={null}
-                    preventCollision={true}
+                    preventCollision={false}
                     onLayoutChange={(layout: Layout[]) => {
                         const newCards = layout.map(({ i, x, y, w, h }) => {
                             const card = data.find(d => d.id === i);
