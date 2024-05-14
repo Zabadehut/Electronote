@@ -14,6 +14,7 @@ import "react-resizable/css/styles.css";
 
 
 export type CardProps = {
+    id: string;
     title: string;
     content: string;
 };
@@ -91,7 +92,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
             case 'weather':
                 return <WeatherContentCard />;
             case 'note':
-                return <NoteTakingCard query={props.cards} onDisableDrag={disableDrag} onEnableDrag={enableDrag} />;
+                return <NoteTakingCard {...props} />;
             case 'Search':
                 return <SearchContentInApp {...cardProps} />;
             default:

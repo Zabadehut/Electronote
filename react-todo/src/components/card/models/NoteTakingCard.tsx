@@ -1,70 +1,66 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { fabric } from "fabric";
-import { Card, CardContent, Typography, Button } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import './NoteTakingCard.css';
+import React, { useState, useEffect } from 'react';
+import { CardIdProps } from '../CardId';  // Assurez-vous que le chemin est correct
+import "./NoteTakingCard.css";
 
-interface NoteTakingCardProps {
-    query: { content: string }[];
-    onDisableDrag: () => void;
-    onEnableDrag: () => void;
-}
+const NoteTakingCard: React.FC<CardIdProps> = (props) => {
+    const [note, setNote] = useState({
+        id: props.id,
+        title: "New Note",
+        content: "Type here...",
+        x: 0, y: 0, w: 2, h: 2,
+        minW: 1, minH: 1,
+        isNew: true,
+        isPinned: false,
+        type: 'note',
+        cards: []
+    });
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedContent, setEditedContent] = useState(note.content);
 
-const NoteTakingCard: React.FC<NoteTakingCardProps> = ({}) => {
-    const canvasRef = useRef<HTMLCanvasElement | null>(null);
-    const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
+    useEffect(() => {
+        setNote({
+            ...note,
+            id: props.id
+        });
+    }, [props.id]);
 
-    // Fonction pour arrêter la propagation des événements de souris
-    const handleMouseInteraction = (event: React.MouseEvent) => {
-        event.stopPropagation();
+    const handleEditClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setIsEditing(true);
     };
 
-    // Initialiser le canevas
-    useEffect(() => {
-        if (canvasRef.current && !canvas) {
-            const initCanvas = new fabric.Canvas(canvasRef.current, {
-                height: canvasRef.current.clientHeight,
-                width: canvasRef.current.clientWidth,
-                selection: false,
-            });
-            setCanvas(initCanvas);
-        }
 
-        // Assurez-vous que la fonction de nettoyage retourne `void`
-        return () => {
-            if (canvas) {
-                canvas.dispose();
-            }
-        };
-    }, [canvas]);
+    const handleSaveClick = () => {
+        setIsEditing(false);
+        setNote({
+            ...note,
+            content: editedContent
+        });
+        // Logic to save the note can be implemented here
+    };
 
-    // Ajouter du texte au canevas
-    const handleAddText = () => {
-        if (canvas) {
-            const text = new fabric.Text('Hello, world!', {
-                left: 50,
-                top: 50,
-                fontSize: 20,
-                borderColor: '#000000',
-                fill: '#000000'
-            });
-            canvas.add(text);
-            canvas.renderAll();
-        }
+    const handleContentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setEditedContent(event.target.value);
     };
 
     return (
-        <Card raised style={{ width: '100%', height: '100%', position: 'relative', display: 'flex', flexDirection: 'column' }}>
-            <CardContent className="canvas-container" onClick={handleMouseInteraction} onMouseDown={handleMouseInteraction}>
-                <Typography variant="h5" component="h2" gutterBottom>Note Taking Card</Typography>
-                <canvas ref={canvasRef} style={{ width: '100%', height: '300px', border: 'none' }} />
-            </CardContent>
-            <CardContent className="card-actions" onClick={handleMouseInteraction} onMouseDown={handleMouseInteraction}>
-                <Button startIcon={<EditIcon />} color="primary" onClick={handleAddText}>Edit</Button>
-                <Button startIcon={<DeleteIcon />} color="secondary">Delete</Button>
-            </CardContent>
-        </Card>
+        <div className={`note-taking-card ${note.isPinned ? 'pinned' : ''}`} onMouseDown={e => e.stopPropagation()}>
+            {isEditing ? (
+                <>
+                    <textarea
+                        value={editedContent}
+                        onChange={handleContentChange}
+                        rows={4}
+                        cols={50}
+                    />
+                    <button onClick={handleSaveClick}>Enregistrer</button>
+                </>
+            ) : (
+                <>
+                    <p>{note.content}</p>
+                    <button onClick={handleEditClick}>Éditer</button>
+                </>
+            )}
+        </div>
     );
 };
 
