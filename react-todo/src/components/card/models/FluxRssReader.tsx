@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Parser from 'rss-parser';
 import { Card, CardContent, CardHeader, CircularProgress, Typography } from '@mui/material';
 
 interface Item {
@@ -14,37 +13,28 @@ interface Feed {
 }
 
 interface FluxRssReaderProps {
-    query: string;  // URL du flux RSS
+    query: string;  // Liste des URLs de flux RSS
     onDisableDrag: () => void;
     onEnableDrag: () => void;
 }
 
-const FluxRssReader: React.FC<FluxRssReaderProps> = ({ query, onDisableDrag, onEnableDrag }) => {
-    const [feed, setFeed] = useState<Feed | null>(null);
+
+
+const FluxRssReader: React.FC<FluxRssReaderProps> = ({onDisableDrag, onEnableDrag }) => {
+    const [feeds, setFeeds] = useState<Feed[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const fetchRSS = async () => {
-            setLoading(true);
-            const parser = new Parser<Feed>();
-            try {
-                const fetchedFeed = await parser.parseURL(query);
-                setFeed(fetchedFeed);
-            } catch (error: any) {
-                console.error("Failed to fetch RSS: " + error.message);
-                setError("Failed to fetch RSS");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (query) {
-            fetchRSS();
-        } else {
-            setError("No RSS URL provided");
-        }
-    }, [query]);
+        // Simuler une réponse réussie
+        setTimeout(() => {
+            const exampleFeed = {
+                title: "Example Feed",
+                items: [{ title: "Test Article", link: "#", contentSnippet: "This is a test" }]
+            };
+            setFeeds([exampleFeed]);
+            setLoading(false);
+        }, 1000);
+    }, []);
 
     const handleMouseInteraction = (event: React.MouseEvent) => {
         event.stopPropagation();
@@ -52,17 +42,17 @@ const FluxRssReader: React.FC<FluxRssReaderProps> = ({ query, onDisableDrag, onE
     };
 
     if (loading) return <CircularProgress />;
-    if (error) return <Typography color="error">{error}</Typography>;
+
 
     return (
         <Card raised onClick={handleMouseInteraction} onMouseDown={handleMouseInteraction} onMouseUp={onEnableDrag}>
             <CardHeader title="RSS Feed Information" />
             <CardContent>
-                {feed ? (
-                    <div>
+                {feeds.map((feed, index) => (
+                    <div key={index}>
                         <Typography variant="h5">{feed.title}</Typography>
-                        {feed.items.map((item, index) => (
-                            <div key={index}>
+                        {feed.items.map((item, idx) => (
+                            <div key={idx}>
                                 <a href={item.link} target="_blank" rel="noopener noreferrer">
                                     <Typography variant="h6">{item.title}</Typography>
                                 </a>
@@ -70,7 +60,7 @@ const FluxRssReader: React.FC<FluxRssReaderProps> = ({ query, onDisableDrag, onE
                             </div>
                         ))}
                     </div>
-                ) : <Typography>No feed data available.</Typography>}
+                ))}
             </CardContent>
         </Card>
     );

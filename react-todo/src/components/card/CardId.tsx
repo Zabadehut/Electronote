@@ -96,7 +96,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
             case 'search':
                 return <SearchContentInApp {...cardProps} />;
             case 'rss':
-                return <FluxRssReader query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag} />;
+                return <FluxRssReader query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag}/>;
             default:
                 return <div>Unsupported card type</div>;
         }
