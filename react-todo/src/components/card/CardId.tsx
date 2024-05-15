@@ -9,6 +9,7 @@ import WebContentCard from './models/WebContentCard';
 import WeatherContentCard from './models/WeatherContentCard';
 import SearchContentInApp from './models/SearchContentInApp';
 import NoteTakingCard from "./models/NoteTakingCard.tsx";
+import FluxRssReader from "./models/FluxRssReader.tsx";
 import { SelectChangeEvent } from '@mui/material/Select';
 import "react-resizable/css/styles.css";
 
@@ -35,8 +36,7 @@ export type CardIdProps = {
     isPinned: boolean;
     disableDragAndDrop?: boolean;
     onPinClicked?: (id: string) => void;
-    type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'Search' | 'note' | 'none';
-
+    type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'search' | 'note' | 'none' | 'rss';
     cards: CardProps[];
 };
 
@@ -93,8 +93,10 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                 return <WeatherContentCard query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag}/>;
             case 'note':
                 return <NoteTakingCard {...props} />;
-            case 'Search':
+            case 'search':
                 return <SearchContentInApp {...cardProps} />;
+            case 'rss':
+                return <FluxRssReader query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag} />;
             default:
                 return <div>Unsupported card type</div>;
         }
@@ -117,6 +119,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                     <MenuItem value="file">File</MenuItem>
                     <MenuItem value="web">Web</MenuItem>
                     <MenuItem value="weather">Weather</MenuItem>
+                    <MenuItem value="rss">Rss</MenuItem>
                 </Select>
             </Stack>
         </div>
