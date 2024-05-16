@@ -16,6 +16,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
     const [headerVisible, setHeaderVisible] = useState(true);
     const [headerHeight] = useState(60); // Default height
     let timeoutId: NodeJS.Timeout;
+    let showHeaderTimeoutId: NodeJS.Timeout;
     const mainContainerRef = useRef<HTMLDivElement>(null); // Ref for the main container
     const [isDraggable, setIsDraggable] = useState(true); // State to control dragging
 
@@ -33,15 +34,18 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
         setData(updatedCards);
     };
 
-
     const handleMoveCards = () => {
         controller.moveCardsToTopLeft();
     };
 
     const handleMouseMove = (e: MouseEvent) => {
         clearTimeout(timeoutId);
+        clearTimeout(showHeaderTimeoutId);
+
         if (e.clientY < 100) {
-            setHeaderVisible(true);
+            showHeaderTimeoutId = setTimeout(() => {
+                setHeaderVisible(true);
+            }, 500); // Delay of 1 second before showing the header
         } else {
             timeoutId = setTimeout(() => {
                 setHeaderVisible(false);
@@ -57,13 +61,14 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
         return () => {
             window.removeEventListener('mousemove', handleMouseMove);
             clearTimeout(timeoutId);
+            clearTimeout(showHeaderTimeoutId);
         };
     }, [headerVisible, headerHeight]);
 
     return (
         <div>
             <div className={`header-container ${headerVisible ? "" : "header-hidden"}`}>
-                <button className="header-container-btn" onClick={toggleDraggable}>{isDraggable ? "Locked Cards" : " Delocked Cards"}</button>
+                <button className="header-container-btn" onClick={toggleDraggable}>{isDraggable ? "Locked Cards" : "Delocked Cards"}</button>
                 <button className="header-container-btn" onClick={() => controller.addCard()}>Add New Card</button>
                 <button className="header-container-btn" onClick={handleMoveCards}>Gather Cards</button>
             </div>
@@ -108,5 +113,3 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
 };
 
 export default GridComponent;
-
-
