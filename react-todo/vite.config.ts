@@ -13,5 +13,6 @@ export default defineConfig({
         input: 'electron/preload.ts',
       },
     }),
+
   ],
 });

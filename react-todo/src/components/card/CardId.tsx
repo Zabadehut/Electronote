@@ -1,18 +1,18 @@
+// src/components/card/CardId.tsx
 import React, { useState } from 'react';
-import { IconButton, Stack, Select, MenuItem } from '@mui/material';
+import { IconButton, Stack, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import PushPinIcon from '@mui/icons-material/PushPin';
 import { v4 as uuidv4 } from 'uuid';
 import TextContentCard from './models/TextContentCard';
 import CodeContentCard from './models/CodeContentCard';
 import FileContentCard from './models/FileContentCard';
 import WebContentCard from './models/WebContentCard';
+import YouTubeVideoCard from './models/YouTubeVideoCard';
 import WeatherContentCard from './models/WeatherContentCard';
 import SearchContentInApp from './models/SearchContentInApp';
-import NoteTakingCard from "./models/NoteTakingCard.tsx";
-import FluxRssReader from "./models/FluxRssReader.tsx";
-import { SelectChangeEvent } from '@mui/material/Select';
+import NoteTakingCard from './models/NoteTakingCard';
+import FluxRssReader from './models/FluxRssReader';
 import "react-resizable/css/styles.css";
-
 
 export type CardProps = {
     id: string;
@@ -36,7 +36,7 @@ export type CardIdProps = {
     isPinned: boolean;
     disableDragAndDrop?: boolean;
     onPinClicked?: (id: string) => void;
-    type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'search' | 'note' | 'none' | 'rss';
+    type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'search' | 'note' | 'none' | 'rss' | 'you' | 'threads';
     cards: CardProps[];
 };
 
@@ -59,7 +59,7 @@ export const defaultCardIdProps: CardIdProps = {
 const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: CardIdProps['type']) => void }> = (props) => {
     const [pinned, setPinned] = useState(props.isPinned);
     const [selectedType, setSelectedType] = useState(props.type);
-    const [isDraggable, setIsDraggable] = useState(true); // Utilisé pour contrôler le drag au niveau de chaque carte
+    const [isDraggable, setIsDraggable] = useState(true);
 
     const handlePinClick = (e: React.MouseEvent<HTMLElement>) => {
         e.stopPropagation();
@@ -73,30 +73,35 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         props.changeCardType(props.id, newType);
     };
 
-
-    // Fonctions pour activer/désactiver le glisser-déposer
     const disableDrag = () => setIsDraggable(false);
     const enableDrag = () => setIsDraggable(true);
 
     const renderCard = () => {
-        const cardProps = {...props, isDraggable, onDisableDrag: disableDrag, onEnableDrag: enableDrag};
+        const cardProps = {
+            ...props,
+            isDraggable,
+            onDisableDrag: disableDrag,
+            onEnableDrag: enableDrag
+        };
         switch (selectedType) {
             case 'text':
-                return <TextContentCard {...cardProps}/>;
+                return <TextContentCard {...cardProps} />;
             case 'code':
                 return <CodeContentCard {...cardProps} />;
             case 'file':
                 return <FileContentCard {...cardProps} />;
             case 'web':
-                return <WebContentCard query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag}/>;
+                return <WebContentCard query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag} />;
+            case 'you':
+                return <YouTubeVideoCard url={props.content} />;
             case 'weather':
-                return <WeatherContentCard query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag}/>;
+                return <WeatherContentCard query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag} />;
             case 'note':
                 return <NoteTakingCard {...props} />;
             case 'search':
                 return <SearchContentInApp {...cardProps} />;
             case 'rss':
-                return <FluxRssReader query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag}/>;
+                return <FluxRssReader query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag} />;
             default:
                 return <div>Unsupported card type</div>;
         }
@@ -118,6 +123,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                     <MenuItem value="code">Code</MenuItem>
                     <MenuItem value="file">File</MenuItem>
                     <MenuItem value="web">Web</MenuItem>
+                    <MenuItem value="you">Youtube</MenuItem>
                     <MenuItem value="weather">Weather</MenuItem>
                     <MenuItem value="rss">Rss</MenuItem>
                 </Select>

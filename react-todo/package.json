@@ -1,8 +1,9 @@
 {
   "name": "electronote",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.3",
   "type": "module",
+  "proxy": "http://localhost:5000",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
@@ -20,14 +21,20 @@
     "@mui/material": "^5.15.16",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "axios": "^1.6.8",
+    "cors": "^2.8.5",
     "electron-squirrel-startup": "^1.0.0",
+    "express": "^4.19.2",
+    "is-url": "^1.2.4",
+    "puppeteer": "^22.9.0",
+    "python-shell": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-grid-layout": "^1.4.4",
     "rss-parser": "^3.13.0",
     "semantic-ui-react": "^2.1.5",
     "styled-components": "^6.1.9",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "valid-url": "^1.0.9"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.4.0",
@@ -39,6 +46,7 @@
     "@electron-forge/plugin-fuses": "^7.4.0",
     "@electron/fuses": "^1.8.0",
     "@types/fabric": "^5.3.7",
+    "@types/python-shell": "^1.0.3",
     "@types/react": "^18.2.64",
     "@types/react-dom": "^18.2.21",
     "@types/react-grid-layout": "^1.3.5",

@@ -5,16 +5,12 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-
-    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -23,8 +19,9 @@
     "paths": {
       "@components/*": ["components/*"],
       "@utils/*": ["utils/*"]
-    }
+    },
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*.ts","src/**/*.tsx", "electron", "src/**/*"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "electron", "src/**/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

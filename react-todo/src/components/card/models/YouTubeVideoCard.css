@@ -1,0 +1,76 @@
+/* Style général de la carte */
+.YouTubeVideoCard {
+    border: none; /* Retirer les bordures pour un look plus moderne */
+    border-radius: 10px; /* Bordures arrondies plus prononcées */
+    box-shadow: 0 6px 10px rgba(0,0,0,0.2); /* Ombre plus marquée pour un effet de profondeur */
+    margin: 20px;
+    overflow: hidden; /* Garde les bordures arrondies sans débordement */
+    background-color: #fff; /* Fond blanc pour la clarté */
+    transition: transform 0.3s ease; /* Transition pour effet au survol */
+}
+
+.YouTubeVideoCard:hover {
+    transform: translateY(-5px); /* Effet de lévitation au survol */
+}
+
+/* En-tête de la carte */
+.YouTubeVideoCard .MuiCardHeader-root {
+    background-color: #cc0000; /* Rouge YouTube pour l'en-tête */
+    color: white;
+    padding: 12px 16px; /* Ajustement des paddings */
+    font-size: 18px; /* Ajustement de la taille de police */
+}
+
+/* Contenu principal de la carte */
+.YouTubeVideoCard .MuiCardContent-root {
+    padding: 16px;
+}
+
+/* Style des entrées de formulaire et bouton */
+.YouTubeVideoCard .MuiTextField-root {
+    margin-bottom: 16px; /* Réduction de l'espace pour plus de compacité */
+}
+
+.YouTubeVideoCard .MuiButton-root {
+    background-color: #3f51b5; /* Maintien du bleu pour le bouton */
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Légère ombre pour le bouton */
+}
+
+/* Styles spécifiques pour les résultats de recherche */
+.YouTubeVideoCard ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0; /* Enlève les marges pour les listes */
+}
+
+.YouTubeVideoCard li {
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.YouTubeVideoCard a {
+    color: #333; /* Couleur de texte plus neutre */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.YouTubeVideoCard img {
+    width: auto; /* Taille auto pour respecter les proportions */
+    max-width: 100%; /* Maximum à 100% pour éviter le débordement */
+    height: auto; /* Hauteur auto pour maintenir les proportions */
+    border-radius: 4px; /* Légère bordure arrondie pour l'image */
+}
+
+.YouTubeVideoCard .MuiTypography-h6 {
+    font-size: 16px;
+    margin: 0;
+    font-weight: bold; /* Police plus grasse pour le titre */
+}
+
+.YouTubeVideoCard .MuiTypography-body2 {
+    color: #666; /* Gris plus doux pour le texte secondaire */
+    font-size: 14px;
+}
