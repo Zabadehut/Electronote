@@ -1,0 +1,31 @@
+.load-content-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.load-content-card h4 {
+    margin: 0 0 10px;
+}
+
+.load-content-card button {
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.load-content-card .error {
+    color: red;
+    margin-top: 10px;
+}
+
+.load-content-card .content {
+    margin-top: 10px;
+    color: black;
+    white-space: pre-wrap;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+}

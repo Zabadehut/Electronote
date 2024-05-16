@@ -3,6 +3,8 @@ import './GridComponent.css';
 import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
 import CardId, { CardIdProps } from "../card/CardId";
 import { CardsUiEventController } from "../controller/CardsUiEventController";
+import LoadContentCard from "../card/models/LoadContentCard";  // Chemin correct pour le nouveau composant
+
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -45,7 +47,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
         if (e.clientY < 100) {
             showHeaderTimeoutId = setTimeout(() => {
                 setHeaderVisible(true);
-            }, 500); // Delay of 1 second before showing the header
+            }, 1000); // Delay of 1 second before showing the header
         } else {
             timeoutId = setTimeout(() => {
                 setHeaderVisible(false);
@@ -103,7 +105,11 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                                 isResizable: isDraggable
                             }}
                         >
-                            <CardId {...item} changeCardType={changeCardType}/>
+                            {item.type === 'loadContent' ? (
+                                <LoadContentCard title={item.title} content={item.content} />
+                            ) : (
+                                <CardId {...item} changeCardType={changeCardType}/>
+                            )}
                         </div>
                     ))}
                 </ResponsiveGridLayout>
