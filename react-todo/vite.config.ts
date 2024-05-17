@@ -13,6 +13,10 @@ export default defineConfig({
         input: 'electron/preload.ts',
       },
     }),
-
   ],
+  resolve: {
+    alias: {
+      'quill-image-resize-module-react': 'node_modules/quill-image-resize-module-react'
+    }
+  }
 });

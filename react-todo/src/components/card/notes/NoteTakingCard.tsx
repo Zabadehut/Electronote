@@ -2,13 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { CardIdProps } from '../CardId';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
-import ImageResize from 'quill-image-resize-module-react';
+//import ImageResize from 'quill-image-resize-module-react';
 import './NoteTakingCard.css';
 import QuillToolbar, { modules, formats } from './QuillToolbar';
 import { v4 as uuidv4 } from 'uuid';
 
 // Enregistrement des modules
+/*
+console.log('Registering ImageResize module');
 Quill.register('modules/imageResize', ImageResize);
+console.log('ImageResize module registered');
+*/
 
 const NoteTakingCard: React.FC<CardIdProps> = (props) => {
     const [note, setNote] = useState({
@@ -60,6 +64,7 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
 
     useEffect(() => {
         if (props.id !== note.id) {
+            console.log('Updating note id:', props.id); // Ajouter un log
             setNote(prevNote => ({
                 ...prevNote,
                 id: props.id,
@@ -71,9 +76,13 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
 
     useEffect(() => {
         if (quillRef.current && !quillInstanceRef.current) {
+            console.log('Initializing Quill instance with ImageResize module'); // Ajouter un log
             const quill = new Quill(quillRef.current, {
                 theme: 'snow',
-                modules: modules(toolbarId),
+                modules: {
+                    toolbar: modules(toolbarId).toolbar,
+                    //imageResize: ImageResize
+                },
                 formats: formats
             });
 
@@ -93,6 +102,7 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
             quillInstanceRef.current.disable();
         }
     }, [isEditing]);
+
 
     const handleEditClick = () => {
         setIsEditing(true);

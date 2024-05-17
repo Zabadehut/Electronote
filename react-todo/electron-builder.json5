@@ -1,22 +1,19 @@
-// @see - https://www.electron.build/configuration/configuration
 {
-  "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
-  "appId": "YourAppID",
-  "asar": true,
+  "appId": "com.yourapp.id",
   "productName": "YourAppName",
   "directories": {
     "output": "release/${version}"
   },
   "files": [
-    "dist",
-    "dist-electron"
+    "dist/",
+    "dist-electron/",
+    "node_modules/"
   ],
-  "mac": {
-    "target": [
-      "dmg"
-    ],
-    "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
-  },
+  "extraFiles": [
+    "node_modules/quill/**/*",
+    "node_modules/quill-image-resize-module/**/*",
+    "node_modules/quill-image-resize-module-react/**/*"
+  ],
   "win": {
     "target": [
       {
@@ -31,13 +28,14 @@
   "nsis": {
     "oneClick": false,
     "perMachine": false,
-    "allowToChangeInstallationDirectory": true,
-    "deleteAppDataOnUninstall": false
+    "allowToChangeInstallationDirectory": true
+  },
+  "mac": {
+    "target": "dmg",
+    "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
   },
   "linux": {
-    "target": [
-      "AppImage"
-    ],
+    "target": "AppImage",
     "artifactName": "${productName}-Linux-${version}.${ext}"
   }
 }
