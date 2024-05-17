@@ -58,3 +58,19 @@
     max-width: 100%;
     height: auto;
 }
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="extra-small"]::before {
+    content: 'Size 1';
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="small"]::before {
+    content: 'Size 2';
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="medium"]::before {
+    content: 'Size 3';
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="large"]::before {
+    content: 'Size 4';
+}

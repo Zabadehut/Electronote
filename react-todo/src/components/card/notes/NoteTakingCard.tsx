@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { CardIdProps } from '../CardId.tsx';
+import { CardIdProps } from '../CardId';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize-module-react';
-import "./NoteTakingCard.css";
+import './NoteTakingCard.css';
+import QuillToolbar, { modules, formats } from './QuillToolbar';
+import { v4 as uuidv4 } from 'uuid';
 
 // Enregistrement des modules
 Quill.register('modules/imageResize', ImageResize);
@@ -25,6 +27,8 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
     const quillRef = useRef<HTMLDivElement | null>(null);
     const quillInstanceRef = useRef<Quill | null>(null);
 
+    const toolbarId = `toolbar-${uuidv4()}`; // Generate a unique ID for each toolbar
+
     const calculateCounts = (text: string) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(text, 'text/html');
@@ -36,7 +40,10 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
         const letters = innerText.length;
         const words = innerText.trim().split(/\s+/).filter(Boolean).length;
         const sentences = innerText.split(/[.!?]+/).filter(Boolean).length;
-        const paragraphs = elements.filter(node => node.nodeType === 1 && (node as Element).tagName === 'P').length;
+
+        // Compter les paragraphes en se basant sur les éléments de type bloc
+        const blockElements = ['P', 'DIV', 'BLOCKQUOTE', 'PRE'];
+        const paragraphs = elements.filter(node => blockElements.includes(node.nodeName) && (node.textContent || '').trim().length > 0).length;
 
         // Compter les images et vidéos
         const images = doc.getElementsByTagName('img').length;
@@ -66,40 +73,8 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
         if (quillRef.current && !quillInstanceRef.current) {
             const quill = new Quill(quillRef.current, {
                 theme: 'snow',
-                modules: {
-                    toolbar: [
-                        [{ 'font': [] }, { 'size': [] }],
-                        ['bold', 'italic', 'underline', 'strike'],
-                        [{ 'color': [] }, { 'background': [] }],
-                        [{ 'script': 'sub' }, { 'script': 'super' }],
-                        ['blockquote', 'code-block'],
-                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                        [{ 'align': [] }],
-                        ['link', 'image', 'video'],
-                        ['clean']
-                    ],
-                    clipboard: {
-                        matchVisual: false
-                    },
-                    keyboard: {
-                        bindings: {
-                            'custom-save': {
-                                key: 'S',
-                                shortKey: true,
-                                handler: handleSaveClick
-                            }
-                        }
-                    },
-                    history: {
-                        delay: 2000,
-                        maxStack: 500,
-                        userOnly: true
-                    },
-                    imageResize: {
-                        parchment: Quill.import('parchment'),
-                        modules: ['Resize', 'DisplaySize', 'Toolbar']
-                    }
-                }
+                modules: modules(toolbarId),
+                formats: formats
             });
 
             quill.on('text-change', () => {
@@ -134,6 +109,7 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
     return (
         <div className={`note-taking-card ${note.isPinned ? 'pinned' : ''}`} onMouseDown={e => e.stopPropagation()}>
             <div className="note-taking-card-content">
+                <QuillToolbar toolbarId={toolbarId} />
                 <div ref={quillRef} className="quill-editor-container" />
             </div>
             <div className="note-taking-controls">
