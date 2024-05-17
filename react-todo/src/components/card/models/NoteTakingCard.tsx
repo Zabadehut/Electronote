@@ -5,15 +5,14 @@ import 'quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize-module-react';
 import "./NoteTakingCard.css";
 
-
 // Enregistrement du module de redimensionnement d'image
 Quill.register('modules/imageResize', ImageResize);
 
 const NoteTakingCard: React.FC<CardIdProps> = (props) => {
     const [note, setNote] = useState({
         id: props.id,
-        title: "New Note",
-        content: "Type here...",
+        title: 'New Note',
+        content: 'Type here...',
         x: 0, y: 0, w: 2, h: 2,
         minW: 1, minH: 1,
         isNew: true,
@@ -30,9 +29,9 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
         const div = document.createElement('div');
         div.innerHTML = text;
 
-        // Ignorer les images pour le comptage des lettres, mots, phrases et paragraphes
+        // Ignorer les images et vidéos pour le comptage des lettres, mots, phrases et paragraphes
         const innerText = Array.from(div.childNodes).reduce((acc, node) => {
-            if (node.nodeName !== 'IMG') {
+            if (node.nodeName !== 'IMG' && node.nodeName !== 'IFRAME') {
                 return acc + (node.textContent || '');
             }
             return acc;
@@ -40,16 +39,17 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
 
         const letters = innerText.length;
         const words = innerText.trim().split(/\s+/).filter(Boolean).length;
-        const sentences = innerText.match(/[\w|\)][.?!](\s|$)/g)?.length || 0;
+        const sentences = innerText.split(/[.!?]+/).filter(Boolean).length;
         const paragraphs = innerText.split(/\n+/).filter(paragraph => paragraph.trim().length > 0).length;
 
-        // Compter les images
+        // Compter les images et vidéos
         const images = div.getElementsByTagName('img').length;
+        const videos = div.getElementsByTagName('iframe').length;
 
-        return { letters, words, sentences, paragraphs, images };
+        return { letters, words, sentences, paragraphs, images, videos };
     };
 
-    const [counts, setCounts] = useState({ letters: 0, words: 0, sentences: 0, paragraphs: 0, images: 0 });
+    const [counts, setCounts] = useState({ letters: 0, words: 0, sentences: 0, paragraphs: 0, images: 0, videos: 0 });
 
     useEffect(() => {
         setCounts(calculateCounts(editedContent));
@@ -60,9 +60,9 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
             setNote(prevNote => ({
                 ...prevNote,
                 id: props.id,
-                content: "Type here..."
+                content: 'Type here...'
             }));
-            setEditedContent("Type here...");
+            setEditedContent('Type here...');
         }
     }, [props.id]);
 
@@ -88,13 +88,16 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
                     }
                 }
             });
+
             quill.on('text-change', () => {
                 const textContent = quill.root.innerHTML;
                 setEditedContent(textContent);
                 setCounts(calculateCounts(textContent));
             });
+
             quillInstanceRef.current = quill;
         }
+
         if (isEditing && quillInstanceRef.current) {
             quillInstanceRef.current.enable();
             quillInstanceRef.current.root.innerHTML = editedContent;
@@ -118,7 +121,7 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
     return (
         <div className={`note-taking-card ${note.isPinned ? 'pinned' : ''}`} onMouseDown={e => e.stopPropagation()}>
             <div className="note-taking-card-content">
-                <div ref={quillRef} style={{ height: '100%', width: '100%' }} />
+                <div ref={quillRef} className="quill-editor-container" />
             </div>
             <div className="note-taking-controls">
                 {isEditing ? (
@@ -127,7 +130,7 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
                     <button onClick={handleEditClick}>Éditer</button>
                 )}
                 <div className="note-taking-card-info">
-                    Lettres: {counts.letters}, Mots: {counts.words}, Phrases: {counts.sentences}, Paragraphes: {counts.paragraphs}, Images: {counts.images}
+                    Lettres: {counts.letters}, Mots: {counts.words}, Phrases: {counts.sentences}, Paragraphes: {counts.paragraphs}, Images: {counts.images}, Vidéos: {counts.videos}
                 </div>
             </div>
         </div>
