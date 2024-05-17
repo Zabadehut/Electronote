@@ -5,7 +5,7 @@ import 'quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize-module-react';
 import "./NoteTakingCard.css";
 
-// Enregistrement du module de redimensionnement d'image
+// Enregistrement des modules
 Quill.register('modules/imageResize', ImageResize);
 
 const NoteTakingCard: React.FC<CardIdProps> = (props) => {
@@ -82,6 +82,23 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
                         ['link', 'image', 'video'],
                         ['clean']
                     ],
+                    clipboard: {
+                        matchVisual: false
+                    },
+                    keyboard: {
+                        bindings: {
+                            'custom-save': {
+                                key: 'S',
+                                shortKey: true,
+                                handler: handleSaveClick
+                            }
+                        }
+                    },
+                    history: {
+                        delay: 2000,
+                        maxStack: 500,
+                        userOnly: true
+                    },
                     imageResize: {
                         parchment: Quill.import('parchment'),
                         modules: ['Resize', 'DisplaySize', 'Toolbar']
