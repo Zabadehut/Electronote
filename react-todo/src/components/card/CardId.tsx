@@ -10,7 +10,7 @@ import WebContentCard from './models/WebContentCard';
 import YouTubeVideoCard from './models/YouTubeVideoCard';
 import WeatherContentCard from './models/WeatherContentCard';
 import SearchContentInApp from './models/SearchContentInApp';
-import NoteTakingCard from './models/NoteTakingCard';
+import NoteTakingCard from './notes/NoteTakingCard.tsx';
 import FluxRssReader from './models/FluxRssReader';
 import LoadContentCard from './models/LoadContentCard';
 import "react-resizable/css/styles.css";

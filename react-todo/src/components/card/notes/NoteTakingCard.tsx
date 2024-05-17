@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { CardIdProps } from '../CardId';
+import { CardIdProps } from '../CardId.tsx';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize-module-react';
@@ -26,25 +26,21 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
     const quillInstanceRef = useRef<Quill | null>(null);
 
     const calculateCounts = (text: string) => {
-        const div = document.createElement('div');
-        div.innerHTML = text;
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, 'text/html');
 
         // Ignorer les images et vidéos pour le comptage des lettres, mots, phrases et paragraphes
-        const innerText = Array.from(div.childNodes).reduce((acc, node) => {
-            if (node.nodeName !== 'IMG' && node.nodeName !== 'IFRAME') {
-                return acc + (node.textContent || '');
-            }
-            return acc;
-        }, '');
+        const elements = Array.from(doc.body.childNodes).filter(node => node.nodeName !== 'IMG' && node.nodeName !== 'IFRAME');
 
+        const innerText = elements.reduce((acc, node) => acc + (node.textContent || ''), '');
         const letters = innerText.length;
         const words = innerText.trim().split(/\s+/).filter(Boolean).length;
         const sentences = innerText.split(/[.!?]+/).filter(Boolean).length;
-        const paragraphs = innerText.split(/\n+/).filter(paragraph => paragraph.trim().length > 0).length;
+        const paragraphs = elements.filter(node => node.nodeType === 1 && (node as Element).tagName === 'P').length;
 
         // Compter les images et vidéos
-        const images = div.getElementsByTagName('img').length;
-        const videos = div.getElementsByTagName('iframe').length;
+        const images = doc.getElementsByTagName('img').length;
+        const videos = doc.getElementsByTagName('iframe').length;
 
         return { letters, words, sentences, paragraphs, images, videos };
     };
