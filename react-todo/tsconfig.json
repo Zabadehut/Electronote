@@ -20,8 +20,10 @@
       "@components/*": ["components/*"],
       "@utils/*": ["utils/*"]
     },
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "types": ["quill", "quill-image-resize-module-react"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "electron", "src/**/*"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "electron", "src/**/*", "src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

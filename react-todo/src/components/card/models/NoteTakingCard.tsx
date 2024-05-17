@@ -1,6 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { CardIdProps } from '../CardId';
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css';
+import ImageResize from 'quill-image-resize-module-react';
 import "./NoteTakingCard.css";
+
+
+// Enregistrement du module de redimensionnement d'image
+Quill.register('modules/imageResize', ImageResize);
 
 const NoteTakingCard: React.FC<CardIdProps> = (props) => {
     const [note, setNote] = useState({
@@ -16,27 +23,85 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
     });
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState(note.content);
+    const quillRef = useRef<HTMLDivElement | null>(null);
+    const quillInstanceRef = useRef<Quill | null>(null);
 
     const calculateCounts = (text: string) => {
-        const letters = text.length;
-        const words = text.match(/\b[-?(\w+)?]+\b/gi)?.length || 0;
-        const sentences = text.match(/[\w|\)][.?!](\s|$)/g)?.length || 0;
-        const paragraphs = text.split(/\n+/).filter(paragraph => paragraph.trim().length > 0).length;
-        return { letters, words, sentences, paragraphs };
+        const div = document.createElement('div');
+        div.innerHTML = text;
+
+        // Ignorer les images pour le comptage des lettres, mots, phrases et paragraphes
+        const innerText = Array.from(div.childNodes).reduce((acc, node) => {
+            if (node.nodeName !== 'IMG') {
+                return acc + (node.textContent || '');
+            }
+            return acc;
+        }, '');
+
+        const letters = innerText.length;
+        const words = innerText.trim().split(/\s+/).filter(Boolean).length;
+        const sentences = innerText.match(/[\w|\)][.?!](\s|$)/g)?.length || 0;
+        const paragraphs = innerText.split(/\n+/).filter(paragraph => paragraph.trim().length > 0).length;
+
+        // Compter les images
+        const images = div.getElementsByTagName('img').length;
+
+        return { letters, words, sentences, paragraphs, images };
     };
 
-    const [counts, setCounts] = useState({ letters: 0, words: 0, sentences: 0, paragraphs: 0 });
+    const [counts, setCounts] = useState({ letters: 0, words: 0, sentences: 0, paragraphs: 0, images: 0 });
+
+    useEffect(() => {
+        setCounts(calculateCounts(editedContent));
+    }, [editedContent]);
 
     useEffect(() => {
         if (props.id !== note.id) {
-            setNote({
-                ...note,
+            setNote(prevNote => ({
+                ...prevNote,
                 id: props.id,
                 content: "Type here..."
-            });
+            }));
+            setEditedContent("Type here...");
         }
-        setCounts(calculateCounts(editedContent));
-    }, [props.id, note.id, editedContent]);
+    }, [props.id]);
+
+    useEffect(() => {
+        if (quillRef.current && !quillInstanceRef.current) {
+            const quill = new Quill(quillRef.current, {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'font': [] }, { 'size': [] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'script': 'sub' }, { 'script': 'super' }],
+                        ['blockquote', 'code-block'],
+                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                        [{ 'align': [] }],
+                        ['link', 'image', 'video'],
+                        ['clean']
+                    ],
+                    imageResize: {
+                        parchment: Quill.import('parchment'),
+                        modules: ['Resize', 'DisplaySize', 'Toolbar']
+                    }
+                }
+            });
+            quill.on('text-change', () => {
+                const textContent = quill.root.innerHTML;
+                setEditedContent(textContent);
+                setCounts(calculateCounts(textContent));
+            });
+            quillInstanceRef.current = quill;
+        }
+        if (isEditing && quillInstanceRef.current) {
+            quillInstanceRef.current.enable();
+            quillInstanceRef.current.root.innerHTML = editedContent;
+        } else if (quillInstanceRef.current) {
+            quillInstanceRef.current.disable();
+        }
+    }, [isEditing]);
 
     const handleEditClick = () => {
         setIsEditing(true);
@@ -44,37 +109,16 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
 
     const handleSaveClick = () => {
         setIsEditing(false);
-        setNote({
-            ...note,
+        setNote(prevNote => ({
+            ...prevNote,
             content: editedContent
-        });
+        }));
     };
-
-    const handleContentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setEditedContent(event.target.value);
-    };
-
-    function formatContentForDisplay(content: string): JSX.Element[] {
-        return content.split('\n').map((item, key) => (
-            <React.Fragment key={key}>
-                {item}
-                <br />
-            </React.Fragment>
-        ));
-    }
 
     return (
         <div className={`note-taking-card ${note.isPinned ? 'pinned' : ''}`} onMouseDown={e => e.stopPropagation()}>
             <div className="note-taking-card-content">
-                {isEditing ? (
-                    <textarea
-                        value={editedContent}
-                        onChange={handleContentChange}
-                        style={{ minHeight: '100px', maxHeight: '300px', overflowY: 'auto' }}
-                    />
-                ) : (
-                    <div>{formatContentForDisplay(note.content)}</div>
-                )}
+                <div ref={quillRef} style={{ height: '100%', width: '100%' }} />
             </div>
             <div className="note-taking-controls">
                 {isEditing ? (
@@ -83,13 +127,11 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
                     <button onClick={handleEditClick}>Éditer</button>
                 )}
                 <div className="note-taking-card-info">
-                    Lettres: {counts.letters}, Mots: {counts.words}, Phrases: {counts.sentences}, Paragraphes: {counts.paragraphs}
+                    Lettres: {counts.letters}, Mots: {counts.words}, Phrases: {counts.sentences}, Paragraphes: {counts.paragraphs}, Images: {counts.images}
                 </div>
             </div>
         </div>
     );
-
-
 };
 
 export default NoteTakingCard;

@@ -1,36 +1,25 @@
 .note-taking-card {
-    display: flex;
-    flex-direction: column;
-    width: 100%; /* Utilise toute la largeur du parent */
-    height: 100%; /* Utilise toute la hauteur du parent */
-    padding: 10px;
-    box-sizing: border-box;
-    overflow: hidden; /* Empêche les débordements non désirés */
+    position: relative;
+    height: 100%;
+    width: 100%;
 }
 
 .note-taking-card-content {
-    flex: 1; /* Utilise tout l'espace vertical disponible */
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto; /* Permet le défilement vertical si nécessaire */
+    height: calc(100% - 50px);
+    width: 100%;
 }
 
 .note-taking-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0; /* Ajuste l'espacement autour des contrôles */
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
 }
 
-.note-taking-card textarea {
-    flex: 1;  /* Occupe tout l'espace disponible restant */
+.ql-container {
+    height: 100%;
     width: 100%;
-    resize: none; /* Empêche le redimensionnement manuel */
-    box-sizing: border-box; /* Inclut le padding et la bordure dans la taille calculée */
-    overflow-y: auto; /* Permet le défilement vertical si nécessaire */
 }
 
-.note-taking-card-info {
-    font-size: 0.85em; /* Ajustement de la taille de la police pour les compteurs */
-    text-align: center; /* Centrage des compteurs */
+.ql-editor {
+    height: 100%;
 }

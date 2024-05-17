@@ -1,31 +1,21 @@
 .load-content-card {
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    padding: 16px;
+    border-radius: 8px;
+    color:black;
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
 }
 
 .load-content-card h4 {
-    margin: 0 0 10px;
-}
-
-.load-content-card button {
-    padding: 5px 10px;
-    font-size: 16px;
-    cursor: pointer;
+    margin: 0 0 16px;
 }
 
 .load-content-card .error {
     color: red;
-    margin-top: 10px;
 }
 
 .load-content-card .content {
-    margin-top: 10px;
     color: black;
+    margin-top: 16px;
     white-space: pre-wrap;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-radius: 5px;
 }

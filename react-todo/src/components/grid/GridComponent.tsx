@@ -47,7 +47,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
         if (e.clientY < 100) {
             showHeaderTimeoutId = setTimeout(() => {
                 setHeaderVisible(true);
-            }, 1000); // Delay of 1 second before showing the header
+            }, 500); // Delay of 1 second before showing the header
         } else {
             timeoutId = setTimeout(() => {
                 setHeaderVisible(false);

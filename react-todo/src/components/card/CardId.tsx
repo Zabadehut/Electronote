@@ -99,7 +99,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
             case 'weather':
                 return <WeatherContentCard query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag} />;
             case 'note':
-                return <NoteTakingCard {...props} />;
+                return <NoteTakingCard {...cardProps} />;
             case 'search':
                 return <SearchContentInApp {...cardProps} />;
             case 'rss':
