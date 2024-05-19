@@ -2,17 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { CardIdProps } from '../CardId';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
-//import ImageResize from 'quill-image-resize-module-react';
+import ImageResize from 'quill-image-resize'; // Importation du module
 import './NoteTakingCard.css';
 import QuillToolbar, { modules, formats } from './QuillToolbar';
 import { v4 as uuidv4 } from 'uuid';
 
-// Enregistrement des modules
-/*
-console.log('Registering ImageResize module');
+// Enregistrer le module
 Quill.register('modules/imageResize', ImageResize);
-console.log('ImageResize module registered');
-*/
 
 const NoteTakingCard: React.FC<CardIdProps> = (props) => {
     const [note, setNote] = useState({
@@ -31,25 +27,18 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
     const quillRef = useRef<HTMLDivElement | null>(null);
     const quillInstanceRef = useRef<Quill | null>(null);
 
-    const toolbarId = `toolbar-${uuidv4()}`; // Generate a unique ID for each toolbar
+    const toolbarId = `toolbar-${uuidv4()}`;
 
     const calculateCounts = (text: string) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(text, 'text/html');
-
-        // Ignorer les images et vidéos pour le comptage des lettres, mots, phrases et paragraphes
         const elements = Array.from(doc.body.childNodes).filter(node => node.nodeName !== 'IMG' && node.nodeName !== 'IFRAME');
-
         const innerText = elements.reduce((acc, node) => acc + (node.textContent || ''), '');
         const letters = innerText.length;
         const words = innerText.trim().split(/\s+/).filter(Boolean).length;
         const sentences = innerText.split(/[.!?]+/).filter(Boolean).length;
-
-        // Compter les paragraphes en se basant sur les éléments de type bloc
         const blockElements = ['P', 'DIV', 'BLOCKQUOTE', 'PRE'];
         const paragraphs = elements.filter(node => blockElements.includes(node.nodeName) && (node.textContent || '').trim().length > 0).length;
-
-        // Compter les images et vidéos
         const images = doc.getElementsByTagName('img').length;
         const videos = doc.getElementsByTagName('iframe').length;
 
@@ -64,7 +53,6 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
 
     useEffect(() => {
         if (props.id !== note.id) {
-            console.log('Updating note id:', props.id); // Ajouter un log
             setNote(prevNote => ({
                 ...prevNote,
                 id: props.id,
@@ -76,12 +64,11 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
 
     useEffect(() => {
         if (quillRef.current && !quillInstanceRef.current) {
-            console.log('Initializing Quill instance with ImageResize module'); // Ajouter un log
             const quill = new Quill(quillRef.current, {
                 theme: 'snow',
                 modules: {
                     toolbar: modules(toolbarId).toolbar,
-                    //imageResize: ImageResize
+                    imageResize: {} // Activation du module de redimensionnement d'image
                 },
                 formats: formats
             });
@@ -102,7 +89,6 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
             quillInstanceRef.current.disable();
         }
     }, [isEditing]);
-
 
     const handleEditClick = () => {
         setIsEditing(true);

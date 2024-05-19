@@ -59,6 +59,38 @@
     height: auto;
 }
 
+.ql-editor iframe {
+    pointer-events: none;
+}
+
+.resize-handle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+
+.resize-handle::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+
+.ql-video-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.ql-video-wrapper iframe {
+    pointer-events: all;
+}
+
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="extra-small"]::before {
     content: 'Size 1';
 }
