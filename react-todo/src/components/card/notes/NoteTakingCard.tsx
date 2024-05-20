@@ -2,12 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { CardIdProps } from '../CardId';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
-import ImageResize from 'quill-image-resize'; // Importation du module
+import ImageResize from 'quill-image-resize';
 import './NoteTakingCard.css';
 import QuillToolbar, { modules, formats } from './QuillToolbar';
 import { v4 as uuidv4 } from 'uuid';
 
-// Enregistrer le module
 Quill.register('modules/imageResize', ImageResize);
 
 const NoteTakingCard: React.FC<CardIdProps> = (props) => {
@@ -26,10 +25,10 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
     const [editedContent, setEditedContent] = useState(note.content);
     const quillRef = useRef<HTMLDivElement | null>(null);
     const quillInstanceRef = useRef<Quill | null>(null);
-
     const toolbarId = `toolbar-${uuidv4()}`;
 
     const calculateCounts = (text: string) => {
+        const byteCount = new Blob([text]).size;
         const parser = new DOMParser();
         const doc = parser.parseFromString(text, 'text/html');
         const elements = Array.from(doc.body.childNodes).filter(node => node.nodeName !== 'IMG' && node.nodeName !== 'IFRAME');
@@ -41,11 +40,27 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
         const paragraphs = elements.filter(node => blockElements.includes(node.nodeName) && (node.textContent || '').trim().length > 0).length;
         const images = doc.getElementsByTagName('img').length;
         const videos = doc.getElementsByTagName('iframe').length;
-
-        return { letters, words, sentences, paragraphs, images, videos };
+        return { byteCount, letters, words, sentences, paragraphs, images, videos };
     };
 
-    const [counts, setCounts] = useState({ letters: 0, words: 0, sentences: 0, paragraphs: 0, images: 0, videos: 0 });
+
+    const formatBytes = (bytes: number) => {
+        if (bytes === 0) return '0 Octets';
+        const k = 1024;
+        const sizes = ['Octets', 'Ko', 'Mo', 'Go', 'To'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    };
+
+    const formatNumber = (num: number) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
+
+
+    const [counts, setCounts] = useState({
+        letters: 0, words: 0, sentences: 0, paragraphs: 0, images: 0, videos: 0, byteCount: 0
+    });
 
     useEffect(() => {
         setCounts(calculateCounts(editedContent));
@@ -115,7 +130,10 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
                     <button onClick={handleEditClick}>Éditer</button>
                 )}
                 <div className="note-taking-card-info">
-                    Lettres: {counts.letters}, Mots: {counts.words}, Phrases: {counts.sentences}, Paragraphes: {counts.paragraphs}, Images: {counts.images}, Vidéos: {counts.videos}
+                    Lettres: {formatNumber(counts.letters)}, Mots: {formatNumber(counts.words)},
+                    Phrases: {formatNumber(counts.sentences)}, Paragraphes: {formatNumber(counts.paragraphs)},
+                    Images: {formatNumber(counts.images)}, Vidéos: {formatNumber(counts.videos)},
+                    Octets: {formatBytes(counts.byteCount)}
                 </div>
             </div>
         </div>
