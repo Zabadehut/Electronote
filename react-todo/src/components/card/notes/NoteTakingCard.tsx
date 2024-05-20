@@ -58,6 +58,7 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
 
 
 
+
     const [counts, setCounts] = useState({
         letters: 0, words: 0, sentences: 0, paragraphs: 0, images: 0, videos: 0, byteCount: 0
     });
