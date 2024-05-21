@@ -43,7 +43,6 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
         return { byteCount, letters, words, sentences, paragraphs, images, videos };
     };
 
-
     const formatBytes = (bytes: number) => {
         if (bytes === 0) return '0 Octets';
         const k = 1024;
@@ -55,9 +54,6 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
     const formatNumber = (num: number) => {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     };
-
-
-
 
     const [counts, setCounts] = useState({
         letters: 0, words: 0, sentences: 0, paragraphs: 0, images: 0, videos: 0, byteCount: 0

@@ -60,35 +60,38 @@
 }
 
 .ql-editor iframe {
-    pointer-events: none;
+    pointer-events: all; /* Assurez-vous que les iframes sont interactives */
+    resize: both; /* Permet le redimensionnement */
+    margin: 10px; /* Ajoute une marge pour éviter le chevauchement avec les poignées */
+    border: none; /* Supprime la bordure par défaut */
+    padding: 10px; /* Ajoute un padding pour améliorer l'interaction */
 }
 
-.resize-handle {
+.ql-editor .resize-handle {
     position: absolute;
     width: 12px;
     height: 12px;
     background: white;
     border: 1px solid black;
     box-sizing: border-box;
+    z-index: 10; /* Donne un z-index plus élevé aux poignées de redimensionnement */
 }
 
-.resize-handle::before {
+.ql-editor .resize-handle::before {
     content: '';
     position: absolute;
     width: 100%;
     height: 100%;
     border: 1px solid black;
     box-sizing: border-box;
+    z-index: 10; /* Donne un z-index plus élevé aux poignées de redimensionnement */
 }
 
 .ql-video-wrapper {
     position: relative;
     display: inline-block;
     cursor: pointer;
-}
-
-.ql-video-wrapper iframe {
-    pointer-events: all;
+    z-index: 1; /* Assurez-vous que le wrapper a un z-index plus bas que les poignées */
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="extra-small"]::before {
