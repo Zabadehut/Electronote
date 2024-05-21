@@ -118,3 +118,11 @@
     cursor: grabbing; /* Change le curseur en "main qui saisit" */
     border-radius: 10px; /* Coins arrondis */
 }
+
+/* Global style to prevent text selection */
+.no-select {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}

@@ -37,3 +37,11 @@ html, body, #root {
 .read-the-docs {
   color: #888;
 }
+
+/* Global style to prevent text selection */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}

@@ -1,5 +1,4 @@
-// src/components/card/CardId.tsx
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { IconButton, Stack, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import PushPinIcon from '@mui/icons-material/PushPin';
 import { v4 as uuidv4 } from 'uuid';
@@ -74,7 +73,6 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         props.changeCardType(props.id, newType);
     };
 
-    // Fonctions pour activer/désactiver le glisser-déposer
     const disableDrag = () => setIsDraggable(false);
     const enableDrag = () => setIsDraggable(true);
 
@@ -105,7 +103,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
             case 'rss':
                 return <FluxRssReader query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag} />;
             case 'loadContent':
-                return <LoadContentCard title={props.title} content={props.content} />; // Ajout de LoadContentCard
+                return <LoadContentCard title={props.title} content={props.content} />;
             default:
                 return <div>Unsupported card type</div>;
         }
@@ -130,11 +128,11 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                     <MenuItem value="you">Youtube</MenuItem>
                     <MenuItem value="weather">Weather</MenuItem>
                     <MenuItem value="rss">Rss</MenuItem>
-                    <MenuItem value="loadContent">Load Content</MenuItem> {/* Ajout de LoadContent */}
+                    <MenuItem value="loadContent">Load Content</MenuItem>
                 </Select>
             </Stack>
         </div>
     );
 };
 
-export default CardId;
+export default memo(CardId);

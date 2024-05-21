@@ -5,7 +5,6 @@ import CardId, { CardIdProps } from "../card/CardId";
 import { CardsUiEventController } from "../controller/CardsUiEventController";
 import LoadContentCard from "../card/models/LoadContentCard";  // Chemin correct pour le nouveau composant
 
-
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 type GridLayoutProps = {
@@ -67,6 +66,14 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
         };
     }, [headerVisible, headerHeight]);
 
+    const handleDragStart = () => {
+        document.body.classList.add('no-select');
+    };
+
+    const handleDragStop = () => {
+        document.body.classList.remove('no-select');
+    };
+
     return (
         <div>
             <div className={`header-container ${headerVisible ? "" : "header-hidden"}`}>
@@ -83,6 +90,10 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                     autoSize={true}
                     compactType={null}
                     preventCollision={false}
+                    onDragStart={handleDragStart}
+                    onDragStop={handleDragStop}
+                    onResizeStart={handleDragStart}
+                    onResizeStop={handleDragStop}
                     onLayoutChange={(layout: Layout[]) => {
                         const newCards = layout.map(({ i, x, y, w, h }) => {
                             const card = data.find(d => d.id === i);
