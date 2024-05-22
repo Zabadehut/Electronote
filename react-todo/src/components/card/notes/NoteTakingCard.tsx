@@ -23,6 +23,7 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
     });
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState(note.content);
+    const [isResizing, setIsResizing] = useState(false);
     const quillRef = useRef<HTMLDivElement | null>(null);
     const quillInstanceRef = useRef<Quill | null>(null);
     const toolbarId = `toolbar-${uuidv4()}`;
@@ -102,6 +103,24 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
         }
     }, [isEditing]);
 
+    useEffect(() => {
+        const handleMouseDown = () => {
+            setIsResizing(true);
+        };
+
+        const handleMouseUp = () => {
+            setIsResizing(false);
+        };
+
+        window.addEventListener('mousedown', handleMouseDown);
+        window.addEventListener('mouseup', handleMouseUp);
+
+        return () => {
+            window.removeEventListener('mousedown', handleMouseDown);
+            window.removeEventListener('mouseup', handleMouseUp);
+        };
+    }, []);
+
     const handleEditClick = () => {
         setIsEditing(true);
     };
@@ -115,7 +134,10 @@ const NoteTakingCard: React.FC<CardIdProps> = (props) => {
     };
 
     return (
-        <div className={`note-taking-card ${note.isPinned ? 'pinned' : ''}`} onMouseDown={e => e.stopPropagation()}>
+        <div
+            className={`note-taking-card ${note.isPinned ? 'pinned' : ''} ${isResizing ? 'is-resizing' : ''}`} // Appliquer la classe CSS pendant le redimensionnement
+            onMouseDown={e => e.stopPropagation()}
+        >
             <div className="note-taking-card-content">
                 <QuillToolbar toolbarId={toolbarId} />
                 <div ref={quillRef} className="quill-editor-container" />
