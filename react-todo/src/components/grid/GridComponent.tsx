@@ -3,7 +3,7 @@ import './GridComponent.css';
 import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
 import CardId, { CardIdProps } from "../card/CardId";
 import { CardsUiEventController } from "../controller/CardsUiEventController";
-import LoadContentCard from "../card/models/LoadContentCard";  // Chemin correct pour le nouveau composant
+import LoadContentCard from "../card/models/LoadContentCard";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -75,12 +75,12 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
         document.body.classList.remove('no-select');
     };
 
-    const handleResizeStart = (layout: Layout[], oldItem: Layout, newItem: Layout) => {
+    const handleResizeStart = (_layout: Layout[], _oldItem: Layout, newItem: Layout): void => {
         setResizingCardId(newItem.i);
         document.body.classList.add('no-select');
     };
 
-    const handleResizeStop = (layout: Layout[], oldItem: Layout, newItem: Layout) => {
+    const handleResizeStop = (_layout: Layout[], _oldItem: Layout, _newItem: Layout): void => {
         setResizingCardId(null);
         document.body.classList.remove('no-select');
     };
@@ -88,9 +88,15 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
     return (
         <div>
             <div className={`header-container ${headerVisible ? "" : "header-hidden"}`}>
-                <button className="header-container-btn" onClick={toggleDraggable}>{isDraggable ? "Locked Cards" : "Delocked Cards"}</button>
-                <button className="header-container-btn" onClick={() => controller.addCard()}>Add New Card</button>
-                <button className="header-container-btn" onClick={handleMoveCards}>Gather Cards</button>
+                <button className="header-container-btn" onClick={toggleDraggable}>
+                    {isDraggable ? "Locked Cards" : "Delocked Cards"}
+                </button>
+                <button className="header-container-btn" onClick={() => controller.addCard()}>
+                    Add New Card
+                </button>
+                <button className="header-container-btn" onClick={handleMoveCards}>
+                    Gather Cards
+                </button>
             </div>
             <div ref={mainContainerRef} style={{ width: '100vw', height: '100vh' }}>
                 <ResponsiveGridLayout

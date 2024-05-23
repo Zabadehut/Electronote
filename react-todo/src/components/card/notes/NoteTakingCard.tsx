@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 Quill.register('modules/imageResize', ImageResize);
 
 interface NoteTakingCardProps extends CardIdProps {
-    isResizing: boolean; // Ajouter cette ligne
+    isResizing: boolean;
 }
 
 const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
@@ -120,7 +120,7 @@ const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
 
     return (
         <div
-            className={`note-taking-card ${note.isPinned ? 'pinned' : ''} ${props.isResizing ? 'is-resizing' : ''}`} // Appliquer la classe CSS pendant le redimensionnement
+            className={`note-taking-card ${note.isPinned ? 'pinned' : ''} ${props.isResizing ? 'is-resizing' : ''}`}
             onMouseDown={e => e.stopPropagation()}
         >
             <div className="note-taking-card-content">

@@ -1,5 +1,8 @@
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
+import ImageResize from 'quill-image-resize';
+
+Quill.register('modules/imageResize', ImageResize);
 
 // Custom Undo button icon component for Quill editor
 const CustomUndo = () => (

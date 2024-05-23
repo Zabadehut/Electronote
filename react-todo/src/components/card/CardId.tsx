@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { useState, useEffect, useRef, memo } from 'react';
 import { IconButton, Stack, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import PushPinIcon from '@mui/icons-material/PushPin';
 import { v4 as uuidv4 } from 'uuid';
@@ -9,7 +9,7 @@ import WebContentCard from './models/WebContentCard';
 import YouTubeVideoCard from './models/YouTubeVideoCard';
 import WeatherContentCard from './models/WeatherContentCard';
 import SearchContentInApp from './models/SearchContentInApp';
-import NoteTakingCard from './notes/NoteTakingCard.tsx';
+import NoteTakingCard from './notes/NoteTakingCard';
 import FluxRssReader from './models/FluxRssReader';
 import LoadContentCard from './models/LoadContentCard';
 import "react-resizable/css/styles.css";
@@ -38,7 +38,7 @@ export type CardIdProps = {
     onPinClicked?: (id: string) => void;
     type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'search' | 'note' | 'none' | 'rss' | 'you' | 'loadContent';
     cards: CardProps[];
-    isResizing?: boolean; // Add this line
+    isResizing: boolean;
 };
 
 export const defaultCardIdProps: CardIdProps = {
@@ -54,13 +54,43 @@ export const defaultCardIdProps: CardIdProps = {
     isNew: true,
     isPinned: false,
     type: 'text',
-    cards: []
+    cards: [],
+    isResizing: false,
 };
 
 const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: CardIdProps['type']) => void }> = (props) => {
     const [pinned, setPinned] = useState(props.isPinned);
     const [selectedType, setSelectedType] = useState(props.type);
     const [isDraggable, setIsDraggable] = useState(true);
+    const workerRef = useRef<Worker | null>(null);
+
+    useEffect(() => {
+        const initializeWorker = async () => {
+            const Worker = await import('./cardWorker.js?worker&inline');
+            const worker = new Worker.default();
+            worker.onmessage = (event) => {
+                const { id, result } = event.data;
+                console.log(`Card ${id} processed result:`, result);
+            };
+            workerRef.current = worker;
+        };
+
+        initializeWorker();
+
+        return () => {
+            workerRef.current?.terminate();
+        };
+    }, [props.id]);
+
+    useEffect(() => {
+        if (workerRef.current) {
+            workerRef.current.postMessage({
+                id: props.id,
+                type: selectedType,
+                content: props.content
+            });
+        }
+    }, [workerRef.current, props.content, selectedType]);
 
     const handlePinClick = (e: React.MouseEvent<HTMLElement>) => {
         e.stopPropagation();

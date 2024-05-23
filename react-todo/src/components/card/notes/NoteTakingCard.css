@@ -85,11 +85,11 @@
 }
 
 .ql-editor iframe {
-    pointer-events: all; /* Assurez-vous que les iframes sont interactives */
-    resize: both; /* Permet le redimensionnement */
-    margin: 10px; /* Ajoute une marge pour éviter le chevauchement avec les poignées */
-    border: none; /* Supprime la bordure par défaut */
-    padding: 10px; /* Ajoute un padding pour améliorer l'interaction */
+    pointer-events: all;
+    resize: both;
+    margin: 10px;
+    border: none;
+    padding: 10px;
 }
 
 .ql-editor .resize-handle {
@@ -99,7 +99,7 @@
     background: white;
     border: 1px solid black;
     box-sizing: border-box;
-    z-index: 10; /* Donne un z-index plus élevé aux poignées de redimensionnement */
+    z-index: 10;
 }
 
 .ql-editor .resize-handle::before {
@@ -109,14 +109,14 @@
     height: 100%;
     border: 1px solid black;
     box-sizing: border-box;
-    z-index: 10; /* Donne un z-index plus élevé aux poignées de redimensionnement */
+    z-index: 10;
 }
 
 .ql-video-wrapper {
     position: relative;
     display: inline-block;
     cursor: pointer;
-    z-index: 1; /* Assurez-vous que le wrapper a un z-index plus bas que les poignées */
+    z-index: 1;
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="extra-small"]::before {
@@ -137,6 +137,6 @@
 
 /* Effet au survol pour la carte */
 .card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Augmente l'ombre au survol */
-    transform: translateY(-2px); /* Soulève la carte de 2px au survol */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
