@@ -66,8 +66,8 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
 
     useEffect(() => {
         const initializeWorker = async () => {
-            const Worker = await import('./cardWorker.js?worker&inline');
-            const worker = new Worker.default();
+            const workerModule = await import('./cardWorker.js?worker&inline');
+            const worker = new workerModule.default();
             worker.onmessage = (event) => {
                 const { id, result } = event.data;
                 console.log(`Card ${id} processed result:`, result);
@@ -90,7 +90,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                 content: props.content
             });
         }
-    }, [workerRef.current, props.content, selectedType]);
+    }, [props.content, selectedType]);
 
     const handlePinClick = (e: React.MouseEvent<HTMLElement>) => {
         e.stopPropagation();

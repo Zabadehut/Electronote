@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { CardIdProps } from '../CardId';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize';
@@ -7,11 +6,12 @@ import './NoteTakingCard.css';
 import QuillToolbar, { modules, formats } from './QuillToolbar';
 import { v4 as uuidv4 } from 'uuid';
 
-Quill.register('modules/imageResize', ImageResize);
-
-interface NoteTakingCardProps extends CardIdProps {
+interface NoteTakingCardProps {
+    id: string;
     isResizing: boolean;
 }
+
+Quill.register('modules/imageResize', ImageResize);
 
 const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
     const [note, setNote] = useState({
@@ -27,37 +27,36 @@ const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
     });
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState(note.content);
+    const [isDragging, setIsDragging] = useState(false);
     const quillRef = useRef<HTMLDivElement | null>(null);
     const quillInstanceRef = useRef<Quill | null>(null);
     const toolbarId = `toolbar-${uuidv4()}`;
 
-    const calculateCounts = (text: string) => {
-        const byteCount = new Blob([text]).size;
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(text, 'text/html');
+    const calculateCounts = useCallback((text: string) => {
+        const doc = new DOMParser().parseFromString(text, 'text/html');
         const elements = Array.from(doc.body.childNodes).filter(node => node.nodeName !== 'IMG' && node.nodeName !== 'IFRAME');
         const innerText = elements.reduce((acc, node) => acc + (node.textContent || ''), '');
+        const byteCount = new Blob([text]).size;
         const letters = innerText.length;
-        const words = innerText.trim().split(/\s+/).filter(Boolean).length;
-        const sentences = innerText.split(/[.!?]+/).filter(Boolean).length;
-        const blockElements = ['P', 'DIV', 'BLOCKQUOTE', 'PRE'];
-        const paragraphs = elements.filter(node => blockElements.includes(node.nodeName) && (node.textContent || '').trim().length > 0).length;
+        const words = innerText.trim().split(/\s+/).length;
+        const sentences = (innerText.match(/[\w|\)][.?!](\s|$)/g) || []).length;
+        const paragraphs = elements.filter(node => node.nodeName === 'P').length;
         const images = doc.getElementsByTagName('img').length;
         const videos = doc.getElementsByTagName('iframe').length;
         return { byteCount, letters, words, sentences, paragraphs, images, videos };
-    };
+    }, []);
 
-    const formatBytes = (bytes: number) => {
+    const formatBytes = useCallback((bytes: number) => {
         if (bytes === 0) return '0 Octets';
         const k = 1024;
         const sizes = ['Octets', 'Ko', 'Mo', 'Go', 'To'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-    };
+    }, []);
 
-    const formatNumber = (num: number) => {
+    const formatNumber = useCallback((num: number) => {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    };
+    }, []);
 
     const [counts, setCounts] = useState({
         letters: 0, words: 0, sentences: 0, paragraphs: 0, images: 0, videos: 0, byteCount: 0
@@ -65,7 +64,7 @@ const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
 
     useEffect(() => {
         setCounts(calculateCounts(editedContent));
-    }, [editedContent]);
+    }, [editedContent, calculateCounts]);
 
     useEffect(() => {
         if (props.id !== note.id) {
@@ -104,28 +103,39 @@ const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
         } else if (quillInstanceRef.current) {
             quillInstanceRef.current.disable();
         }
-    }, [isEditing]);
+    }, [isEditing, calculateCounts]);
 
-    const handleEditClick = () => {
+    const handleEditClick = useCallback(() => {
         setIsEditing(true);
-    };
+    }, []);
 
-    const handleSaveClick = () => {
+    const handleSaveClick = useCallback(() => {
         setIsEditing(false);
         setNote(prevNote => ({
             ...prevNote,
             content: editedContent
         }));
+    }, [editedContent]);
+
+    const handleDragStart = () => {
+        setIsDragging(true);
+    };
+
+    const handleDragEnd = () => {
+        setIsDragging(false);
     };
 
     return (
         <div
             className={`note-taking-card ${note.isPinned ? 'pinned' : ''} ${props.isResizing ? 'is-resizing' : ''}`}
             onMouseDown={e => e.stopPropagation()}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
         >
             <div className="note-taking-card-content">
                 <QuillToolbar toolbarId={toolbarId} />
-                <div ref={quillRef} className="quill-editor-container" />
+                {!isDragging && <div ref={quillRef} className="quill-editor-container" />}
+                {isDragging && <div className="quill-editor-container-placeholder">Déplacement...</div>}
             </div>
             {props.isResizing && (
                 <div className="loader"></div>
@@ -147,4 +157,4 @@ const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
     );
 };
 
-export default NoteTakingCard;
+export default React.memo(NoteTakingCard);
