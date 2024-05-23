@@ -38,6 +38,7 @@ export type CardIdProps = {
     onPinClicked?: (id: string) => void;
     type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'search' | 'note' | 'none' | 'rss' | 'you' | 'loadContent';
     cards: CardProps[];
+    isResizing?: boolean; // Add this line
 };
 
 export const defaultCardIdProps: CardIdProps = {
@@ -110,7 +111,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
     };
 
     return (
-        <div className={`card ${selectedType}`} id={props.id}>
+        <div className={`card ${selectedType} ${props.isResizing ? 'is-resizing' : ''}`} id={props.id}>
             <h4>{props.title}</h4>
             {renderCard()}
             <Stack direction="row" spacing={1} sx={{ position: 'absolute', top: 5, right: 5 }}>

@@ -20,6 +20,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
     let showHeaderTimeoutId: NodeJS.Timeout;
     const mainContainerRef = useRef<HTMLDivElement>(null); // Ref for the main container
     const [isDraggable, setIsDraggable] = useState(true); // State to control dragging
+    const [resizingCardId, setResizingCardId] = useState<string | null>(null);
 
     const toggleDraggable = () => {
         setIsDraggable(!isDraggable); // Toggle the draggable state
@@ -74,6 +75,16 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
         document.body.classList.remove('no-select');
     };
 
+    const handleResizeStart = (layout: Layout[], oldItem: Layout, newItem: Layout) => {
+        setResizingCardId(newItem.i);
+        document.body.classList.add('no-select');
+    };
+
+    const handleResizeStop = (layout: Layout[], oldItem: Layout, newItem: Layout) => {
+        setResizingCardId(null);
+        document.body.classList.remove('no-select');
+    };
+
     return (
         <div>
             <div className={`header-container ${headerVisible ? "" : "header-hidden"}`}>
@@ -92,8 +103,8 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                     preventCollision={false}
                     onDragStart={handleDragStart}
                     onDragStop={handleDragStop}
-                    onResizeStart={handleDragStart}
-                    onResizeStop={handleDragStop}
+                    onResizeStart={handleResizeStart}
+                    onResizeStop={handleResizeStop}
                     onLayoutChange={(layout: Layout[]) => {
                         const newCards = layout.map(({ i, x, y, w, h }) => {
                             const card = data.find(d => d.id === i);
@@ -119,7 +130,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                             {item.type === 'loadContent' ? (
                                 <LoadContentCard title={item.title} content={item.content} />
                             ) : (
-                                <CardId {...item} changeCardType={changeCardType}/>
+                                <CardId {...item} changeCardType={changeCardType} isResizing={resizingCardId === item.id} />
                             )}
                         </div>
                     ))}
