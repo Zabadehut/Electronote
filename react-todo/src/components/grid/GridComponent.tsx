@@ -1,3 +1,5 @@
+// GridComponent.tsx
+
 import React, { useState, useEffect, useRef } from 'react';
 import './GridComponent.css';
 import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
@@ -21,6 +23,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
     const mainContainerRef = useRef<HTMLDivElement>(null); // Ref for the main container
     const [isDraggable, setIsDraggable] = useState(true); // State to control dragging
     const [resizingCardId, setResizingCardId] = useState<string | null>(null);
+    const [draggingCardId, setDraggingCardId] = useState<string | null>(null);
 
     const toggleDraggable = () => {
         setIsDraggable(!isDraggable); // Toggle the draggable state
@@ -67,11 +70,13 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
         };
     }, [headerVisible, headerHeight]);
 
-    const handleDragStart = () => {
+    const handleDragStart = (_layout: Layout[], _oldItem: Layout, newItem: Layout) => {
+        setDraggingCardId(newItem.i);
         document.body.classList.add('no-select');
     };
 
     const handleDragStop = () => {
+        setDraggingCardId(null);
         document.body.classList.remove('no-select');
     };
 
@@ -89,7 +94,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
         <div>
             <div className={`header-container ${headerVisible ? "" : "header-hidden"}`}>
                 <button className="header-container-btn" onClick={toggleDraggable}>
-                    {isDraggable ? "Locked Cards" : "Delocked Cards"}
+                    {isDraggable ? "Locked Cards" : "Unlocked Cards"}
                 </button>
                 <button className="header-container-btn" onClick={() => controller.addCard()}>
                     Add New Card
@@ -136,7 +141,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                             {item.type === 'loadContent' ? (
                                 <LoadContentCard title={item.title} content={item.content} />
                             ) : (
-                                <CardId {...item} changeCardType={changeCardType} isResizing={resizingCardId === item.id} />
+                                <CardId {...item} changeCardType={changeCardType} isResizing={resizingCardId === item.id} isDragging={draggingCardId === item.id} />
                             )}
                         </div>
                     ))}

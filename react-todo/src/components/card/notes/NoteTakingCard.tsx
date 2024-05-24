@@ -1,3 +1,5 @@
+// NoteTakingCard.tsx
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
@@ -9,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 interface NoteTakingCardProps {
     id: string;
     isResizing: boolean;
+    isDragging: boolean;
 }
 
 Quill.register('modules/imageResize', ImageResize);
@@ -27,7 +30,6 @@ const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
     });
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState(note.content);
-    const [isDragging, setIsDragging] = useState(false);
     const quillRef = useRef<HTMLDivElement | null>(null);
     const quillInstanceRef = useRef<Quill | null>(null);
     const toolbarId = `toolbar-${uuidv4()}`;
@@ -117,29 +119,18 @@ const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
         }));
     }, [editedContent]);
 
-    const handleDragStart = () => {
-        setIsDragging(true);
-    };
-
-    const handleDragEnd = () => {
-        setIsDragging(false);
-    };
-
     return (
         <div
-            className={`note-taking-card ${note.isPinned ? 'pinned' : ''} ${props.isResizing ? 'is-resizing' : ''}`}
+            className={`note-taking-card ${note.isPinned ? 'pinned' : ''} ${props.isResizing ? 'is-resizing' : ''} ${props.isDragging ? 'is-dragging' : ''}`}
             onMouseDown={e => e.stopPropagation()}
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
         >
             <div className="note-taking-card-content">
                 <QuillToolbar toolbarId={toolbarId} />
-                {!isDragging && <div ref={quillRef} className="quill-editor-container" />}
-                {isDragging && <div className="quill-editor-container-placeholder">Déplacement...</div>}
+                <div ref={quillRef} className="quill-editor-container" />
             </div>
-            {props.isResizing && (
+            {props.isResizing || props.isDragging ? (
                 <div className="loader"></div>
-            )}
+            ) : null}
             <div className="note-taking-controls">
                 {isEditing ? (
                     <button onClick={handleSaveClick}>Enregistrer</button>

@@ -43,6 +43,12 @@
     width: 100%;
 }
 
+.quill-editor-container-disabled {
+    height: 100%;
+    width: 100%;
+    background-color: #f0f0f0;
+}
+
 .ql-toolbar {
     position: sticky;
     top: 0;
@@ -139,4 +145,25 @@
 .card:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
+}
+
+
+    /* NoteTakingCard.css */
+
+.note-taking-card.is-dragging .note-taking-card-content,
+.note-taking-card.is-resizing .note-taking-card-content {
+    display: none;
+}
+
+.note-taking-card.is-dragging .loader,
+.note-taking-card.is-resizing .loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.quill-editor-container-disabled {
+    display: none; /* Cache le conteneur Quill lorsqu'il est désactivé */
 }

@@ -1,3 +1,5 @@
+// CardId.tsx
+
 import React, { useState, useEffect, useRef, memo } from 'react';
 import { IconButton, Stack, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import PushPinIcon from '@mui/icons-material/PushPin';
@@ -39,6 +41,7 @@ export type CardIdProps = {
     type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'search' | 'note' | 'none' | 'rss' | 'you' | 'loadContent';
     cards: CardProps[];
     isResizing: boolean;
+    isDragging: boolean;
 };
 
 export const defaultCardIdProps: CardIdProps = {
@@ -56,6 +59,7 @@ export const defaultCardIdProps: CardIdProps = {
     type: 'text',
     cards: [],
     isResizing: false,
+    isDragging: false,
 };
 
 const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: CardIdProps['type']) => void }> = (props) => {
@@ -141,7 +145,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
     };
 
     return (
-        <div className={`card ${selectedType} ${props.isResizing ? 'is-resizing' : ''}`} id={props.id}>
+        <div className={`card ${selectedType} ${props.isResizing ? 'is-resizing' : ''} ${props.isDragging ? 'is-dragging' : ''}`} id={props.id}>
             <h4>{props.title}</h4>
             {renderCard()}
             <Stack direction="row" spacing={1} sx={{ position: 'absolute', top: 5, right: 5 }}>
