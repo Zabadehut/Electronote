@@ -1,4 +1,3 @@
-/* Conteneur de la grille */
 .grid-header {
     display: flex; /* Utilise le modèle de boîte flex pour le conteneur */
     justify-content: space-between; /* Espace les éléments horizontalement */
@@ -15,34 +14,13 @@
     border-radius: 10px; /* Coins arrondis */
 }
 
-/* Carte individuelle */
-.card {
-    width: 100%; /* Assurez-vous que la carte prend toute la largeur de son conteneur */
-    height: 100%; /* Assurez-vous que la carte prend toute la hauteur de son conteneur */
-    box-sizing: border-box; /* Inclut padding et border dans la dimension de l'élément */
-    border: 1px solid #ccc; /* Bordure grise claire autour de la carte */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre subtile */
-    background-color: #fff; /* Couleur de fond claire */
-    display: flex; /* Utilise le modèle de boîte flex pour les éléments enfants */
-    flex-direction: column; /* Les enfants sont disposés en colonne */
-    justify-content: center; /* Centre les enfants verticalement */
-    align-items: center; /* Centre les enfants horizontalement */
-    border-radius: 10px; /* Les coins de la carte sont arrondis */
-    padding: 10px; /* Espace intérieur autour du contenu de la carte */
-    position: relative; /* Positionne les éléments relatifs à la carte */
-    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Transitions douces pour l'ombre et la transformation */
-    cursor: default; /* Le curseur ne change pas au survol */
-    color: #000; /* Texte noir à l'intérieur de la carte */
-    overflow: hidden; /* Cache tout débordement */
-}
-
 .drag-handle {
     cursor: move; /* Change le curseur pour indiquer une capacité de déplacement */
-    padding: 4px;
-    background-color: #ccc;
-    color: #333;
-    text-align: center;
-    border-radius: 3px;
+    padding: 4px; /* Padding interne */
+    background-color: #ccc; /* Couleur de fond grise claire */
+    color: #333; /* Couleur de texte grise foncée */
+    text-align: center; /* Alignement centré */
+    border-radius: 3px; /* Coins arrondis */
 }
 
 .header-container {
@@ -79,7 +57,7 @@
 }
 
 .header-hidden {
-    top: -100%; /*Continuons là où nous nous sommes arrêtés*/
+    top: -100%; /* Continuons là où nous nous sommes arrêtés */
     height: 0; /* Fixe la hauteur à 0 pour éviter de prendre de l'espace */
     transition: top 0.3s ease, height 0.3s ease; /* Transition douce pour la position et la hauteur */
 }
@@ -117,12 +95,4 @@
     opacity: 0.9; /* Légèrement transparent lorsqu'on fait glisser */
     cursor: grabbing; /* Change le curseur en "main qui saisit" */
     border-radius: 10px; /* Coins arrondis */
-}
-
-/* Global style to prevent text selection */
-.no-select {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
 }

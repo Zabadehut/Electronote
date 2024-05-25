@@ -1,5 +1,3 @@
-// NoteTakingCard.tsx
-
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
@@ -7,6 +5,8 @@ import ImageResize from 'quill-image-resize';
 import './NoteTakingCard.css';
 import QuillToolbar, { modules, formats } from './QuillToolbar';
 import { v4 as uuidv4 } from 'uuid';
+import debounce from 'lodash.debounce';
+import { Typography } from '@mui/material';
 
 interface NoteTakingCardProps {
     id: string;
@@ -64,9 +64,13 @@ const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
         letters: 0, words: 0, sentences: 0, paragraphs: 0, images: 0, videos: 0, byteCount: 0
     });
 
+    const debouncedCalculateCounts = useCallback(debounce((content) => {
+        setCounts(calculateCounts(content));
+    }, 300), [calculateCounts]);
+
     useEffect(() => {
-        setCounts(calculateCounts(editedContent));
-    }, [editedContent, calculateCounts]);
+        debouncedCalculateCounts(editedContent);
+    }, [editedContent, debouncedCalculateCounts]);
 
     useEffect(() => {
         if (props.id !== note.id) {
@@ -93,7 +97,7 @@ const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
             quill.on('text-change', () => {
                 const textContent = quill.root.innerHTML;
                 setEditedContent(textContent);
-                setCounts(calculateCounts(textContent));
+                debouncedCalculateCounts(textContent);
             });
 
             quillInstanceRef.current = quill;
@@ -105,7 +109,7 @@ const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
         } else if (quillInstanceRef.current) {
             quillInstanceRef.current.disable();
         }
-    }, [isEditing, calculateCounts]);
+    }, [isEditing, debouncedCalculateCounts]);
 
     const handleEditClick = useCallback(() => {
         setIsEditing(true);
@@ -137,12 +141,11 @@ const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
                 ) : (
                     <button onClick={handleEditClick}>Éditer</button>
                 )}
-                <div className="note-taking-card-info">
-                    Lettres: {formatNumber(counts.letters)}, Mots: {formatNumber(counts.words)},
-                    Phrases: {formatNumber(counts.sentences)}, Paragraphes: {formatNumber(counts.paragraphs)},
-                    Images: {formatNumber(counts.images)}, Vidéos: {formatNumber(counts.videos)},
-                    Octets: {formatBytes(counts.byteCount)}
-                </div>
+            </div>
+            <div className="card-stats">
+                <Typography variant="caption">
+                    Lettres: {formatNumber(counts.letters)}, Mots: {formatNumber(counts.words)}, Phrases: {formatNumber(counts.sentences)}, Paragraphes: {formatNumber(counts.paragraphs)}, Images: {formatNumber(counts.images)}, Vidéos: {formatNumber(counts.videos)}, Octets: {formatBytes(counts.byteCount)}
+                </Typography>
             </div>
         </div>
     );

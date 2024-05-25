@@ -1,31 +1,31 @@
 .note-taking-card {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    position: relative; /* Positionnement relatif */
+    height: 100%; /* Hauteur à 100% de son conteneur parent */
+    width: 100%; /* Largeur à 100% de son conteneur parent */
+    display: flex; /* Affichage en flexbox */
+    flex-direction: column; /* Disposition des éléments enfants en colonne */
+    overflow: hidden; /* Cache le débordement */
 }
 
 .note-taking-card.is-resizing .note-taking-card-content {
-    display: none;
+    display: none; /* Cache le contenu de la carte lors du redimensionnement */
 }
 
 .note-taking-card.is-resizing .loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
+    display: flex; /* Affichage en flexbox */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    height: 80%; /* Hauteur à 100% du conteneur parent */
+    width: 80%; /* Largeur à 100% du conteneur parent */
 }
 
 .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
+    border: 16px solid #f3f3f3; /* Bordure grise claire */
+    border-top: 16px solid #3498db; /* Bordure supérieure bleue */
+    border-radius: 50%; /* Forme arrondie */
+    width: 80%; /* Largeur de 120px */
+    height: 80%; /* Hauteur de 120px */
+    animation: spin 2s linear infinite; /* Animation de rotation */
 }
 
 @keyframes spin {
@@ -34,134 +34,138 @@
 }
 
 .note-taking-card-content {
-    flex-grow: 1;
-    overflow-y: auto;
+    flex-grow: 1; /* Prend tout l'espace disponible */
+    overflow-y: auto; /* Barre de défilement verticale si nécessaire */
 }
 
 .quill-editor-container {
-    height: 100%;
-    width: 100%;
+    height: 100%; /* Hauteur à 100% du conteneur parent */
+    width: 100%; /* Largeur à 100% du conteneur parent */
 }
 
 .quill-editor-container-disabled {
-    height: 100%;
-    width: 100%;
-    background-color: #f0f0f0;
+    height: 80%; /* Hauteur à 100% du conteneur parent */
+    width: 80%; /* Largeur à 100% du conteneur parent */
+    background-color: #f0f0f0; /* Couleur de fond grise claire */
 }
 
 .ql-toolbar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: #fff;
+    position: sticky; /* Positionnement fixe par rapport à son conteneur parent */
+    top: 0; /* Aligné en haut */
+    background: #fff; /* Couleur de fond blanche */
 }
 
 .note-taking-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background: white;
-    border-top: 1px solid #ddd;
-    position: sticky;
-    bottom: 0;
-    z-index: 100;
+    display: flex; /* Affichage en flexbox */
+    justify-content: space-between; /* Espace entre les éléments enfants */
+    align-items: center; /* Alignement vertical centré */
+    padding: 10px; /* Padding de 10px */
+    background: white; /* Couleur de fond blanche */
+    border-top: 1px solid #ddd; /* Bordure supérieure */
+    bottom: 30px; /* Espacement en bas pour laisser la place aux statistiques */
+}
+
+.card-stats {
+    position: sticky; /* Positionnement fixe par rapport à son conteneur parent */
+    bottom: 0; /* Aligné en bas */
+    background: rgba(255, 255, 255, 0.8); /* Fond blanc semi-transparent */
+    padding: 2px 5px; /* Padding interne */
+    border-radius: 5px; /* Coins arrondis */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Légère ombre */
+    font-size: 10px; /* Taille de police */
+    color: lightgray; /* Couleur de texte grise claire */
 }
 
 .note-taking-card-info {
-    margin-top: 5px;
+    margin-top: 5px; /* Marge supérieure */
 }
 
 .ql-container {
-    height: 100%;
-    width: 100%;
-    flex-direction: column;
+    height: 100%; /* Hauteur à 100% du conteneur parent */
+    width: 100%; /* Largeur à 100% du conteneur parent */
+    flex-direction: column; /* Disposition des éléments enfants en colonne */
 }
 
 .ql-editor {
-    flex-grow: 1;
-    overflow-y: auto;
-    height: 100%;
+    flex-grow: 1; /* Prend tout l'espace disponible */
+    overflow-y: auto; /* Barre de défilement verticale si nécessaire */
+    height: 100%; /* Hauteur à 100% du conteneur parent */
 }
 
 .ql-editor img,
 .ql-editor iframe {
-    max-width: 100%;
-    height: auto;
+    max-width: 100%; /* Largeur maximale à 100% du conteneur parent */
+    height: auto; /* Hauteur automatique */
 }
 
 .ql-editor iframe {
-    pointer-events: all;
-    resize: both;
-    margin: 10px;
-    border: none;
-    padding: 10px;
+    pointer-events: all; /* Permet les événements sur l'iframe */
+    resize: both; /* Redimensionnement possible */
+    margin: 10px; /* Marge interne */
+    border: none; /* Pas de bordure */
+    padding: 10px; /* Padding interne */
 }
 
 .ql-editor .resize-handle {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    background: white;
-    border: 1px solid black;
-    box-sizing: border-box;
-    z-index: 10;
+    position: absolute; /* Positionnement absolu */
+    width: 12px; /* Largeur de 12px */
+    height: 12px; /* Hauteur de 12px */
+    background: white; /* Fond blanc */
+    border: 1px solid black; /* Bordure noire */
+    box-sizing: border-box; /* Box sizing border-box */
+
 }
 
 .ql-editor .resize-handle::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border: 1px solid black;
-    box-sizing: border-box;
-    z-index: 10;
+    content: ''; /* Contenu vide */
+    position: absolute; /* Positionnement absolu */
+    width: 100%; /* Largeur à 100% */
+    height: 100%; /* Hauteur à 100% */
+    border: 1px solid black; /* Bordure noire */
+    box-sizing: border-box; /* Box sizing border-box */
 }
 
 .ql-video-wrapper {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    z-index: 1;
+    position: relative; /* Positionnement relatif */
+    display: inline-block; /* Affichage en ligne */
+    cursor: pointer; /* Curseur en forme de pointeur */
+    z-index: 1; /* Niveau de superposition */
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="extra-small"]::before {
-    content: 'Size 1';
+    content: 'Size 1'; /* Contenu textuel */
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="small"]::before {
-    content: 'Size 2';
+    content: 'Size 2'; /* Contenu textuel */
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="medium"]::before {
-    content: 'Size 3';
+    content: 'Size 3'; /* Contenu textuel */
 }
 
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="large"]::before {
-    content: 'Size 4';
+    content: 'Size 4'; /* Contenu textuel */
 }
 
 /* Effet au survol pour la carte */
 .card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre */
+    transform: translateY(-2px); /* Translation vers le haut */
 }
-
-
-    /* NoteTakingCard.css */
 
 .note-taking-card.is-dragging .note-taking-card-content,
 .note-taking-card.is-resizing .note-taking-card-content {
-    display: none;
+    display: none; /* Cache le contenu de la carte lors du déplacement ou du redimensionnement */
 }
 
 .note-taking-card.is-dragging .loader,
 .note-taking-card.is-resizing .loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
+    display: flex; /* Affichage en flexbox */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    height: 80%; /* Hauteur à 100% du conteneur parent */
+    width: 80%; /* Largeur à 100% du conteneur parent */
 }
 
 .quill-editor-container-disabled {

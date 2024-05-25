@@ -1,5 +1,3 @@
-// CardId.tsx
-
 import React, { useState, useEffect, useRef, memo } from 'react';
 import { IconButton, Stack, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import PushPinIcon from '@mui/icons-material/PushPin';
@@ -14,7 +12,11 @@ import SearchContentInApp from './models/SearchContentInApp';
 import NoteTakingCard from './notes/NoteTakingCard';
 import FluxRssReader from './models/FluxRssReader';
 import LoadContentCard from './models/LoadContentCard';
+import { MemoryManager } from './MemoryManager'; // Importez le gestionnaire de mémoire
 import "react-resizable/css/styles.css";
+
+// Importer le Web Worker
+import Worker from './cardWorker?worker';
 
 export type CardProps = {
     id: string;
@@ -67,11 +69,13 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
     const [selectedType, setSelectedType] = useState(props.type);
     const [isDraggable, setIsDraggable] = useState(true);
     const workerRef = useRef<Worker | null>(null);
+    const memoryManagerRef = useRef(new MemoryManager()); // Instance du gestionnaire de mémoire spécifique à ce `CardId`
+
+
 
     useEffect(() => {
-        const initializeWorker = async () => {
-            const workerModule = await import('./cardWorker.js?worker&inline');
-            const worker = new workerModule.default();
+        const initializeWorker = () => {
+            const worker = new Worker();
             worker.onmessage = (event) => {
                 const { id, result } = event.data;
                 console.log(`Card ${id} processed result:`, result);
@@ -116,7 +120,8 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
             ...props,
             isDraggable,
             onDisableDrag: disableDrag,
-            onEnableDrag: enableDrag
+            onEnableDrag: enableDrag,
+            memoryManager: memoryManagerRef.current // Passer le gestionnaire de mémoire à chaque enfant
         };
         switch (selectedType) {
             case 'text':
@@ -143,6 +148,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                 return <div>Unsupported card type</div>;
         }
     };
+
 
     return (
         <div className={`card ${selectedType} ${props.isResizing ? 'is-resizing' : ''} ${props.isDragging ? 'is-dragging' : ''}`} id={props.id}>

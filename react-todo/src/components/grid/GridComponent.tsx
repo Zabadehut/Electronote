@@ -1,5 +1,3 @@
-// GridComponent.tsx
-
 import React, { useState, useEffect, useRef } from 'react';
 import './GridComponent.css';
 import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
