@@ -47,6 +47,7 @@
     color: white; /* Couleur du texte blanche */
     cursor: pointer; /* Change le curseur en pointeur */
     border-radius: 8px; /* Coins arrondis */
+    z-index: 100;
     margin: 0 5px; /* Petit espace entre les boutons */
     opacity: 0.9; /* Légèrement transparent */
     transition: background-color 0.3s ease, opacity 0.3s ease; /* Transitions douces pour la couleur et l'opacité */
@@ -73,6 +74,7 @@
     width: 100%; /* La grille prend toute la largeur du conteneur */
     min-height: 100vh; /* La grille prend au moins toute la hauteur du conteneur */
     display: flex; /* Utilise le modèle de boîte flex */
+    z-index: 100;
     flex-wrap: wrap; /* Enveloppe les éléments si nécessaire */
     background-color: #f0f0f0; /* Couleur de fond claire */
 }
