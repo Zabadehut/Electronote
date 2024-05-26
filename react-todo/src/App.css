@@ -1,38 +1,44 @@
-/* App.css */
-html, body, #root {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+.theme-switcher {
+  position: relative;
+}
+
+.theme-switcher-popup {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 5px;
+  box-shadow: 0 4px 8px var(--color-shadow);
+  z-index: 1000;
+  padding: 10px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.theme-preview {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  margin-bottom: 5px;
+  color: var(--color-text); /* Pour une meilleure lisibilité */
 }
 
-@media (hover: hover) {
-  .card:hover {
-    transform: scale(1.05);
-    box-shadow: 2px 2px 10px var(--color-shadow);
-  }
+.theme-preview.selected {
+  border: 2px solid var(--color-primary);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-  }
+.theme-preview:hover {
+  background-color: var(--color-shadow);
 }
 
-.read-the-docs {
-  color: #888;
+.light-theme {
+  background-color: var(--color-light-background);
+  color: var(--color-light-text);
+}
+
+.dark-theme {
+  background-color: var(--color-dark-background);
+  color: var(--color-dark-text);
 }

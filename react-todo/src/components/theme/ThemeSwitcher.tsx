@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ThemeSwitcher.css';
 
 const themes = [
@@ -6,14 +6,25 @@ const themes = [
     { name: 'Dark', className: 'dark-theme' }
 ];
 
-const ThemeSwitcher: React.FC = () => {
+type ThemeSwitcherProps = {
+    isHeaderVisible: boolean;
+};
+
+const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ isHeaderVisible }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedTheme, setSelectedTheme] = useState<string>('light-theme');
 
     const handleThemeChange = (theme: string) => {
         setSelectedTheme(theme);
         document.body.className = theme;
+        setIsOpen(false); // Close the popup after selecting a theme
     };
+
+    useEffect(() => {
+        if (!isHeaderVisible) {
+            setIsOpen(false); // Close the popup when the header is not visible
+        }
+    }, [isHeaderVisible]);
 
     return (
         <div className="theme-switcher">

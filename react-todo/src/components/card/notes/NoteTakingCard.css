@@ -1,3 +1,4 @@
+/* NoteTakingCard.css */
 .note-taking-card {
     position: relative;
     height: 100%;
@@ -55,7 +56,37 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: #fff;
+    background: var(--color-background);
+}
+
+/* Ajout de la couleur de fond aux boutons de l'éditeur Quill */
+.ql-toolbar .ql-formats button,
+.ql-toolbar .ql-formats select,
+.ql-toolbar .ql-formats .ql-picker-label,
+.ql-toolbar .ql-formats .ql-picker-item {
+    background-color: rgba(255, 255, 255, 0.1); /* Couleur de fond semi-transparente */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Bordure semi-transparente */
+    color: var(--color-text); /* Couleur du texte pour s'adapter au thème */
+    border-radius: 4px; /* Légèrement arrondi pour un look moderne */
+    margin: 2px; /* Espacement entre les boutons */
+    padding: 5px 10px; /* Espacement interne pour agrandir les boutons */
+    transition: background-color 0.3s, color 0.3s; /* Transition douce pour les interactions */
+}
+
+.ql-toolbar .ql-formats button:hover,
+.ql-toolbar .ql-formats select:hover,
+.ql-toolbar .ql-formats .ql-picker-label:hover,
+.ql-toolbar .ql-formats .ql-picker-item:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Couleur de fond légèrement plus foncée au survol */
+    color: var(--color-primary); /* Changement de couleur de texte au survol */
+}
+
+.ql-toolbar .ql-formats button:active,
+.ql-toolbar .ql-formats select:active,
+.ql-toolbar .ql-formats .ql-picker-label:active,
+.ql-toolbar .ql-formats .ql-picker-item:active {
+    background-color: rgba(255, 255, 255, 0.3); /* Couleur de fond encore plus foncée lorsqu'on clique */
+    color: var(--color-primary-hover); /* Changement de couleur de texte lorsqu'on clique */
 }
 
 .note-taking-controls {
@@ -63,8 +94,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background: white;
-    border-top: 1px solid #ddd;
+    background: var(--color-background);
+    border-top: 1px solid var(--color-border);
     position: sticky;
     bottom: 0;
     z-index: 100;
@@ -73,24 +104,37 @@
 .card-stats {
     position: sticky;
     bottom: 0;
+    right: 0;
     background: rgba(255, 255, 255, 0.8);
     padding: 2px 5px;
     border-radius: 5px;
     box-shadow: 0 1px 2px var(--color-shadow);
     font-size: 10px;
-    color: lightgray;
+    color: var(--color-stat-text); /* Utilisation de la couleur de texte des stats */
+    background: var(--color-stat-background); /* Utilisation de l'arrière-plan des stats */
+    display: inline-block; /* Permet au cadre de s'adapter à la taille de son contenu */
+    text-align: left; /* Alignement du texte à gauche */
+    margin: 0 auto; /* Centrer horizontalement */
+}
+
+.note-taking-card-info {
+    margin-top: 5px;
 }
 
 .ql-container {
     height: 100%;
     width: 100%;
     flex-direction: column;
+    background-color: var(--color-background); /* Ajouté pour le mode sombre */
+    color: var(--color-text); /* Ajouté pour le mode sombre */
 }
 
 .ql-editor {
     flex-grow: 1;
     overflow-y: auto;
     height: 100%;
+    background-color: var(--color-background); /* Ajouté pour le mode sombre */
+    color: var(--color-text); /* Ajouté pour le mode sombre */
 }
 
 .ql-editor img,

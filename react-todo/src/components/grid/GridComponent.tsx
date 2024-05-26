@@ -101,7 +101,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                 <button className="header-container-btn" onClick={handleMoveCards}>
                     Gather Cards
                 </button>
-                <ThemeSwitcher />
+                <ThemeSwitcher isHeaderVisible={headerVisible} />
             </div>
             <div ref={mainContainerRef} style={{ width: '100vw', height: '100vh' }}>
                 <ResponsiveGridLayout

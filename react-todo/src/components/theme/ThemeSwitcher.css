@@ -1,16 +1,15 @@
-/* ThemeSwitcher.css */
 .theme-switcher {
     position: relative;
 }
 
 .theme-switcher-popup {
     position: absolute;
-    top: 40px;
-    right: 0;
-    background: white;
-    border: 1px solid #ccc;
+    top: 100%; /* Ajoutez cette ligne pour que la popup s'aligne sous le bouton */
+    left: 0;
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
     border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px var(--color-shadow);
     z-index: 1000;
     padding: 10px;
     display: flex;
@@ -23,22 +22,23 @@
     transition: background-color 0.3s ease;
     text-align: center;
     margin-bottom: 5px;
+    color: var(--color-text); /* Pour une meilleure lisibilité */
 }
 
 .theme-preview.selected {
-    border: 2px solid #3498db;
+    border: 2px solid var(--color-primary);
 }
 
 .theme-preview:hover {
-    background-color: #f0f0f0;
+    background-color: var(--color-shadow);
 }
 
 .light-theme {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: var(--color-light-background);
+    color: var(--color-light-text);
 }
 
 .dark-theme {
-    background-color: #282c34;
-    color: #ffffff;
+    background-color: var(--color-dark-background);
+    color: var(--color-dark-text);
 }

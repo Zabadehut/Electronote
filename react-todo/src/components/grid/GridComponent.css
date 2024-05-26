@@ -1,4 +1,3 @@
-/* GridComponent.css */
 .grid-header {
     display: flex;
     justify-content: space-between;
@@ -20,12 +19,13 @@
     bottom: 5px;
     right: 5px;
     font-size: 10px;
-    color: lightgray;
-    background: rgba(255, 255, 255, 0.8);
+    color: var(--color-stat-text); /* Utilisation de la couleur de texte des stats */
+    background: var(--color-stat-background); /* Utilisation de l'arrière-plan des stats */
     padding: 2px 5px;
     border-radius: 5px;
-    box-shadow: 0 1px 2px var(--color-shadow);
+    box-shadow: var(--color-shadow); /* Utilisation de la variable box-shadow */
 }
+
 
 .card {
     position: relative;
@@ -50,8 +50,8 @@
 .drag-handle {
     cursor: move;
     padding: 4px;
-    background-color: #ccc;
-    color: #333;
+    background-color: var(--color-button-bg);
+    color: var(--color-text);
     text-align: center;
     border-radius: 3px;
 }
@@ -114,6 +114,8 @@
     box-shadow: 5px 5px 15px var(--color-shadow);
     border-radius: 10px;
     overflow: hidden;
+    background-color: var(--color-background);
+    color: var(--color-text);
 }
 
 .react-grid-item.react-grid-placeholder {

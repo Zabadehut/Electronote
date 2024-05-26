@@ -1,6 +1,5 @@
-/* index.css */
 :root {
-  --font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   --line-height: 1.5;
   --font-weight: 400;
 
@@ -12,6 +11,8 @@
   --color-light-button-bg: #f9f9f9;
   --color-light-border: #e0e0e0;
   --color-light-shadow: rgba(0, 0, 0, 0.1);
+  --color-light-stat-background: rgba(0, 0, 0, 0.1);
+  --color-light-stat-text: #213547;
 
   /* Dark Theme Colors */
   --color-dark-background: #282c34;
@@ -21,6 +22,12 @@
   --color-dark-button-bg: #1a1a1a;
   --color-dark-border: #3c414a;
   --color-dark-shadow: rgba(255, 255, 255, 0.1);
+  --color-dark-stat-background: rgba(255, 255, 255, 0.2);
+  --color-dark-stat-text: rgba(255, 255, 255, 0.87);
+
+  /* Common Box Shadow */
+  --box-shadow-light: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --box-shadow-dark: 0 4px 8px rgba(255, 255, 255, 0.1);
 
   /* Default Theme */
   --color-background: var(--color-light-background);
@@ -29,7 +36,9 @@
   --color-primary-hover: var(--color-light-primary-hover);
   --color-button-bg: var(--color-light-button-bg);
   --color-border: var(--color-light-border);
-  --color-shadow: var(--color-light-shadow);
+  --color-shadow: var(--box-shadow-light);
+  --color-stat-background: var(--color-light-stat-background);
+  --color-stat-text: var(--color-light-stat-text);
 }
 
 body.light-theme {
@@ -39,7 +48,9 @@ body.light-theme {
   --color-primary-hover: var(--color-light-primary-hover);
   --color-button-bg: var(--color-light-button-bg);
   --color-border: var(--color-light-border);
-  --color-shadow: var(--color-light-shadow);
+  --color-shadow: var(--box-shadow-light);
+  --color-stat-background: var(--color-light-stat-background);
+  --color-stat-text: var(--color-light-stat-text);
 }
 
 body.dark-theme {
@@ -49,11 +60,13 @@ body.dark-theme {
   --color-primary-hover: var(--color-dark-primary-hover);
   --color-button-bg: var(--color-dark-button-bg);
   --color-border: var(--color-dark-border);
-  --color-shadow: var(--color-dark-shadow);
+  --color-shadow: var(--box-shadow-dark);
+  --color-stat-background: var(--color-dark-stat-background);
+  --color-stat-text: var(--color-dark-stat-text);
 }
 
 body {
-  font-family: var(--font-family);
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: var(--line-height);
   font-weight: var(--font-weight);
   background-color: var(--color-background);
@@ -90,6 +103,7 @@ button {
   background-color: var(--color-button-bg);
   cursor: pointer;
   transition: border-color 0.25s;
+  color: var(--color-text); /* Pour une meilleure lisibilité */
 }
 
 button:hover {
@@ -114,4 +128,17 @@ button:focus-visible {
 
 .add-card-btn:hover {
   background-color: var(--color-shadow);
+}
+
+/* Ajout des styles pour les champs de formulaire */
+input, textarea {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  padding: 8px;
+  border-radius: 5px;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--color-text);
 }
