@@ -1,20 +1,4 @@
 /* CardId.css */
-.grid-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: var(--color-background);
-    padding: 10px;
-    z-index: 1;
-    box-shadow: 0 2px 4px var(--color-shadow);
-    border-bottom: 1px solid var(--color-border);
-    border-radius: 10px;
-}
-
 .drag-handle {
     cursor: move;
     padding: 4px;
@@ -24,22 +8,6 @@
     border-radius: 3px;
 }
 
-.header-container {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: var(--color-background);
-    color: var(--color-text);
-    padding: 10px;
-    z-index: 1000;
-    transition: top 0.3s ease;
-    box-shadow: 0 2px 4px var(--color-shadow);
-    border-bottom: 1px solid var(--color-border);
-}
 
 .header-container-btn {
     padding: 10px 15px;

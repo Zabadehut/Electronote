@@ -1,6 +1,7 @@
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import ImageResize from 'quill-image-resize';
+import './NoteTakingCard.css';
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -67,7 +68,7 @@ export const formats = [
 
 // Quill Toolbar component
 const QuillToolbar = ({ toolbarId }: { toolbarId: string }) => (
-    <div id={toolbarId}>
+    <div id={toolbarId} className="ql-toolbar">
         <span className="ql-formats">
             <select className="ql-font" defaultValue="arial">
                 <option value="arial">Arial</option>
