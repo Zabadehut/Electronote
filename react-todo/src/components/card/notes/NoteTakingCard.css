@@ -5,6 +5,8 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    background-color: var(--color-background);
+    color: var(--color-text);
 }
 
 .note-taking-card.is-resizing .note-taking-card-content {
@@ -20,8 +22,8 @@
 }
 
 .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid var(--color-primary);
     border-radius: 50%;
     width: 120px;
     height: 120px;
@@ -74,13 +76,9 @@
     background: rgba(255, 255, 255, 0.8);
     padding: 2px 5px;
     border-radius: 5px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 2px var(--color-shadow);
     font-size: 10px;
     color: lightgray;
-}
-
-.note-taking-card-info {
-    margin-top: 5px;
 }
 
 .ql-container {
@@ -152,9 +150,8 @@
     content: 'Size 4';
 }
 
-/* Effet au survol pour la carte */
 .card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 16px var(--color-shadow);
     transform: translateY(-2px);
 }
 
@@ -173,5 +170,5 @@
 }
 
 .quill-editor-container-disabled {
-    display: none; /* Cache le conteneur Quill lorsqu'il est désactivé */
+    display: none;
 }

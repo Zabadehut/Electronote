@@ -1,0 +1,44 @@
+/* ThemeSwitcher.css */
+.theme-switcher {
+    position: relative;
+}
+
+.theme-switcher-popup {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.theme-preview {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.theme-preview.selected {
+    border: 2px solid #3498db;
+}
+
+.theme-preview:hover {
+    background-color: #f0f0f0;
+}
+
+.light-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.dark-theme {
+    background-color: #282c34;
+    color: #ffffff;
+}

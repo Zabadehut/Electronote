@@ -4,6 +4,7 @@ import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
 import CardId, { CardIdProps } from "../card/CardId";
 import { CardsUiEventController } from "../controller/CardsUiEventController";
 import LoadContentCard from "../card/models/LoadContentCard";
+import ThemeSwitcher from '../theme/ThemeSwitcher';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -100,6 +101,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                 <button className="header-container-btn" onClick={handleMoveCards}>
                     Gather Cards
                 </button>
+                <ThemeSwitcher />
             </div>
             <div ref={mainContainerRef} style={{ width: '100vw', height: '100vh' }}>
                 <ResponsiveGridLayout

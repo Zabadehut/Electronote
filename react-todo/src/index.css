@@ -1,33 +1,78 @@
+/* index.css */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --line-height: 1.5;
+  --font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #282c34;
+  /* Light Theme Colors */
+  --color-light-background: #ffffff;
+  --color-light-text: #213547;
+  --color-light-primary: #646cff;
+  --color-light-primary-hover: #535bf2;
+  --color-light-button-bg: #f9f9f9;
+  --color-light-border: #e0e0e0;
+  --color-light-shadow: rgba(0, 0, 0, 0.1);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Dark Theme Colors */
+  --color-dark-background: #282c34;
+  --color-dark-text: rgba(255, 255, 255, 0.87);
+  --color-dark-primary: #646cff;
+  --color-dark-primary-hover: #535bf2;
+  --color-dark-button-bg: #1a1a1a;
+  --color-dark-border: #3c414a;
+  --color-dark-shadow: rgba(255, 255, 255, 0.1);
+
+  /* Default Theme */
+  --color-background: var(--color-light-background);
+  --color-text: var(--color-light-text);
+  --color-primary: var(--color-light-primary);
+  --color-primary-hover: var(--color-light-primary-hover);
+  --color-button-bg: var(--color-light-button-bg);
+  --color-border: var(--color-light-border);
+  --color-shadow: var(--color-light-shadow);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+body.light-theme {
+  --color-background: var(--color-light-background);
+  --color-text: var(--color-light-text);
+  --color-primary: var(--color-light-primary);
+  --color-primary-hover: var(--color-light-primary-hover);
+  --color-button-bg: var(--color-light-button-bg);
+  --color-border: var(--color-light-border);
+  --color-shadow: var(--color-light-shadow);
 }
-a:hover {
-  color: #535bf2;
+
+body.dark-theme {
+  --color-background: var(--color-dark-background);
+  --color-text: var(--color-dark-text);
+  --color-primary: var(--color-dark-primary);
+  --color-primary-hover: var(--color-dark-primary-hover);
+  --color-button-bg: var(--color-dark-button-bg);
+  --color-border: var(--color-dark-border);
+  --color-shadow: var(--color-dark-shadow);
 }
 
 body {
+  font-family: var(--font-family);
+  line-height: var(--line-height);
+  font-weight: var(--font-weight);
+  background-color: var(--color-background);
+  color: var(--color-text);
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+}
+
+a {
+  font-weight: 500;
+  color: var(--color-primary);
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: var(--color-primary-hover);
 }
 
 h1 {
@@ -42,32 +87,22 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--color-button-bg);
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
-  border-color: #646cff;
+  border-color: var(--color-primary);
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
 .add-card-btn {
-  background-color: #3c414a;
+  background-color: var(--color-border);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -78,7 +113,5 @@ button:focus-visible {
 }
 
 .add-card-btn:hover {
-  background-color: #505760;
+  background-color: var(--color-shadow);
 }
-
-

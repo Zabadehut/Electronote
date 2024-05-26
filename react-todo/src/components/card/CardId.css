@@ -1,100 +1,100 @@
+/* CardId.css */
 .grid-header {
-    display: flex; /* Utilise le modèle de boîte flex pour le conteneur */
-    justify-content: space-between; /* Espace les éléments horizontalement */
-    align-items: center; /* Centre les éléments verticalement */
-    position: fixed; /* Fixe le conteneur en haut de la page */
-    top: 0; /* Aligne le conteneur en haut */
-    left: 0; /* Aligne le conteneur à gauche */
-    right: 0; /* Aligne le conteneur à droite */
-    background-color: #f0f0f0; /* Couleur de fond claire */
-    padding: 10px; /* Espace intérieur autour des éléments */
-    z-index: 1; /* Place le conteneur au-dessus des autres éléments */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Légère ombre */
-    border-bottom: 1px solid #e0e0e0; /* Ligne de séparation en bas */
-    border-radius: 10px; /* Coins arrondis */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--color-background);
+    padding: 10px;
+    z-index: 1;
+    box-shadow: 0 2px 4px var(--color-shadow);
+    border-bottom: 1px solid var(--color-border);
+    border-radius: 10px;
 }
 
 .drag-handle {
-    cursor: move; /* Change le curseur pour indiquer une capacité de déplacement */
-    padding: 4px; /* Padding interne */
-    background-color: #ccc; /* Couleur de fond grise claire */
-    color: #333; /* Couleur de texte grise foncée */
-    text-align: center; /* Alignement centré */
-    border-radius: 3px; /* Coins arrondis */
+    cursor: move;
+    padding: 4px;
+    background-color: #ccc;
+    color: #333;
+    text-align: center;
+    border-radius: 3px;
 }
 
 .header-container {
-    display: flex; /* Utilise le modèle de boîte flex pour le conteneur */
-    justify-content: flex-start; /* Aligne les éléments horizontalement au début */
-    align-items: center; /* Aligne les éléments verticalement au centre */
-    position: fixed; /* Fixe le conteneur en haut de la page */
-    top: 0; /* Aligne le conteneur en haut */
-    left: 0; /* Aligne le conteneur à gauche */
-    width: 100%; /* Assure que le conteneur prend toute la largeur de la page */
-    background-color: #f0f0f0; /* Couleur de fond claire */
-    color: black; /* Couleur du texte noire */
-    padding: 10px; /* Espace intérieur autour des éléments */
-    z-index: 1000; /* Place le conteneur au-dessus de tout autre élément */
-    transition: top 0.3s ease; /* Transition douce pour la position */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Légère ombre */
-    border-bottom: 1px solid #e0e0e0; /* Ligne de séparation en bas */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    padding: 10px;
+    z-index: 1000;
+    transition: top 0.3s ease;
+    box-shadow: 0 2px 4px var(--color-shadow);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .header-container-btn {
-    padding: 10px 15px; /* Espace intérieur pour le bouton */
-    background-image: linear-gradient(to right, #3498db, #2980b9); /* Dégradé */
-    border: none; /* Pas de bordure */
-    color: white; /* Couleur du texte blanche */
-    cursor: pointer; /* Change le curseur en pointeur */
-    border-radius: 8px; /* Coins arrondis */
+    padding: 10px 15px;
+    background-image: linear-gradient(to right, #3498db, #2980b9);
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
     z-index: 100;
-    margin: 0 5px; /* Petit espace entre les boutons */
-    opacity: 0.9; /* Légèrement transparent */
-    transition: background-color 0.3s ease, opacity 0.3s ease; /* Transitions douces pour la couleur et l'opacité */
+    margin: 0 5px;
+    opacity: 0.9;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
 .header-container-btn:hover {
-    opacity: 1; /* Entièrement opaque au survol */
+    opacity: 1;
 }
 
 .header-hidden {
-    top: -100%; /* Continuons là où nous nous sommes arrêtés */
-    height: 0; /* Fixe la hauteur à 0 pour éviter de prendre de l'espace */
-    transition: top 0.3s ease, height 0.3s ease; /* Transition douce pour la position et la hauteur */
+    top: -100%;
+    height: 0;
+    transition: top 0.3s ease, height 0.3s ease;
 }
 
 .grid-layout-container {
-    overflow-y: auto; /* Barre de défilement verticale si nécessaire */
-    background-color: #f0f0f0; /* Couleur de fond claire */
-    transition: padding-top 0.3s ease; /* Transition douce pour le padding-top */
+    overflow-y: auto;
+    background-color: var(--color-background);
+    transition: padding-top 0.3s ease;
 }
 
-/* S'assure que le composant de grille remplit le conteneur parent */
 .layout {
-    width: 100%; /* La grille prend toute la largeur du conteneur */
-    min-height: 100vh; /* La grille prend au moins toute la hauteur du conteneur */
-    display: flex; /* Utilise le modèle de boîte flex */
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
     z-index: 100;
-    flex-wrap: wrap; /* Enveloppe les éléments si nécessaire */
-    background-color: #f0f0f0; /* Couleur de fond claire */
+    flex-wrap: wrap;
+    background-color: var(--color-background);
 }
 
 .react-grid-item {
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1); /* Ombre légère autour de l'élément */
-    border-radius: 10px; /* Coins arrondis */
-    overflow: hidden; /* Cache tout débordement */
+    box-shadow: 5px 5px 15px var(--color-shadow);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .react-grid-item.react-grid-placeholder {
-    background-color: rgba(255, 255, 255, 0.7); /* Couleur de fond blanche semi-transparente */
-    border: 2px dashed #9f3f3f; /* Bordure en pointillé rouge foncé */
-    transition: opacity 0.3s; /* Transition douce pour l'opacité */
-    opacity: 0.5; /* Légèrement transparent */
-    border-radius: 10px; /* Coins arrondis */
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 2px dashed #9f3f3f;
+    transition: opacity 0.3s;
+    opacity: 0.5;
+    border-radius: 10px;
 }
 
 .react-grid-item.dragging {
-    opacity: 0.9; /* Légèrement transparent lorsqu'on fait glisser */
-    cursor: grabbing; /* Change le curseur en "main qui saisit" */
-    border-radius: 10px; /* Coins arrondis */
+    opacity: 0.9;
+    cursor: grabbing;
+    border-radius: 10px;
 }
