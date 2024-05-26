@@ -7,6 +7,9 @@
     overflow: hidden;
     background-color: var(--color-background);
     color: var(--color-text);
+    border: 1px solid var(--color-border);
+    box-shadow: 0 4px 8px var(--color-shadow);
+    border-radius: 10px; /* Ajout de la bordure arrondie */
 }
 
 .note-taking-card.is-resizing .note-taking-card-content {
@@ -151,6 +154,8 @@
 .card:hover {
     box-shadow: 0 8px 16px var(--color-shadow);
     transform: translateY(-2px);
+    background-color: var(--color-primary-hover); /* Ajout de la couleur de fond au survol */
+    color: var(--color-light-text); /* Couleur du texte au survol */
 }
 
 .note-taking-card.is-dragging .note-taking-card-content,
