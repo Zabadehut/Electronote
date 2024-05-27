@@ -116,7 +116,7 @@
   --color-primary-hover: var(--color-light-primary-hover);
   --color-button-bg: var(--color-light-button-bg);
   --color-border: var(--color-light-border);
-  --color-shadow: var(--color-light-shadow);
+  --color-shadow: var(--box-shadow-light);
   --color-stat-background: var(--color-light-stat-background);
   --color-stat-text: var(--color-light-stat-text);
 }
@@ -303,4 +303,3 @@ input, textarea {
 input::placeholder, textarea::placeholder {
   color: var(--color-text);
 }
-
