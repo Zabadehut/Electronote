@@ -16,7 +16,7 @@
 .note-taking-card:hover {
     box-shadow: 0 8px 16px var(--color-shadow);
     transform: translateY(-1px);
-    background-color: rgba(0, 0, 0, 0.2); /* Subtle hover effect */
+    background-color: rgba(0, 0, 0, 0.3); /* Subtle hover effect */
 }
 
 .note-taking-card.is-resizing .note-taking-card-content {
