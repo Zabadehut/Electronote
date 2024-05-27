@@ -88,7 +88,6 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
         setResizingCardId(null);
         document.body.classList.remove('no-select');
     };
-
     return (
         <div>
             <div className={`header-container ${headerVisible ? "" : "header-hidden"}`}>
@@ -103,7 +102,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                 </button>
                 <ThemeSwitcher isHeaderVisible={headerVisible} />
             </div>
-            <div ref={mainContainerRef} style={{ width: '100vw', height: '100vh' }}>
+            <div ref={mainContainerRef} className="main-container">
                 <ResponsiveGridLayout
                     className="layout"
                     isDraggable={isDraggable}

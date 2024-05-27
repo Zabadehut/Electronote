@@ -14,6 +14,7 @@ import FluxRssReader from './models/FluxRssReader';
 import LoadContentCard from './models/LoadContentCard';
 import { MemoryManager } from './MemoryManager'; // Importez le gestionnaire de mémoire
 import "react-resizable/css/styles.css";
+import './CardId.css';
 
 // Importer le Web Worker
 import Worker from './cardWorker?worker';
@@ -70,8 +71,6 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
     const [isDraggable, setIsDraggable] = useState(true);
     const workerRef = useRef<Worker | null>(null);
     const memoryManagerRef = useRef(new MemoryManager()); // Instance du gestionnaire de mémoire spécifique à ce `CardId`
-
-
 
     useEffect(() => {
         const initializeWorker = () => {
@@ -149,7 +148,6 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         }
     };
 
-
     return (
         <div className={`card ${selectedType} ${props.isResizing ? 'is-resizing' : ''} ${props.isDragging ? 'is-dragging' : ''}`} id={props.id}>
             <h4>{props.title}</h4>
@@ -158,7 +156,31 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                 <IconButton onClick={handlePinClick} color="primary" aria-label="pin card">
                     <PushPinIcon />
                 </IconButton>
-                <Select value={selectedType} onChange={handleChangeType} displayEmpty inputProps={{ 'aria-label': 'Without label' }} sx={{ mt: 2, minWidth: 120 }}>
+                <Select
+                    value={selectedType}
+                    onChange={handleChangeType}
+                    displayEmpty
+                    inputProps={{ 'aria-label': 'Without label' }}
+                    sx={{
+                        mt: 2,
+                        minWidth: 120,
+                        backgroundColor: 'var(--color-button-bg)',
+                        color: 'var(--color-text)',
+                        '& .MuiSelect-select': {
+                            backgroundColor: 'var(--color-button-bg)',
+                            color: 'var(--color-text)',
+                        },
+                        '& .MuiOutlinedInput-notchedOutline': {
+                            borderColor: 'var(--color-border)',
+                        },
+                        '&:hover .MuiOutlinedInput-notchedOutline': {
+                            borderColor: 'var(--color-primary-hover)',
+                        },
+                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            borderColor: 'var(--color-primary)',
+                        }
+                    }}
+                >
                     <MenuItem value=""><em>None</em></MenuItem>
                     <MenuItem value="search">Search</MenuItem>
                     <MenuItem value="note">Note</MenuItem>
@@ -168,7 +190,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                     <MenuItem value="web">Web</MenuItem>
                     <MenuItem value="you">Youtube</MenuItem>
                     <MenuItem value="weather">Weather</MenuItem>
-                    <MenuItem value="rss">Rss</MenuItem>
+                    <MenuItem value="rss">RSS</MenuItem>
                     <MenuItem value="loadContent">Load Content</MenuItem>
                 </Select>
             </Stack>
