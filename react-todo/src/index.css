@@ -4,11 +4,11 @@
   --font-weight: 400;
 
   /* Light Theme Colors */
-  --color-light-background: #ffffff;
+  --color-light-background: #f0f2f5;
   --color-light-text: #213547;
   --color-light-primary: #646cff;
   --color-light-primary-hover: #535bf2;
-  --color-light-button-bg: #f9f9f9;
+  --color-light-button-bg: #ffffff;
   --color-light-border: #e0e0e0;
   --color-light-shadow: rgba(0, 0, 0, 0.1);
   --color-light-stat-background: rgba(0, 0, 0, 0.1);
@@ -80,19 +80,21 @@ body {
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid var(--color-border);
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   background-color: var(--color-button-bg);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.3s, transform 0.3s;
   color: var(--color-text);
+  box-shadow: var(--color-shadow);
 }
 
 button:hover {
-  border-color: var(--color-primary);
+  background-color: var(--color-primary-hover);
+  transform: scale(1.05);
 }
 
 button:focus,
@@ -101,18 +103,20 @@ button:focus-visible {
 }
 
 .add-card-btn {
-  background-color: var(--color-border);
-  color: white;
-  border: none;
+  background-color: var(--color-button-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s, transform 0.3s;
   margin: 10px;
+  box-shadow: var(--color-shadow);
 }
 
 .add-card-btn:hover {
-  background-color: var(--color-shadow);
+  background-color: var(--color-primary-hover);
+  transform: scale(1.05);
 }
 
 /* Ajout des styles pour les champs de formulaire */
@@ -122,6 +126,7 @@ input, textarea {
   border: 1px solid var(--color-border);
   padding: 8px;
   border-radius: 5px;
+  box-shadow: var(--color-shadow);
 }
 
 input::placeholder, textarea::placeholder {

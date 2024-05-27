@@ -1,46 +1,3 @@
-:root {
-  --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --line-height: 1.5;
-  --font-weight: 400;
-
-  /* Light Theme Colors */
-  --color-light-background: #ffffff;
-  --color-light-text: #213547;
-  --color-light-primary: #646cff;
-  --color-light-primary-hover: #535bf2;
-  --color-light-button-bg: #f9f9f9;
-  --color-light-border: #e0e0e0;
-  --color-light-shadow: rgba(0, 0, 0, 0.1);
-  --color-light-stat-background: rgba(0, 0, 0, 0.1);
-  --color-light-stat-text: #213547;
-
-  /* Dark Theme Colors */
-  --color-dark-background: #282c34;
-  --color-dark-text: rgba(255, 255, 255, 0.87);
-  --color-dark-primary: #646cff;
-  --color-dark-primary-hover: #535bf2;
-  --color-dark-button-bg: #1a1a1a;
-  --color-dark-border: #3c414a;
-  --color-dark-shadow: rgba(255, 255, 255, 0.1);
-  --color-dark-stat-background: rgba(255, 255, 255, 0.2);
-  --color-dark-stat-text: rgba(255, 255, 255, 0.87);
-
-  /* Common Box Shadow */
-  --box-shadow-light: 0 4px 8px rgba(0, 0, 0, 0.1);
-  --box-shadow-dark: 0 4px 8px rgba(255, 255, 255, 0.1);
-
-  /* Default Theme */
-  --color-background: var(--color-light-background);
-  --color-text: var(--color-light-text);
-  --color-primary: var(--color-light-primary);
-  --color-primary-hover: var(--color-light-primary-hover);
-  --color-button-bg: var(--color-light-button-bg);
-  --color-border: var(--color-light-border);
-  --color-shadow: var(--box-shadow-light);
-  --color-stat-background: var(--color-light-stat-background);
-  --color-stat-text: var(--color-light-stat-text);
-}
-
 .ql-toolbar .ql-formats button,
 .ql-toolbar .ql-formats select,
 .ql-toolbar .ql-picker-label,
@@ -57,6 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: var(--color-shadow);
 }
 
 /* Styles communs pour les boutons align et color */
@@ -76,6 +34,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: var(--color-shadow);
 }
 
 /* Ajustements spécifiques pour les éléments select */
@@ -119,7 +78,7 @@ body.dark-theme .ql-picker-item:hover {
   background-color: rgba(75, 75, 75, 0.8);
   color: #ffffff;
   transform: scale(1.1);
-  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.3);
 }
 
 /* Effets actifs pour le thème sombre */
@@ -130,7 +89,6 @@ body.dark-theme .ql-picker-item:active {
   background-color: rgba(100, 100, 100, 0.9);
   color: #ffffff;
 }
-
 
 body {
   font-family: var(--font-family);
@@ -147,19 +105,21 @@ body {
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid var(--color-border);
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   background-color: var(--color-button-bg);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.3s, transform 0.3s;
   color: var(--color-text);
+  box-shadow: var(--color-shadow);
 }
 
 button:hover {
-  border-color: var(--color-primary);
+  background-color: var(--color-primary-hover);
+  transform: scale(1.05);
 }
 
 button:focus,
@@ -168,18 +128,20 @@ button:focus-visible {
 }
 
 .add-card-btn {
-  background-color: var(--color-border);
-  color: white;
-  border: none;
+  background-color: var(--color-button-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s, transform 0.3s;
   margin: 10px;
+  box-shadow: var(--color-shadow);
 }
 
 .add-card-btn:hover {
-  background-color: var(--color-shadow);
+  background-color: var(--color-primary-hover);
+  transform: scale(1.05);
 }
 
 /* Ajout des styles pour les champs de formulaire */
@@ -189,6 +151,7 @@ input, textarea {
   border: 1px solid var(--color-border);
   padding: 8px;
   border-radius: 5px;
+  box-shadow: var(--color-shadow);
 }
 
 input::placeholder, textarea::placeholder {

@@ -19,13 +19,12 @@
     bottom: 5px;
     right: 5px;
     font-size: 10px;
-    color: var(--color-stat-text); /* Utilisation de la couleur de texte des stats */
-    background: var(--color-stat-background); /* Utilisation de l'arrière-plan des stats */
+    color: var(--color-stat-text);
+    background: var(--color-stat-background);
     padding: 2px 5px;
     border-radius: 5px;
-    box-shadow: var(--color-shadow); /* Utilisation de la variable box-shadow */
+    box-shadow: var(--color-shadow);
 }
-
 
 .card {
     position: relative;
@@ -42,9 +41,16 @@
     border-radius: 10px;
     padding: 10px;
     overflow: hidden;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
     cursor: default;
     color: var(--color-text);
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px var(--color-shadow);
+    transform: translateY(-2px);
+    background-color: rgba(100, 100, 255, 0.1); /* Couleur de survol plus subtile */
+    color: var(--color-text); /* Assurer que le texte reste lisible */
 }
 
 .drag-handle {
@@ -83,6 +89,7 @@
     margin: 0 5px;
     opacity: 0.9;
     transition: background-color 0.3s ease, opacity 0.3s ease;
+    box-shadow: var(--color-shadow);
 }
 
 .header-container-btn:hover {

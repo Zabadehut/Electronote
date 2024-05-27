@@ -9,7 +9,7 @@
     color: var(--color-text);
     border: 1px solid var(--color-border);
     box-shadow: 0 4px 8px var(--color-shadow);
-    border-radius: 10px; /* Ajout de la bordure arrondie */
+    border-radius: 10px;
 }
 
 .note-taking-card.is-resizing .note-taking-card-content {
@@ -154,8 +154,8 @@
 .card:hover {
     box-shadow: 0 8px 16px var(--color-shadow);
     transform: translateY(-2px);
-    background-color: var(--color-primary-hover); /* Ajout de la couleur de fond au survol */
-    color: var(--color-light-text); /* Couleur du texte au survol */
+    background-color: rgba(100, 100, 255, 0.1); /* Couleur de survol plus subtile */
+    color: var(--color-text); /* Assurer que le texte reste lisible */
 }
 
 .note-taking-card.is-dragging .note-taking-card-content,
