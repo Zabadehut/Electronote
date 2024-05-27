@@ -3,7 +3,10 @@ import './ThemeSwitcher.css';
 
 const themes = [
     { name: 'Light', className: 'light-theme' },
-    { name: 'Dark', className: 'dark-theme' }
+    { name: 'Dark', className: 'dark-theme' },
+    { name: 'Blue', className: 'blue-theme' },
+    { name: 'Green', className: 'green-theme' },
+    { name: 'Red', className: 'red-theme' }
 ];
 
 type ThemeSwitcherProps = {

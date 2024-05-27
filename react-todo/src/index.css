@@ -25,9 +25,38 @@
   --color-dark-stat-background: rgba(255, 255, 255, 0.2);
   --color-dark-stat-text: rgba(255, 255, 255, 0.87);
 
-  /* Common Box Shadow */
-  --box-shadow-light: 0 4px 8px rgba(0, 0, 0, 0.1);
-  --box-shadow-dark: 0 4px 8px rgba(255, 255, 255, 0.1);
+  /* Blue Theme Colors */
+  --color-blue-background: #e0f7fa;
+  --color-blue-text: #00796b;
+  --color-blue-primary: #00acc1;
+  --color-blue-primary-hover: #00838f;
+  --color-blue-button-bg: #b2ebf2;
+  --color-blue-border: #4dd0e1;
+  --color-blue-shadow: rgba(0, 128, 128, 0.2);
+  --color-blue-stat-background: rgba(0, 128, 128, 0.1);
+  --color-blue-stat-text: #00796b;
+
+  /* Green Theme Colors */
+  --color-green-background: #e8f5e9;
+  --color-green-text: #2e7d32;
+  --color-green-primary: #4caf50;
+  --color-green-primary-hover: #388e3c;
+  --color-green-button-bg: #c8e6c9;
+  --color-green-border: #81c784;
+  --color-green-shadow: rgba(46, 125, 50, 0.2);
+  --color-green-stat-background: rgba(46, 125, 50, 0.1);
+  --color-green-stat-text: #2e7d32;
+
+  /* Red Theme Colors */
+  --color-red-background: #ffebee;
+  --color-red-text: #c62828;
+  --color-red-primary: #e53935;
+  --color-red-primary-hover: #b71c1c;
+  --color-red-button-bg: #ffcdd2;
+  --color-red-border: #ef9a9a;
+  --color-red-shadow: rgba(198, 40, 40, 0.2);
+  --color-red-stat-background: rgba(198, 40, 40, 0.1);
+  --color-red-stat-text: #c62828;
 
   /* Default Theme */
   --color-background: var(--color-light-background);
@@ -65,6 +94,42 @@ body.dark-theme {
   --color-stat-text: var(--color-dark-stat-text);
 }
 
+body.blue-theme {
+  --color-background: var(--color-blue-background);
+  --color-text: var(--color-blue-text);
+  --color-primary: var(--color-blue-primary);
+  --color-primary-hover: var(--color-blue-primary-hover);
+  --color-button-bg: var(--color-blue-button-bg);
+  --color-border: var(--color-blue-border);
+  --color-shadow: var(--color-blue-shadow);
+  --color-stat-background: var(--color-blue-stat-background);
+  --color-stat-text: var(--color-blue-stat-text);
+}
+
+body.green-theme {
+  --color-background: var(--color-green-background);
+  --color-text: var(--color-green-text);
+  --color-primary: var(--color-green-primary);
+  --color-primary-hover: var(--color-green-primary-hover);
+  --color-button-bg: var(--color-green-button-bg);
+  --color-border: var(--color-green-border);
+  --color-shadow: var(--color-green-shadow);
+  --color-stat-background: var(--color-green-stat-background);
+  --color-stat-text: var(--color-green-stat-text);
+}
+
+body.red-theme {
+  --color-background: var(--color-red-background);
+  --color-text: var(--color-red-text);
+  --color-primary: var(--color-red-primary);
+  --color-primary-hover: var(--color-red-primary-hover);
+  --color-button-bg: var(--color-red-button-bg);
+  --color-border: var(--color-red-border);
+  --color-shadow: var(--color-red-shadow);
+  --color-stat-background: var(--color-red-stat-background);
+  --color-stat-text: var(--color-red-stat-text);
+}
+
 body {
   font-family: var(--font-family);
   line-height: var(--line-height);
@@ -80,21 +145,19 @@ body {
 
 button {
   border-radius: 8px;
-  border: 1px solid var(--color-border);
+  border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   background-color: var(--color-button-bg);
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
+  transition: border-color 0.25s;
   color: var(--color-text);
-  box-shadow: var(--color-shadow);
 }
 
 button:hover {
-  background-color: var(--color-primary-hover);
-  transform: scale(1.05);
+  border-color: var(--color-primary);
 }
 
 button:focus,
@@ -103,20 +166,18 @@ button:focus-visible {
 }
 
 .add-card-btn {
-  background-color: var(--color-button-bg);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
+  background-color: var(--color-border);
+  color: white;
+  border: none;
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
+  transition: background-color 0.3s ease;
   margin: 10px;
-  box-shadow: var(--color-shadow);
 }
 
 .add-card-btn:hover {
-  background-color: var(--color-primary-hover);
-  transform: scale(1.05);
+  background-color: var(--color-shadow);
 }
 
 /* Ajout des styles pour les champs de formulaire */
@@ -126,7 +187,6 @@ input, textarea {
   border: 1px solid var(--color-border);
   padding: 8px;
   border-radius: 5px;
-  box-shadow: var(--color-shadow);
 }
 
 input::placeholder, textarea::placeholder {
