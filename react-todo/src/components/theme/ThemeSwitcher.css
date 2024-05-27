@@ -4,7 +4,7 @@
 
 .theme-switcher-popup {
     position: absolute;
-    top: 100%; /* Align the popup below the button */
+    top: 100%;
     left: 0;
     background: var(--color-background);
     border: 1px solid var(--color-border);
@@ -12,8 +12,9 @@
     box-shadow: 0 4px 8px var(--color-shadow);
     z-index: 1000;
     padding: 10px;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Affichage en grille */
+    gap: 5px;
 }
 
 .theme-preview {
@@ -21,8 +22,9 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-align: center;
-    margin-bottom: 5px;
     color: var(--color-text); /* For better readability */
+    border: 1px solid transparent;
+    border-radius: 5px;
 }
 
 .theme-preview.selected {
@@ -83,3 +85,62 @@
     color: var(--color-pastel-dark-text);
 }
 
+.theme1 {
+    background-color: #222831;
+    color: #EEEEEE;
+}
+
+.theme2 {
+    background-color: #E3FDFD;
+    color: #71C9CE;
+}
+
+.theme3 {
+    background-color: #F9F7F7;
+    color: #112D4E;
+}
+
+.theme4 {
+    background-color: #FFC7C7;
+    color: #8785A2;
+}
+
+.theme5 {
+    background-color: #FFF5E4;
+    color: #FF9494;
+}
+
+.theme6 {
+    background-color: #AD8B73;
+    color: #FFFBE9;
+}
+
+.theme7 {
+    background-color: #08D9D6;
+    color: #EAEAEA;
+}
+
+.theme8 {
+    background-color: #F9ED69;
+    color: #6A2C70;
+}
+
+.theme9 {
+    background-color: #F4EEFF;
+    color: #424874;
+}
+
+.theme10 {
+    background-color: #F38181;
+    color: #95E1D3;
+}
+
+.theme11 {
+    background-color: #1B262C;
+    color: #BBE1FA;
+}
+
+.theme12 {
+    background-color: #A8D8EA;
+    color: #FFFFD2;
+}

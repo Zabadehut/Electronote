@@ -154,8 +154,8 @@
 .card:hover {
     box-shadow: 0 8px 16px var(--color-shadow);
     transform: translateY(-2px);
-    background-color: rgba(100, 100, 255, 0.1); /* Couleur de survol plus subtile */
-    color: var(--color-text); /* Assurer que le texte reste lisible */
+    background-color: rgba(100, 100, 255, 0.1);
+    color: var(--color-text);
 }
 
 .note-taking-card.is-dragging .note-taking-card-content,

@@ -109,6 +109,128 @@
   --color-pastel-dark-stat-background: rgba(179, 157, 219, 0.2);
   --color-pastel-dark-stat-text: #d1c4e9;
 
+  /* Additional Themes */
+  /* Theme 1 */
+  --color-theme1-background: #222831;
+  --color-theme1-text: #EEEEEE;
+  --color-theme1-primary: #00ADB5;
+  --color-theme1-primary-hover: #00796b;
+  --color-theme1-button-bg: #393E46;
+  --color-theme1-border: #004d40;
+  --color-theme1-shadow: rgba(0, 150, 136, 0.1);
+  --color-theme1-stat-background: rgba(0, 150, 136, 0.1);
+  --color-theme1-stat-text: #00ADB5;
+
+  --color-theme2-background: #E3FDFD;
+  --color-theme2-text: #71C9CE;
+  --color-theme2-primary: #A6E3E9;
+  --color-theme2-primary-hover: #00897b;
+  --color-theme2-button-bg: #CBF1F5;
+  --color-theme2-border: #004d40;
+  --color-theme2-shadow: rgba(0, 150, 136, 0.1);
+  --color-theme2-stat-background: rgba(0, 150, 136, 0.1);
+  --color-theme2-stat-text: #00796b;
+
+  --color-theme3-background: #F9F7F7;
+  --color-theme3-text: #112D4E;
+  --color-theme3-primary: #3F72AF;
+  --color-theme3-primary-hover: #535bf2;
+  --color-theme3-button-bg: #DBE2EF;
+  --color-theme3-border: #004d40;
+  --color-theme3-shadow: rgba(0, 150, 136, 0.1);
+  --color-theme3-stat-background: rgba(0, 150, 136, 0.1);
+  --color-theme3-stat-text: #213547;
+
+  --color-theme4-background: #FFC7C7;
+  --color-theme4-text: #8785A2;
+  --color-theme4-primary: #F6F6F6;
+  --color-theme4-primary-hover: #535bf2;
+  --color-theme4-button-bg: #FFE2E2;
+  --color-theme4-border: #004d40;
+  --color-theme4-shadow: rgba(0, 150, 136, 0.1);
+  --color-theme4-stat-background: rgba(0, 150, 136, 0.1);
+  --color-theme4-stat-text: #213547;
+
+  --color-theme5-background: #FFF5E4;
+  --color-theme5-text: #FF9494;
+  --color-theme5-primary: #FFD1D1;
+  --color-theme5-primary-hover: #535bf2;
+  --color-theme5-button-bg: #FFE3E1;
+  --color-theme5-border: #004d40;
+  --color-theme5-shadow: rgba(0, 150, 136, 0.1);
+  --color-theme5-stat-background: rgba(0, 150, 136, 0.1);
+  --color-theme5-stat-text: #213547;
+
+  --color-theme6-background: #AD8B73;
+  --color-theme6-text: #FFFBE9;
+  --color-theme6-primary: #E3CAA5;
+  --color-theme6-primary-hover: #535bf2;
+  --color-theme6-button-bg: #CEAB93;
+  --color-theme6-border: #004d40;
+  --color-theme6-shadow: rgba(0, 150, 136, 0.1);
+  --color-theme6-stat-background: rgba(0, 150, 136, 0.1);
+  --color-theme6-stat-text: #213547;
+
+  --color-theme7-background: #08D9D6;
+  --color-theme7-text: #EAEAEA;
+  --color-theme7-primary: #FF2E63;
+  --color-theme7-primary-hover: #535bf2;
+  --color-theme7-button-bg: #252A34;
+  --color-theme7-border: #004d40;
+  --color-theme7-shadow: rgba(0, 150, 136, 0.1);
+  --color-theme7-stat-background: rgba(0, 150, 136, 0.1);
+  --color-theme7-stat-text: #213547;
+
+  --color-theme8-background: #F9ED69;
+  --color-theme8-text: #6A2C70;
+  --color-theme8-primary: #B83B5E;
+  --color-theme8-primary-hover: #535bf2;
+  --color-theme8-button-bg: #F08A5D;
+  --color-theme8-border: #004d40;
+  --color-theme8-shadow: rgba(0, 150, 136, 0.1);
+  --color-theme8-stat-background: rgba(0, 150, 136, 0.1);
+  --color-theme8-stat-text: #213547;
+
+  --color-theme9-background: #F4EEFF;
+  --color-theme9-text: #424874;
+  --color-theme9-primary: #A6B1E1;
+  --color-theme9-primary-hover: #535bf2;
+  --color-theme9-button-bg: #DCD6F7;
+  --color-theme9-border: #004d40;
+  --color-theme9-shadow: rgba(0, 150, 136, 0.1);
+  --color-theme9-stat-background: rgba(0, 150, 136, 0.1);
+  --color-theme9-stat-text: #213547;
+
+  --color-theme10-background: #F38181;
+  --color-theme10-text: #95E1D3;
+  --color-theme10-primary: #EAFFD0;
+  --color-theme10-primary-hover: #535bf2;
+  --color-theme10-button-bg: #FCE38A;
+  --color-theme10-border: #004d40;
+  --color-theme10-shadow: rgba(0, 150, 136, 0.1);
+  --color-theme10-stat-background: rgba(0, 150, 136, 0.1);
+  --color-theme10-stat-text: #213547;
+
+  --color-theme11-background: #1B262C;
+  --color-theme11-text: #BBE1FA;
+  --color-theme11-primary: #3282B8;
+  --color-theme11-primary-hover: #535bf2;
+  --color-theme11-button-bg: #0F4C75;
+  --color-theme11-border: #004d40;
+  --color-theme11-shadow: rgba(0, 150, 136, 0.1);
+  --color-theme11-stat-background: rgba(0, 150, 136, 0.1);
+  --color-theme11-stat-text: #213547;
+
+  --color-theme12-background: #A8D8EA;
+  --color-theme12-text: #FFFFD2;
+  --color-theme12-primary: #FCBAD3;
+  --color-theme12-primary-hover: #535bf2;
+  --color-theme12-button-bg: #AA96DA;
+  --color-theme12-border: #004d40;
+  --color-theme12-shadow: rgba(0, 150, 136, 0.1);
+  --color-theme12-stat-background: rgba(0, 150, 136, 0.1);
+  --color-theme12-stat-text: #213547;
+
   /* Default Theme */
   --color-background: var(--color-light-background);
   --color-text: var(--color-light-text);
@@ -116,7 +238,7 @@
   --color-primary-hover: var(--color-light-primary-hover);
   --color-button-bg: var(--color-light-button-bg);
   --color-border: var(--color-light-border);
-  --color-shadow: var(--box-shadow-light);
+  --color-shadow: var(--color-dark-shadow);
   --color-stat-background: var(--color-light-stat-background);
   --color-stat-text: var(--color-light-stat-text);
 }
@@ -241,34 +363,182 @@ body.pastel-dark-theme {
   --color-stat-text: var(--color-pastel-dark-stat-text);
 }
 
+body.theme1 {
+  --color-background: var(--color-theme1-background);
+  --color-text: var(--color-theme1-text);
+  --color-primary: var(--color-theme1-primary);
+  --color-primary-hover: var(--color-theme1-primary-hover);
+  --color-button-bg: var(--color-theme1-button-bg);
+  --color-border: var(--color-theme1-border);
+  --color-shadow: var(--color-theme1-shadow);
+  --color-stat-background: var(--color-theme1-stat-background);
+  --color-stat-text: var(--color-theme1-stat-text);
+}
+
+body.theme2 {
+  --color-background: var(--color-theme2-background);
+  --color-text: var(--color-theme2-text);
+  --color-primary: var(--color-theme2-primary);
+  --color-primary-hover: var(--color-theme2-primary-hover);
+  --color-button-bg: var(--color-theme2-button-bg);
+  --color-border: var(--color-theme2-border);
+  --color-shadow: var(--color-theme2-shadow);
+  --color-stat-background: var(--color-theme2-stat-background);
+  --color-stat-text: var(--color-theme2-stat-text);
+}
+
+body.theme3 {
+  --color-background: var(--color-theme3-background);
+  --color-text: var(--color-theme3-text);
+  --color-primary: var(--color-theme3-primary);
+  --color-primary-hover: var(--color-theme3-primary-hover);
+  --color-button-bg: var(--color-theme3-button-bg);
+  --color-border: var(--color-theme3-border);
+  --color-shadow: var(--color-theme3-shadow);
+  --color-stat-background: var(--color-theme3-stat-background);
+  --color-stat-text: var(--color-theme3-stat-text);
+}
+
+body.theme4 {
+  --color-background: var(--color-theme4-background);
+  --color-text: var(--color-theme4-text);
+  --color-primary: var(--color-theme4-primary);
+  --color-primary-hover: var(--color-theme4-primary-hover);
+  --color-button-bg: var(--color-theme4-button-bg);
+  --color-border: var(--color-theme4-border);
+  --color-shadow: var(--color-theme4-shadow);
+  --color-stat-background: var(--color-theme4-stat-background);
+  --color-stat-text: var(--color-theme4-stat-text);
+}
+
+body.theme5 {
+  --color-background: var(--color-theme5-background);
+  --color-text: var(--color-theme5-text);
+  --color-primary: var(--color-theme5-primary);
+  --color-primary-hover: var(--color-theme5-primary-hover);
+  --color-button-bg: var(--color-theme5-button-bg);
+  --color-border: var(--color-theme5-border);
+  --color-shadow: var(--color-theme5-shadow);
+  --color-stat-background: var(--color-theme5-stat-background);
+  --color-stat-text: var(--color-theme5-stat-text);
+}
+
+body.theme6 {
+  --color-background: var(--color-theme6-background);
+  --color-text: var(--color-theme6-text);
+  --color-primary: var(--color-theme6-primary);
+  --color-primary-hover: var(--color-theme6-primary-hover);
+  --color-button-bg: var(--color-theme6-button-bg);
+  --color-border: var(--color-theme6-border);
+  --color-shadow: var(--color-theme6-shadow);
+  --color-stat-background: var(--color-theme6-stat-background);
+  --color-stat-text: var(--color-theme6-stat-text);
+}
+
+body.theme7 {
+  --color-background: var(--color-theme7-background);
+  --color-text: var(--color-theme7-text);
+  --color-primary: var(--color-theme7-primary);
+  --color-primary-hover: var(--color-theme7-primary-hover);
+  --color-button-bg: var(--color-theme7-button-bg);
+  --color-border: var(--color-theme7-border);
+  --color-shadow: var(--color-theme7-shadow);
+  --color-stat-background: var(--color-theme7-stat-background);
+  --color-stat-text: var(--color-theme7-stat-text);
+}
+
+body.theme8 {
+  --color-background: var(--color-theme8-background);
+  --color-text: var(--color-theme8-text);
+  --color-primary: var(--color-theme8-primary);
+  --color-primary-hover: var(--color-theme8-primary-hover);
+  --color-button-bg: var(--color-theme8-button-bg);
+  --color-border: var(--color-theme8-border);
+  --color-shadow: var(--color-theme8-shadow);
+  --color-stat-background: var(--color-theme8-stat-background);
+  --color-stat-text: var(--color-theme8-stat-text);
+}
+
+body.theme9 {
+  --color-background: var(--color-theme9-background);
+  --color-text: var(--color-theme9-text);
+  --color-primary: var(--color-theme9-primary);
+  --color-primary-hover: var(--color-theme9-primary-hover);
+  --color-button-bg: var(--color-theme9-button-bg);
+  --color-border: var(--color-theme9-border);
+  --color-shadow: var(--color-theme9-shadow);
+  --color-stat-background: var(--color-theme9-stat-background);
+  --color-stat-text: var(--color-theme9-stat-text);
+}
+
+body.theme10 {
+  --color-background: var(--color-theme10-background);
+  --color-text: var(--color-theme10-text);
+  --color-primary: var(--color-theme10-primary);
+  --color-primary-hover: var(--color-theme10-primary-hover);
+  --color-button-bg: var(--color-theme10-button-bg);
+  --color-border: var(--color-theme10-border);
+  --color-shadow: var(--color-theme10-shadow);
+  --color-stat-background: var(--color-theme10-stat-background);
+  --color-stat-text: var(--color-theme10-stat-text);
+}
+
+body.theme11 {
+  --color-background: var(--color-theme11-background);
+  --color-text: var(--color-theme11-text);
+  --color-primary: var(--color-theme11-primary);
+  --color-primary-hover: var(--color-theme11-primary-hover);
+  --color-button-bg: var(--color-theme11-button-bg);
+  --color-border: var(--color-theme11-border);
+  --color-shadow: var(--color-theme11-shadow);
+  --color-stat-background: var(--color-theme11-stat-background);
+  --color-stat-text: var(--color-theme11-stat-text);
+}
+
+body.theme12 {
+  --color-background: var(--color-theme12-background);
+  --color-text: var(--color-theme12-text);
+  --color-primary: var(--color-theme12-primary);
+  --color-primary-hover: var(--color-theme12-primary-hover);
+  --color-button-bg: var(--color-theme12-button-bg);
+  --color-border: var(--color-theme12-border);
+  --color-shadow: var(--color-theme12-shadow);
+  --color-stat-background: var(--color-theme12-stat-background);
+  --color-stat-text: var(--color-theme12-stat-text);
+}
+
+
 body {
   font-family: var(--font-family);
   line-height: var(--line-height);
   font-weight: var(--font-weight);
-  background-color: var(--color-background);
+  background: var(--gradient-background);
   color: var(--color-text);
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  transition: background-color 0.3s ease;
 }
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid var(--color-border);
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   background-color: var(--color-button-bg);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.25s;
   color: var(--color-text);
 }
 
 button:hover {
   border-color: var(--color-primary);
+  background-color: var(--color-primary-hover);
+  color: var(--color-background);
 }
 
 button:focus,
@@ -291,7 +561,6 @@ button:focus-visible {
   background-color: var(--color-shadow);
 }
 
-/* Ajout des styles pour les champs de formulaire */
 input, textarea {
   background-color: var(--color-background);
   color: var(--color-text);

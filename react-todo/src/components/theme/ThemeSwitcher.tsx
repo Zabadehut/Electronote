@@ -11,7 +11,19 @@ const themes = [
     { name: 'Red Light', className: 'red-light-theme' },
     { name: 'Red Dark', className: 'red-dark-theme' },
     { name: 'Pastel Light', className: 'pastel-light-theme' },
-    { name: 'Pastel Dark', className: 'pastel-dark-theme' }
+    { name: 'Pastel Dark', className: 'pastel-dark-theme' },
+    { name: 'Cool Aqua', className: 'theme1' },
+    { name: 'Classic Blue', className: 'theme2' },
+    { name: 'Soft Pink', className: 'theme3' },
+    { name: 'Warm Peach', className: 'theme4' },
+    { name: 'Earthy Brown', className: 'theme5' },
+    { name: 'Bright Cyan', className: 'theme6' },
+    { name: 'Sunny Yellow', className: 'theme7' },
+    { name: 'Lavender Dream', className: 'theme8' },
+    { name: 'Coral Sunset', className: 'theme9' },
+    { name: 'Midnight Blue', className: 'theme10' },
+    { name: 'Pale Sky', className: 'theme11' },
+    { name: 'Dark Mode', className: 'theme12' }
 ];
 
 type ThemeSwitcherProps = {
