@@ -23,7 +23,8 @@ const themes = [
     { name: 'Coral Sunset', className: 'theme9' },
     { name: 'Midnight Blue', className: 'theme10' },
     { name: 'Pale Sky', className: 'theme11' },
-    { name: 'Dark Mode', className: 'theme12' }
+    { name: 'Candy Purple', className: 'theme12' },
+    { name: 'Night Blue', className: 'modern-theme' } // Ajout du nouveau thème "Modern"
 ];
 
 type ThemeSwitcherProps = {

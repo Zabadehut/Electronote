@@ -16,21 +16,18 @@
 }
 
 .header-container-btn {
-    padding: 10px 15px;
     background-color: var(--color-primary);
-    border: none;
     color: var(--color-text);
+    border: none;
     cursor: pointer;
     border-radius: 8px;
-    margin: 0 5px;
-    opacity: 0.9;
-    transition: background-color 0.3s ease, opacity 0.3s ease;
     box-shadow: var(--color-shadow);
+    transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
 .header-container-btn:hover {
-    opacity: 1;
     background-color: var(--color-primary-hover);
+    opacity: 1;
 }
 
 .header-hidden {
@@ -40,7 +37,6 @@
 }
 
 .grid-layout-container {
-    overflow-y: auto;
     background-color: var(--color-background);
     transition: padding-top 0.3s ease;
 }

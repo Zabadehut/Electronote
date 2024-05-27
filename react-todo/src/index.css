@@ -3,6 +3,28 @@
   --line-height: 1.5;
   --font-weight: 400;
 
+  /* Modern Theme Colors */
+  --color-modern-background: #1b1f3b;
+  --color-modern-text: #ffffff;
+  --color-modern-primary: #29abe2;
+  --color-modern-primary-hover: #1d8dbc;
+  --color-modern-button-bg: #2c2f48;
+  --color-modern-border: #3c3f58;
+  --color-modern-shadow: rgba(0, 150, 255, 0.3);
+  --color-modern-stat-background: rgba(0, 150, 255, 0.1);
+  --color-modern-stat-text: #29abe2;
+
+  /* Default Theme */
+  --color-background: var(--color-modern-background);
+  --color-text: var(--color-modern-text);
+  --color-primary: var(--color-modern-primary);
+  --color-primary-hover: var(--color-modern-primary-hover);
+  --color-button-bg: var(--color-modern-button-bg);
+  --color-border: var(--color-modern-border);
+  --color-shadow: var(--color-modern-shadow);
+  --color-stat-background: var(--color-modern-stat-background);
+  --color-stat-text: var(--color-modern-stat-text);
+
   /* Light Theme Colors */
   --color-light-background: #ffffff;
   --color-light-text: #213547;
@@ -231,17 +253,8 @@
   --color-theme12-stat-background: rgba(0, 150, 136, 0.1);
   --color-theme12-stat-text: #213547;
 
-  /* Default Theme */
-  --color-background: var(--color-light-background);
-  --color-text: var(--color-light-text);
-  --color-primary: var(--color-light-primary);
-  --color-primary-hover: var(--color-light-primary-hover);
-  --color-button-bg: var(--color-light-button-bg);
-  --color-border: var(--color-light-border);
-  --color-shadow: var(--color-dark-shadow);
-  --color-stat-background: var(--color-light-stat-background);
-  --color-stat-text: var(--color-light-stat-text);
 }
+
 
 body.light-theme {
   --color-background: var(--color-light-background);
@@ -508,11 +521,23 @@ body.theme12 {
 }
 
 
+body.modern-theme {
+  --color-background: var(--color-modern-background);
+  --color-text: var(--color-modern-text);
+  --color-primary: var(--color-modern-primary);
+  --color-primary-hover: var(--color-modern-primary-hover);
+  --color-button-bg: var(--color-modern-button-bg);
+  --color-border: var(--color-modern-border);
+  --color-shadow: var(--color-modern-shadow);
+  --color-stat-background: var(--color-modern-stat-background);
+  --color-stat-text: var(--color-modern-stat-text);
+}
+
 body {
   font-family: var(--font-family);
   line-height: var(--line-height);
   font-weight: var(--font-weight);
-  background: var(--gradient-background);
+  background-color: var(--color-background);
   color: var(--color-text);
   margin: 0;
   display: flex;
@@ -571,4 +596,32 @@ input, textarea {
 
 input::placeholder, textarea::placeholder {
   color: var(--color-text);
+}
+
+.theme-switcher-popup {
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 8px var(--color-shadow);
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Affichage en grille */
+  gap: 5px;
+}
+
+.theme-preview {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  color: var(--color-text);
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+
+.theme-preview.selected {
+  border: 2px solid var(--color-primary);
+}
+
+.theme-preview:hover {
+  background-color: var(--color-shadow);
 }

@@ -10,6 +10,13 @@
     border: 1px solid var(--color-border);
     box-shadow: 0 4px 8px var(--color-shadow);
     border-radius: 10px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+}
+
+.note-taking-card:hover {
+    box-shadow: 0 8px 16px var(--color-shadow);
+    transform: translateY(-1px);
+    background-color: rgba(0, 0, 0, 0.2); /* Subtle hover effect */
 }
 
 .note-taking-card.is-resizing .note-taking-card-content {
