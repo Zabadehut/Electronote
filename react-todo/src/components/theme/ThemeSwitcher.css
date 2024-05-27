@@ -4,7 +4,7 @@
 
 .theme-switcher-popup {
     position: absolute;
-    top: 100%; /* Ajoutez cette ligne pour que la popup s'aligne sous le bouton */
+    top: 100%; /* Align the popup below the button */
     left: 0;
     background: var(--color-background);
     border: 1px solid var(--color-border);
@@ -22,7 +22,7 @@
     transition: background-color 0.3s ease;
     text-align: center;
     margin-bottom: 5px;
-    color: var(--color-text); /* Pour une meilleure lisibilité */
+    color: var(--color-text); /* For better readability */
 }
 
 .theme-preview.selected {
@@ -43,17 +43,42 @@
     color: var(--color-dark-text);
 }
 
-.blue-theme {
-    background-color: var(--color-blue-background);
-    color: var(--color-blue-text);
+.blue-light-theme {
+    background-color: var(--color-blue-light-background);
+    color: var(--color-blue-light-text);
 }
 
-.green-theme {
-    background-color: var(--color-green-background);
-    color: var(--color-green-text);
+.blue-dark-theme {
+    background-color: var(--color-blue-dark-background);
+    color: var(--color-blue-dark-text);
 }
 
-.red-theme {
-    background-color: var(--color-red-background);
-    color: var(--color-red-text);
+.green-light-theme {
+    background-color: var(--color-green-light-background);
+    color: var(--color-green-light-text);
+}
+
+.green-dark-theme {
+    background-color: var(--color-green-dark-background);
+    color: var(--color-green-dark-text);
+}
+
+.red-light-theme {
+    background-color: var(--color-red-light-background);
+    color: var(--color-red-light-text);
+}
+
+.red-dark-theme {
+    background-color: var(--color-red-dark-background);
+    color: var(--color-red-dark-text);
+}
+
+.pastel-light-theme {
+    background-color: var(--color-pastel-light-background);
+    color: var(--color-pastel-light-text);
+}
+
+.pastel-dark-theme {
+    background-color: var(--color-pastel-dark-background);
+    color: var(--color-pastel-dark-text);
 }
