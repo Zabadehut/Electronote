@@ -1,3 +1,4 @@
+
 .header-container {
     display: flex;
     justify-content: flex-start;
@@ -116,9 +117,3 @@
     background-color: var(--color-shadow);
 }
 
-.no-select {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
