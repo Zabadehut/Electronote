@@ -5,48 +5,45 @@
     justify-content: center;
     color: var(--color-text);
     padding: 10px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
 }
 
-.digital-clock {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.date-display {
-    font-size: 1rem;
-    margin-bottom: 20px;
-}
-
-.analog-clock {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    border: 5px solid var(--color-border);
-    border-radius: 50%;
+.wrapper {
     display: flex;
-    align-items: center;
     justify-content: center;
-    background: var(--color-background);
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-background);
 }
 
-.hand {
-    position: absolute;
-    width: 50%;
-    height: 2px;
-    background: var(--color-text);
-    transform-origin: 100%;
-    transition: transform 0.5s ease-in-out;
+#app-horloge {
+    width: 80%;
+    height: 80%;
 }
 
-.hour {
-    height: 4px;
+svg {
+    width: 100%;
+    height: 100%;
 }
 
-.center {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: var(--color-text);
-    border-radius: 50%;
+rect {
+    transform-origin: center center;
+    fill: var(--color-text);
+}
+
+circle.center {
+    fill: var(--color-text);
+}
+
+circle.border {
+    stroke-width: 1%;
+    fill: none;
+    stroke: var(--color-text);
+}
+
+.seconds, .minutes, .hours {
+    transform-origin: center center;
 }

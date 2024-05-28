@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, memo } from 'react';
 import { IconButton, Stack, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import PushPinIcon from '@mui/icons-material/PushPin';
+import CloseIcon from '@mui/icons-material/Close';
 import { v4 as uuidv4 } from 'uuid';
 import TextContentCard from './models/TextContentCard';
 import CodeContentCard from './models/CodeContentCard';
@@ -18,6 +19,7 @@ import './CardId.css';
 
 // Importer le Web Worker
 import Worker from './cardWorker?worker';
+import HourTime from './times/HourTime.tsx'; // Assurez-vous que le chemin est correct
 
 export type CardProps = {
     id: string;
@@ -41,7 +43,8 @@ export type CardIdProps = {
     isPinned: boolean;
     disableDragAndDrop?: boolean;
     onPinClicked?: (id: string) => void;
-    type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'search' | 'note' | 'none' | 'rss' | 'you' | 'loadContent';
+    onClose?: (id: string) => void;
+    type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'search' | 'note' | 'none' | 'rss' | 'you' | 'loadContent' | 'hourTime';
     cards: CardProps[];
     isResizing: boolean;
     isDragging: boolean;
@@ -114,6 +117,15 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
     const disableDrag = () => setIsDraggable(false);
     const enableDrag = () => setIsDraggable(true);
 
+    const handleTimeUpdate = (time: Date) => {
+        console.log("Current Time Updated: ", time);
+        // Vous pouvez ajouter toute autre logique que vous souhaitez ici, par exemple, mettre à jour l'état du composant parent.
+    };
+
+    const handleClose = () => {
+        props.onClose?.(props.id);
+    };
+
     const renderCard = () => {
         const cardProps = {
             ...props,
@@ -143,6 +155,8 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                 return <FluxRssReader query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag} />;
             case 'loadContent':
                 return <LoadContentCard title={props.title} content={props.content} />;
+            case 'hourTime':
+                return <HourTime onTimeUpdate={handleTimeUpdate} />;
             default:
                 return <div>Unsupported card type</div>;
         }
@@ -150,49 +164,57 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
 
     return (
         <div className={`card ${selectedType} ${props.isResizing ? 'is-resizing' : ''} ${props.isDragging ? 'is-dragging' : ''}`} id={props.id}>
-            <h4>{props.title}</h4>
+            {selectedType !== 'hourTime' && <h4>{props.title}</h4>}
             {renderCard()}
             <Stack direction="row" spacing={1} sx={{ position: 'absolute', top: 5, right: 5 }}>
-                <IconButton onClick={handlePinClick} color="primary" aria-label="pin card">
-                    <PushPinIcon />
+                {selectedType !== 'hourTime' && (
+                    <IconButton onClick={handlePinClick} color="primary" aria-label="pin card">
+                        <PushPinIcon />
+                    </IconButton>
+                )}
+                <IconButton onClick={handleClose} color="secondary" aria-label="close card">
+                    <CloseIcon />
                 </IconButton>
-                <Select
-                    value={selectedType}
-                    onChange={handleChangeType}
-                    displayEmpty
-                    inputProps={{ 'aria-label': 'Without label' }}
-                    sx={{
-                        mt: 2,
-                        minWidth: 120,
-                        backgroundColor: 'var(--color-button-bg)',
-                        color: 'var(--color-text)',
-                        '& .MuiSelect-select': {
+                {selectedType !== 'hourTime' && (
+                    <Select
+                        value={selectedType}
+                        onChange={handleChangeType}
+                        displayEmpty
+                        inputProps={{ 'aria-label': 'Without label' }}
+                        sx={{
+                            mt: 2,
+                            minWidth: 120,
                             backgroundColor: 'var(--color-button-bg)',
                             color: 'var(--color-text)',
-                        },
-                        '& .MuiOutlinedInput-notchedOutline': {
-                            borderColor: 'var(--color-border)',
-                        },
-                        '&:hover .MuiOutlinedInput-notchedOutline': {
-                            borderColor: 'var(--color-primary-hover)',
-                        },
-                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                            borderColor: 'var(--color-primary)',
-                        }
-                    }}
-                >
-                    <MenuItem value=""><em>None</em></MenuItem>
-                    <MenuItem value="search">Search</MenuItem>
-                    <MenuItem value="note">Note</MenuItem>
-                    <MenuItem value="text">Text</MenuItem>
-                    <MenuItem value="code">Code</MenuItem>
-                    <MenuItem value="file">File</MenuItem>
-                    <MenuItem value="web">Web</MenuItem>
-                    <MenuItem value="you">Youtube</MenuItem>
-                    <MenuItem value="weather">Weather</MenuItem>
-                    <MenuItem value="rss">RSS</MenuItem>
-                    <MenuItem value="loadContent">Load Content</MenuItem>
-                </Select>
+                            '& .MuiSelect-select': {
+                                backgroundColor: 'var(--color-button-bg)',
+                                color: 'var(--color-text)',
+                            },
+                            '& .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'var(--color-border)',
+                            },
+                            '&:hover .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'var(--color-primary-hover)',
+                            },
+                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'var(--color-primary)',
+                            }
+                        }}
+                    >
+                        <MenuItem value=""><em>None</em></MenuItem>
+                        <MenuItem value="search">Search</MenuItem>
+                        <MenuItem value="note">Note</MenuItem>
+                        <MenuItem value="text">Text</MenuItem>
+                        <MenuItem value="code">Code</MenuItem>
+                        <MenuItem value="file">File</MenuItem>
+                        <MenuItem value="web">Web</MenuItem>
+                        <MenuItem value="you">Youtube</MenuItem>
+                        <MenuItem value="weather">Weather</MenuItem>
+                        <MenuItem value="rss">RSS</MenuItem>
+                        <MenuItem value="loadContent">Load Content</MenuItem>
+                        <MenuItem value="hourTime">Hour Time</MenuItem>
+                    </Select>
+                )}
             </Stack>
         </div>
     );
