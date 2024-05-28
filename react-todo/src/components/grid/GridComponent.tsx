@@ -88,6 +88,11 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
         setResizingCardId(null);
         document.body.classList.remove('no-select');
     };
+
+    const handleCloseCard = (id: string) => {
+        const updatedCards = data.filter(card => card.id !== id);
+        setData(updatedCards);
+    };
     return (
         <div>
             <div className={`header-container ${headerVisible ? "" : "header-hidden"}`}>
@@ -140,7 +145,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData }) => {
                             {item.type === 'loadContent' ? (
                                 <LoadContentCard title={item.title} content={item.content} />
                             ) : (
-                                <CardId {...item} changeCardType={changeCardType} isResizing={resizingCardId === item.id} isDragging={draggingCardId === item.id} />
+                                <CardId {...item} changeCardType={changeCardType} isResizing={resizingCardId === item.id} isDragging={draggingCardId === item.id} onClose={handleCloseCard} />
                             )}
                         </div>
                     ))}

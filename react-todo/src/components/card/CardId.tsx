@@ -88,7 +88,9 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         initializeWorker();
 
         return () => {
-            workerRef.current?.terminate();
+            if (workerRef.current) {
+                workerRef.current.terminate();
+            }
         };
     }, [props.id]);
 
@@ -123,6 +125,9 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
     };
 
     const handleClose = () => {
+        if (workerRef.current) {
+            workerRef.current.terminate();
+        }
         props.onClose?.(props.id);
     };
 
