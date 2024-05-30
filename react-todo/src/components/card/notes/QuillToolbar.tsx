@@ -1,10 +1,14 @@
-import Quill from 'quill';
 import React from 'react';
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css';
+import ImageResize from 'quill-image-resize';
 
 // Définir l'interface pour les icônes
 interface QuillIcons {
     [key: string]: string | { [key: string]: string };
 }
+
+Quill.register('modules/imageResize', ImageResize);
 
 // Importer les icônes de Quill
 const icons = Quill.import('ui/icons') as QuillIcons;
