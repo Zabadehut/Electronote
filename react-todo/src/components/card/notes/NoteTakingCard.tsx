@@ -5,6 +5,7 @@ import ImageResize from 'quill-image-resize';
 import './NoteTakingCard.css';
 import QuillToolbar, { modules, formats } from './QuillToolbar';
 import { v4 as uuidv4 } from 'uuid';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import debounce from 'lodash.debounce';
 import { Typography } from '@mui/material';
 
@@ -132,9 +133,9 @@ const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
                 <QuillToolbar toolbarId={toolbarId} />
                 <div ref={quillRef} className="quill-editor-container" />
             </div>
-            {props.isResizing || props.isDragging ? (
+            {(props.isResizing || props.isDragging) && (
                 <div className="loader"></div>
-            ) : null}
+            )}
             <div className="note-taking-controls">
                 {isEditing ? (
                     <button onClick={handleSaveClick}>Enregistrer</button>

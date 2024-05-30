@@ -1,3 +1,4 @@
+/* Style pour la carte de prise de notes */
 .note-taking-card {
     position: relative;
     height: 100%;
@@ -16,14 +17,16 @@
 .note-taking-card:hover {
     box-shadow: 0 8px 16px var(--color-shadow);
     transform: translateY(-1px);
-    background-color: rgba(0, 0, 0, 0.3); /* Subtle hover effect */
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
-.note-taking-card.is-resizing .note-taking-card-content {
+.note-taking-card.is-resizing .note-taking-card-content,
+.note-taking-card.is-dragging .note-taking-card-content {
     display: none;
 }
 
-.note-taking-card.is-resizing .loader {
+.note-taking-card.is-resizing .loader,
+.note-taking-card.is-dragging .loader {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,6 +34,7 @@
     width: 100%;
 }
 
+/* Style pour le loader */
 .loader {
     border: 16px solid #f3f3f3;
     border-top: 16px solid var(--color-primary);
@@ -61,16 +65,104 @@
     background-color: #f0f0f0;
 }
 
+
+
+/* Styles pour la toolbar Quill */
+.ql-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2px;
+    border-radius: 5px;
+}
+
+.ql-toolbar .ql-formats {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.ql-toolbar .ql-formats button,
+.ql-toolbar .ql-formats select,
+.ql-toolbar .ql-picker-label,
+.ql-toolbar .ql-picker-item {
+    background-color: var(--color-button-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    border-radius: 4px;
+    margin: 2px;
+    padding: 0 10px;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    font-size: 16px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--color-shadow);
+}
+
+.ql-toolbar .ql-formats .fa,
+.ql-toolbar .ql-formats button svg,
+.ql-toolbar .ql-formats .ql-picker-label svg,
+.ql-toolbar .ql-formats .ql-picker-item svg {
+    font-size: 16px;
+    fill: var(--color-text);
+    width: 24px;
+    height: 24px;
+}
+
+.ql-toolbar .ql-formats button:hover,
+.ql-toolbar .ql-formats select:hover,
+.ql-toolbar .ql-picker-label:hover,
+.ql-toolbar .ql-picker-item:hover {
+    background-color: var(--color-primary-hover);
+    color: var(--color-background);
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px var(--color-shadow);
+}
+
+body.dark-theme .ql-toolbar {
+    background-color: var(--color-dark-background) !important;
+    border: 1px solid var(--color-dark-border) !important;
+}
+
+body.dark-theme .ql-toolbar button,
+body.dark-theme .ql-toolbar .ql-picker-label,
+body.dark-theme .ql-toolbar .ql-picker-item {
+    color: var(--color-dark-text) !important;
+    background-color: var(--color-dark-button-bg) !important;
+    border: 1px solid var(--color-dark-border) !important;
+}
+
+body.dark-theme .ql-toolbar button:hover,
+body.dark-theme .ql-toolbar .ql-picker-label:hover,
+body.dark-theme .ql-toolbar .ql-picker-item:hover {
+    background-color: var(--color-dark-primary-hover) !important;
+    color: var(--color-dark-text) !important;
+}
+
+body.dark-theme .ql-toolbar button svg {
+    fill: var(--color-dark-text) !important;
+}
+
+body.dark-theme .ql-toolbar .ql-picker-options {
+    background-color: var(--color-dark-background) !important;
+    border: 1px solid var(--color-dark-border) !important;
+}
+
+body.dark-theme .ql-toolbar .ql-picker-item {
+    color: var(--color-dark-text) !important;
+}
+
+/* Autres styles pour la prise de notes */
 .note-taking-controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 1%;
     background: var(--color-background);
     border-top: 1px solid var(--color-border);
     position: sticky;
     bottom: 0;
-    z-index: 100;
 }
 
 .card-stats {
@@ -165,20 +257,57 @@
     color: var(--color-text);
 }
 
-.note-taking-card.is-dragging .note-taking-card-content,
-.note-taking-card.is-resizing .note-taking-card-content {
-    display: none;
-}
-
-.note-taking-card.is-dragging .loader,
-.note-taking-card.is-resizing .loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
-
 .quill-editor-container-disabled {
     display: none;
+}
+
+button.ql-image, button.ql-undo, button.ql-redo,
+.ql-picker-label.ql-color, .ql-picker-label.ql-background {
+    color: var(--color-dark-text) !important;
+    background-color: var(--color-dark-button-bg) !important;
+    border: 1px solid var(--color-dark-border) !important;
+    height: 40px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--color-shadow);
+}
+
+button.ql-image:hover, button.ql-undo:hover, button.ql-redo:hover,
+.ql-picker-label.ql-color:hover, .ql-picker-label.ql-background:hover {
+    background-color: var(--color-dark-primary-hover) !important;
+    color: var(--color-dark-text) !important;
+}
+
+svg {
+    width: 24px;
+    height: 24px;
+    color: var(--color-dark-text) !important;
+}
+
+.ql-toolbar .ql-formats button.ql-undo,
+.ql-toolbar .ql-formats button.ql-redo {
+    width: 28px;
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-dark-button-bg);
+    color: var(--color-dark-text);
+    border: 1px solid var(--color-dark-border);
+}
+
+.ql-toolbar .ql-formats button.ql-undo:hover,
+.ql-toolbar .ql-formats button.ql-redo:hover {
+    background-color: var(--color-dark-primary-hover);
+    color: var(--color-dark-text);
+}
+
+.ql-toolbar .ql-formats button.ql-undo svg,
+.ql-toolbar .ql-formats button.ql-redo svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
 }
