@@ -18,13 +18,13 @@ const themes = [
     { name: 'Warm Peach', className: 'theme4' },
     { name: 'Earthy Brown', className: 'theme5' },
     { name: 'Bright Cyan', className: 'theme6' },
-    { name: 'Sunny Yellow', className: 'theme7' },
-    { name: 'Lavender Dream', className: 'theme8' },
-    { name: 'Coral Sunset', className: 'theme9' },
-    { name: 'Midnight Blue', className: 'theme10' },
-    { name: 'Pale Sky', className: 'theme11' },
+    { name: 'Sunny Yellow', className: 'theme8' },
+    { name: 'Lavender Dream', className: 'theme9' }, // Correction de la classe
+    { name: 'Coral Sunset', className: 'theme13' },
+    { name: 'Midnight Blue', className: 'theme11' }, // Correction de la classe
+    { name: 'Pale Sky', className: 'theme10' }, // Correction de la classe
     { name: 'Candy Purple', className: 'theme12' },
-    { name: 'Night Blue', className: 'modern-theme' } // Ajout du nouveau thème "Modern"
+    { name: 'Night Blue', className: 'modern-theme' }
 ];
 
 type ThemeSwitcherProps = {
@@ -38,12 +38,12 @@ const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ isHeaderVisible }) => {
     const handleThemeChange = (theme: string) => {
         setSelectedTheme(theme);
         document.body.className = theme;
-        setIsOpen(false); // Close the popup after selecting a theme
+        setIsOpen(false); // Fermer la popup après avoir sélectionné un thème
     };
 
     useEffect(() => {
         if (!isHeaderVisible) {
-            setIsOpen(false); // Close the popup when the header is not visible
+            setIsOpen(false); // Fermer la popup lorsque le header n'est pas visible
         }
     }, [isHeaderVisible]);
 

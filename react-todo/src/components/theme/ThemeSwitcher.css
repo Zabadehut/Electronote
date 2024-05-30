@@ -22,7 +22,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-align: center;
-    color: var(--color-text); /* For better readability */
+    color: var(--color-text); /* Pour une meilleure lisibilité */
     border: 1px solid transparent;
     border-radius: 5px;
 }
@@ -86,61 +86,71 @@
 }
 
 .theme1 {
-    background-color: #222831;
-    color: #EEEEEE;
+    background-color: var(--color-theme1-background);
+    color: var(--color-theme1-text);
 }
 
 .theme2 {
-    background-color: #E3FDFD;
-    color: #71C9CE;
+    background-color: var(--color-theme2-background);
+    color: var(--color-theme2-text);
 }
 
 .theme3 {
-    background-color: #F9F7F7;
-    color: #112D4E;
+    background-color: var(--color-theme3-background);
+    color: var(--color-theme3-text);
 }
 
 .theme4 {
-    background-color: #FFC7C7;
-    color: #8785A2;
+    background-color: var(--color-theme4-background);
+    color: var(--color-theme4-text);
 }
 
 .theme5 {
-    background-color: #FFF5E4;
-    color: #FF9494;
+    background-color: var(--color-theme5-background);
+    color: var(--color-theme5-text);
 }
 
 .theme6 {
-    background-color: #AD8B73;
-    color: #FFFBE9;
+    background-color: var(--color-theme6-background);
+    color: var(--color-theme6-text);
 }
 
 .theme7 {
-    background-color: #08D9D6;
-    color: #EAEAEA;
+    background-color: var(--color-theme7-background);
+    color: var(--color-theme7-text);
 }
 
 .theme8 {
-    background-color: #F9ED69;
-    color: #6A2C70;
+    background-color: var(--color-theme8-background);
+    color: var(--color-theme8-text);
 }
 
 .theme9 {
-    background-color: #F4EEFF;
-    color: #424874;
+    background-color: var(--color-theme9-background);
+    color: var(--color-theme9-text);
 }
 
 .theme10 {
-    background-color: #F38181;
-    color: #95E1D3;
+    background-color: var(--color-theme10-background);
+    color: var(--color-theme10-text);
 }
 
 .theme11 {
-    background-color: #1B262C;
-    color: #BBE1FA;
+    background-color: var(--color-theme11-background);
+    color: var(--color-theme11-text);
 }
 
 .theme12 {
-    background-color: #A8D8EA;
-    color: #FFFFD2;
+    background-color: var(--color-theme12-background);
+    color: var(--color-theme12-text);
+}
+
+.theme13 {
+    background-color: var(--color-theme13-background);
+    color: var(--color-theme13-text);
+}
+
+.modern-theme {
+    background-color: var(--color-modern-background);
+    color: var(--color-modern-text);
 }

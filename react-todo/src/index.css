@@ -4,18 +4,6 @@
   --font-weight: 400;
   --header-height: 60px;
 
-
-  /* Default Colors */
-  --color-background: #1b1f3b;
-  --color-text: #ffffff;
-  --color-primary: #29abe2;
-  --color-primary-hover: #1d8dbc;
-  --color-button-bg: #2c2f48;
-  --color-border: #3c3f58;
-  --color-shadow: rgba(0, 150, 255, 0.3);
-  --color-stat-background: rgba(0, 150, 255, 0.1);
-  --color-stat-text: #29abe2;
-
   /* Modern Theme Colors */
   --color-modern-background: #1b1f3b;
   --color-modern-text: #ffffff;
@@ -27,42 +15,49 @@
   --color-modern-stat-background: rgba(0, 150, 255, 0.1);
   --color-modern-stat-text: #29abe2;
 
-
+  /* Default Theme */
+  --color-background: var(--color-modern-background);
+  --color-text: var(--color-modern-text);
+  --color-primary: var(--color-modern-primary);
+  --color-primary-hover: var(--color-modern-primary-hover);
+  --color-button-bg: var(--color-modern-button-bg);
+  --color-border: var(--color-modern-border);
+  --color-shadow: var(--color-modern-shadow);
+  --color-stat-background: var(--color-modern-stat-background);
+  --color-stat-text: var(--color-modern-stat-text);
 
   /* Light Theme Colors */
-  --light-background: #ffffff;
-  --light-text: #213547;
-  --light-primary: #646cff;
-  --light-primary-hover: #535bf2;
-  --light-button-bg: #f9f9f9;
-  --light-border: #e0e0e0;
-  --light-shadow: rgba(0, 0, 0, 0.1);
-  --light-stat-background: rgba(0, 0, 0, 0.1);
-  --light-stat-text: #213547;
+  --color-light-background: #ffffff;
+  --color-light-text: #213547;
+  --color-light-primary: #646cff;
+  --color-light-primary-hover: #535bf2;
+  --color-light-button-bg: #f9f9f9;
+  --color-light-border: #e0e0e0;
+  --color-light-shadow: rgba(0, 0, 0, 0.1);
+  --color-light-stat-background: rgba(0, 0, 0, 0.1);
+  --color-light-stat-text: #213547;
 
-
-  /* Dark Theme */
-  --dark-background: #282c34;
-  --dark-text: rgba(255, 255, 255, 0.87);
-  --dark-primary: #646cff;
-  --dark-primary-hover: #535bf2;
-  --dark-button-bg: #1a1a1a;
-  --dark-border: #3c414a;
-  --dark-shadow: rgba(255, 255, 255, 0.1);
-  --dark-stat-background: rgba(255, 255, 255, 0.2);
-  --dark-stat-text: rgba(255, 255, 255, 0.87);
+  /* Dark Theme Colors */
+  --color-dark-background: #282c34;
+  --color-dark-text: rgba(255, 255, 255, 0.87);
+  --color-dark-primary: #646cff;
+  --color-dark-primary-hover: #535bf2;
+  --color-dark-button-bg: #1a1a1a;
+  --color-dark-border: #3c414a;
+  --color-dark-shadow: rgba(255, 255, 255, 0.1);
+  --color-dark-stat-background: rgba(255, 255, 255, 0.2);
+  --color-dark-stat-text: rgba(255, 255, 255, 0.87);
 
   /* Blue Theme Colors */
-  /* Blue Light Theme */
-  --blue-light-background: #e0f7fa;
-  --blue-light-text: #00796b;
-  --blue-light-primary: #009688;
-  --blue-light-primary-hover: #00897b;
-  --blue-light-button-bg: #b2dfdb;
-  --blue-light-border: #004d40;
-  --blue-light-shadow: rgba(0, 150, 136, 0.1);
-  --blue-light-stat-background: rgba(0, 150, 136, 0.1);
-  --blue-light-stat-text: #00796b;
+  --color-blue-light-background: #e0f7fa;
+  --color-blue-light-text: #00796b;
+  --color-blue-light-primary: #009688;
+  --color-blue-light-primary-hover: #00897b;
+  --color-blue-light-button-bg: #b2dfdb;
+  --color-blue-light-border: #004d40;
+  --color-blue-light-shadow: rgba(0, 150, 136, 0.1);
+  --color-blue-light-stat-background: rgba(0, 150, 136, 0.1);
+  --color-blue-light-stat-text: #00796b;
 
   --color-blue-dark-background: #0a3430;
   --color-blue-dark-text: #80cbc4;
@@ -75,15 +70,16 @@
   --color-blue-dark-stat-text: #80cbc4;
 
   /* Green Theme Colors */
-  --green-light-background: #e8f5e9;
-  --green-light-text: #2e7d32;
-  --green-light-primary: #4caf50;
-  --green-light-primary-hover: #388e3c;
-  --green-light-button-bg: #c8e6c9;
-  --green-light-border: #1b5e20;
-  --green-light-shadow: rgba(76, 175, 80, 0.1);
-  --green-light-stat-background: rgba(76, 175, 80, 0.1);
-  --green-light-stat-text: #2e7d32;
+  /* Green Theme Colors */
+  --color-green-light-background: #e8f5e9;
+  --color-green-light-text: #2e7d32;
+  --color-green-light-primary: #4caf50;
+  --color-green-light-primary-hover: #388e3c;
+  --color-green-light-button-bg: #c8e6c9;
+  --color-green-light-border: #1b5e20;
+  --color-green-light-shadow: rgba(76, 175, 80, 0.1);
+  --color-green-light-stat-background: rgba(76, 175, 80, 0.1);
+  --color-green-light-stat-text: #2e7d32;
 
   --color-green-dark-background: #0f2d1e;
   --color-green-dark-text: #a5d6a7;
@@ -240,7 +236,7 @@
   --color-theme10-stat-text: #213547;
 
   --color-theme11-background: #1B262C;
-  --color-theme11-text: #BBE1FA;
+  --color-theme11-text: #ffffff;
   --color-theme11-primary: #3282B8;
   --color-theme11-primary-hover: #535bf2;
   --color-theme11-button-bg: #0F4C75;
@@ -258,6 +254,17 @@
   --color-theme12-shadow: rgba(0, 150, 136, 0.1);
   --color-theme12-stat-background: rgba(0, 150, 136, 0.1);
   --color-theme12-stat-text: #213547;
+
+
+  --color-theme13-background: #FF6F61; /* Fond corail */
+  --color-theme13-text: #FAFAFA; /* Texte blanc cassé */
+  --color-theme13-primary: #FFCCBC; /* Primaire corail clair */
+  --color-theme13-primary-hover: #FF8A65; /* Primaire survol corail plus foncé */
+  --color-theme13-button-bg: #FFAB91; /* Fond de bouton corail doux */
+  --color-theme13-border: #D84315; /* Bordure corail foncé */
+  --color-theme13-shadow: rgba(255, 112, 67, 0.3); /* Ombre corail translucide */
+  --color-theme13-stat-background: rgba(255, 112, 67, 0.1); /* Fond de statistique corail translucide */
+  --color-theme13-stat-text: #3E2723; /* Texte de statistique corail foncé */
 
 }
 
@@ -527,6 +534,17 @@ body.theme12 {
   --color-stat-text: var(--color-theme12-stat-text);
 }
 
+body.theme13 {
+  --color-background: var(--color-theme13-background);
+  --color-text: var(--color-theme13-text);
+  --color-primary: var(--color-theme13-primary);
+  --color-primary-hover: var(--color-theme13-primary-hover);
+  --color-button-bg: var(--color-theme13-button-bg);
+  --color-border: var(--color-theme13-border);
+  --color-shadow: var(--color-theme13-shadow);
+  --color-stat-background: var(--color-theme13-stat-background);
+  --color-stat-text: var(--color-theme13-stat-text);
+}
 
 body.modern-theme {
   --color-background: var(--color-modern-background);
