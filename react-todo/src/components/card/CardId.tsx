@@ -13,13 +13,14 @@ import SearchContentInApp from './models/SearchContentInApp';
 import NoteTakingCard from './notes/NoteTakingCard';
 import FluxRssReader from './models/FluxRssReader';
 import LoadContentCard from './models/LoadContentCard';
-import { MemoryManager } from './MemoryManager'; // Importez le gestionnaire de mémoire
+import ToDoList from './todolist/ToDoList';
+import { MemoryManager } from './MemoryManager';
 import "react-resizable/css/styles.css";
 import './CardId.css';
 
 // Importer le Web Worker
 import Worker from './cardWorker?worker';
-import HourTime from './times/HourTime.tsx'; // Assurez-vous que le chemin est correct
+import HourTime from './times/HourTime.tsx';
 
 export type CardProps = {
     id: string;
@@ -44,7 +45,7 @@ export type CardIdProps = {
     disableDragAndDrop?: boolean;
     onPinClicked?: (id: string) => void;
     onClose?: (id: string) => void;
-    type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'search' | 'note' | 'none' | 'rss' | 'you' | 'loadContent' | 'hourTime';
+    type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'search' | 'note' | 'none' | 'rss' | 'you' | 'loadContent' | 'hourTime' | 'toDoList';
     cards: CardProps[];
     isResizing: boolean;
     isDragging: boolean;
@@ -162,6 +163,8 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                 return <LoadContentCard title={props.title} content={props.content} />;
             case 'hourTime':
                 return <HourTime onTimeUpdate={handleTimeUpdate} />;
+            case 'toDoList':
+                return <ToDoList onDisableDrag={disableDrag} onEnableDrag={enableDrag} />;
             default:
                 return <div>Unsupported card type</div>;
         }
@@ -218,6 +221,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                         <MenuItem value="rss">RSS</MenuItem>
                         <MenuItem value="loadContent">Load Content</MenuItem>
                         <MenuItem value="hourTime">Hour Time</MenuItem>
+                        <MenuItem value="toDoList">To-Do List</MenuItem>
                     </Select>
                 )}
             </Stack>
