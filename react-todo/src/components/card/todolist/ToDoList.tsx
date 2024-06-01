@@ -35,7 +35,7 @@ const ToDoList: React.FC<ToDoListProps> = ({ onDisableDrag, onEnableDrag }) => {
     return (
         <div className="todolist-container">
             <ToDoInput onAddTask={addTask} onDisableDrag={onDisableDrag} onEnableDrag={onEnableDrag} />
-            <div className="flex flex-col gap-2" onMouseDown={onDisableDrag}>
+            <div className="tasks-container" onMouseDown={onDisableDrag}>
                 {todos.length ? (
                     todos.map((todo) => (
                         <ToDoItem

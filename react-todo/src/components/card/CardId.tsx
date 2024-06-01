@@ -18,6 +18,7 @@ import { MemoryManager } from './MemoryManager';
 import "react-resizable/css/styles.css";
 import './CardId.css';
 
+
 // Importer le Web Worker
 import Worker from './cardWorker?worker';
 import HourTime from './times/HourTime.tsx';
@@ -45,7 +46,7 @@ export type CardIdProps = {
     disableDragAndDrop?: boolean;
     onPinClicked?: (id: string) => void;
     onClose?: (id: string) => void;
-    type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'search' | 'note' | 'none' | 'rss' | 'you' | 'loadContent' | 'hourTime' | 'toDoList';
+    type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'search' | 'note' | 'none' | 'rss' | 'you' | 'loadContent' | 'hourTime' | 'toDoList' | 'winapp';
     cards: CardProps[];
     isResizing: boolean;
     isDragging: boolean;

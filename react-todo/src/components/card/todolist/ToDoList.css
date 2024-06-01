@@ -38,6 +38,12 @@
     z-index: 10; /* Ensure button is on top */
 }
 
+.tasks-container {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 400px; /* or any height you prefer */
+}
+
 .todo-item {
     display: flex;
     justify-content: space-between;
