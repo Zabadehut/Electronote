@@ -13,7 +13,9 @@
 .reminder-icon {
     margin-left: 10px;
     color: var(--color-primary);
-    font-size: 1.2em; /* Adjust size to be smaller */
+    font-size: 1em; /* Adjust size to be smaller initially */
+    width: 40px; /* Set a specific width */
+    height: 40px; /* Set a specific height */
 }
 
 .todolist-container {

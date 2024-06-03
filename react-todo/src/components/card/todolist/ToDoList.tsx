@@ -20,7 +20,12 @@ const ToDoList: React.FC<ToDoListProps> = ({ onDisableDrag, onEnableDrag }) => {
 
     const addTask = (task: string, reminderTime: string) => {
         const newTask: ToDo = { id: Date.now().toString(), task, completed: false, reminderTime };
-        setTodos([...todos, newTask]);
+        const updatedTodos = [...todos, newTask].sort((a, b) => {
+            if (!a.reminderTime) return 1;
+            if (!b.reminderTime) return -1;
+            return a.reminderTime.localeCompare(b.reminderTime);
+        });
+        setTodos(updatedTodos);
     };
 
     const toggleTask = (id: string) => {
