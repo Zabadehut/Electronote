@@ -15,28 +15,22 @@ const ToDoItem: React.FC<ToDoItemProps> = ({ task, completed, reminderTime, onTo
     const [isVibrating, setIsVibrating] = useState(false);
 
     useEffect(() => {
-        let timer: NodeJS.Timeout;
-
-        if (reminderTime && !completed) {
+        if (reminderTime) {
             const reminderDate = new Date();
             const [hours, minutes] = reminderTime.split(':').map(Number);
             reminderDate.setHours(hours);
             reminderDate.setMinutes(minutes || 0);
             reminderDate.setSeconds(0);
-            reminderDate.setMilliseconds(0);
 
             const timeout = reminderDate.getTime() - new Date().getTime();
             if (timeout > 0) {
-                timer = setTimeout(() => {
+                const timer = setTimeout(() => {
                     setIsVibrating(true);
                 }, timeout);
-            } else {
-                setIsVibrating(true);
+                return () => clearTimeout(timer);
             }
         }
-
-        return () => clearTimeout(timer);
-    }, [reminderTime, completed]);
+    }, [reminderTime]);
 
     const handleClick = () => {
         setIsVibrating(false);
@@ -44,7 +38,7 @@ const ToDoItem: React.FC<ToDoItemProps> = ({ task, completed, reminderTime, onTo
     };
 
     return (
-        <div className={`todo-item ${isVibrating && !completed ? 'vibrating' : ''}`} onMouseDown={onDisableDrag} onMouseUp={onEnableDrag}>
+        <div className={`todo-item ${isVibrating ? 'vibrating' : ''}`} onMouseDown={onDisableDrag} onMouseUp={onEnableDrag} onClick={handleClick}>
             <div className="flex gap-2 items-center justify-between w-full">
                 <div className="flex items-center">
                     <input type="checkbox" checked={completed} onChange={handleClick} />

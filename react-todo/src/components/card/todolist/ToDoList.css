@@ -6,14 +6,8 @@
     100% { transform: translate(2px, 2px); }
 }
 
-@keyframes blink {
-    0% { background-color: transparent; }
-    50% { background-color: rgba(255, 255, 0, 0.5); }
-    100% { background-color: transparent; }
-}
-
 .vibrating {
-    animation: vibrate 0.1s linear infinite, blink 1s step-start infinite;
+    animation: vibrate 0.1s linear infinite;
 }
 
 .reminder-icon {
@@ -103,14 +97,4 @@
 
 .delete-button:hover {
     background-color: var(--color-red-light-primary-hover);
-}
-
-.toggle-completed {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-}
-
-.toggle-completed input {
-    margin-right: 5px;
 }
