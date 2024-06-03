@@ -6,16 +6,26 @@
     100% { transform: translate(2px, 2px); }
 }
 
+@keyframes blink {
+    0%, 100% { background-color: initial; }
+    50% { background-color: yellow; }
+}
+
 .vibrating {
     animation: vibrate 0.1s linear infinite;
 }
 
+.blinking {
+    animation: blink 1s linear infinite;
+}
+
+
 .reminder-icon {
     margin-left: 10px;
     color: var(--color-primary);
-    font-size: 1em; /* Adjust size to be smaller initially */
-    width: 40px; /* Set a specific width */
-    height: 40px; /* Set a specific height */
+    font-size: 1em;
+    width: 40px;
+    height: 40px;
 }
 
 .todolist-container {
@@ -30,7 +40,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    z-index: 10; /* Ensure form is on top */
+    z-index: 10;
 }
 
 .input-container {
@@ -48,7 +58,7 @@
     padding: 10px;
     border-radius: 5px;
     border: 1px solid var(--color-border);
-    margin-bottom: 10px; /* Add margin to separate from the reminder section */
+    margin-bottom: 10px;
 }
 
 .add-task-button {
@@ -57,13 +67,14 @@
     background-color: var(--color-primary);
     color: var(--color-text);
     cursor: pointer;
-    z-index: 10; /* Ensure button is on top */
+    z-index: 10;
 }
 
 .tasks-container {
     flex: 1;
     overflow-y: auto;
-    max-height: 100%; /* or any height you prefer */
+    max-height: calc(100vh - 200px);
+    padding-right: 10px;
 }
 
 .todo-item {
@@ -75,8 +86,8 @@
     border-radius: 5px;
     margin-bottom: 10px;
     box-shadow: var(--color-shadow);
-    z-index: 10; /* Ensure item is on top */
-    width: 100%; /* Ensure it fits within the container */
+    z-index: 10;
+    width: 100%;
     box-sizing: border-box;
 }
 
@@ -92,9 +103,19 @@
     border-radius: 5px;
     padding: 5px 10px;
     cursor: pointer;
-    z-index: 10; /* Ensure button is on top */
+    z-index: 10;
 }
 
 .delete-button:hover {
     background-color: var(--color-red-light-primary-hover);
+}
+
+.toggle-completed {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-completed input {
+    margin-right: 5px;
 }
