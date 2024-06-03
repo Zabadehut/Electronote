@@ -7,6 +7,7 @@ interface ToDo {
     id: string;
     task: string;
     completed: boolean;
+    reminderTime: string;
 }
 
 interface ToDoListProps {
@@ -17,8 +18,8 @@ interface ToDoListProps {
 const ToDoList: React.FC<ToDoListProps> = ({ onDisableDrag, onEnableDrag }) => {
     const [todos, setTodos] = useState<ToDo[]>([]);
 
-    const addTask = (task: string) => {
-        const newTask: ToDo = { id: Date.now().toString(), task, completed: false };
+    const addTask = (task: string, reminderTime: string) => {
+        const newTask: ToDo = { id: Date.now().toString(), task, completed: false, reminderTime };
         setTodos([...todos, newTask]);
     };
 
@@ -42,6 +43,7 @@ const ToDoList: React.FC<ToDoListProps> = ({ onDisableDrag, onEnableDrag }) => {
                             key={todo.id}
                             task={todo.task}
                             completed={todo.completed}
+                            reminderTime={todo.reminderTime}
                             onToggle={() => toggleTask(todo.id)}
                             onDelete={() => deleteTask(todo.id)}
                             onDisableDrag={onDisableDrag}

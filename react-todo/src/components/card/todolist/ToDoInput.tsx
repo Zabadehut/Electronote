@@ -1,8 +1,7 @@
-// ToDoInput.tsx
 import React, { useState } from 'react';
 
 interface ToDoInputProps {
-    onAddTask: (task: string) => void;
+    onAddTask: (task: string, reminderTime: string) => void;
     onDisableDrag: () => void;
     onEnableDrag: () => void;
 }
@@ -12,8 +11,12 @@ const ToDoInput: React.FC<ToDoInputProps> = ({ onAddTask, onDisableDrag, onEnabl
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        const timePattern = /\b(\d{1,2}[h:]\d{0,2})\b/i;
+        const match = task.match(timePattern);
+        const reminderTime = match ? match[0].replace('h', ':').replace(/^(\d{1,2}):$/, '$1:00') : '';
+
         if (task.trim()) {
-            onAddTask(task);
+            onAddTask(task, reminderTime);
             setTask('');
         }
     };

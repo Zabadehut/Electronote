@@ -19,6 +19,7 @@ import "react-resizable/css/styles.css";
 import './CardId.css';
 
 
+
 // Importer le Web Worker
 import Worker from './cardWorker?worker';
 import HourTime from './times/HourTime.tsx';
@@ -170,7 +171,6 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                 return <div>Unsupported card type</div>;
         }
     };
-
     return (
         <div className={`card ${selectedType} ${props.isResizing ? 'is-resizing' : ''} ${props.isDragging ? 'is-dragging' : ''}`} id={props.id}>
             {selectedType !== 'hourTime' && <h4>{props.title}</h4>}
