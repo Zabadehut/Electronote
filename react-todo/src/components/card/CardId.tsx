@@ -18,9 +18,6 @@ import { MemoryManager } from './MemoryManager';
 import "react-resizable/css/styles.css";
 import './CardId.css';
 
-
-
-// Importer le Web Worker
 import Worker from './cardWorker?worker';
 import HourTime from './times/HourTime.tsx';
 
@@ -76,7 +73,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
     const [selectedType, setSelectedType] = useState(props.type);
     const [isDraggable, setIsDraggable] = useState(true);
     const workerRef = useRef<Worker | null>(null);
-    const memoryManagerRef = useRef(new MemoryManager()); // Instance du gestionnaire de mémoire spécifique à ce `CardId`
+    const memoryManagerRef = useRef(new MemoryManager());
 
     useEffect(() => {
         const initializeWorker = () => {
@@ -124,7 +121,6 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
 
     const handleTimeUpdate = (time: Date) => {
         console.log("Current Time Updated: ", time);
-        // Vous pouvez ajouter toute autre logique que vous souhaitez ici, par exemple, mettre à jour l'état du composant parent.
     };
 
     const handleClose = () => {
@@ -140,7 +136,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
             isDraggable,
             onDisableDrag: disableDrag,
             onEnableDrag: enableDrag,
-            memoryManager: memoryManagerRef.current // Passer le gestionnaire de mémoire à chaque enfant
+            memoryManager: memoryManagerRef.current
         };
         switch (selectedType) {
             case 'text':
@@ -171,6 +167,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                 return <div>Unsupported card type</div>;
         }
     };
+
     return (
         <div className={`card ${selectedType} ${props.isResizing ? 'is-resizing' : ''} ${props.isDragging ? 'is-dragging' : ''}`} id={props.id}>
             {selectedType !== 'hourTime' && <h4>{props.title}</h4>}
