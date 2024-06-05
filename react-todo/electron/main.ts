@@ -26,7 +26,9 @@ let win: BrowserWindow | null
 
 function createWindow() {
   win = new BrowserWindow({
-    transparent: false, // Désactivez la transparence
+    transparent: true,
+    frame: false,
+    titleBarStyle: 'hidden',
     resizable: true,
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
     webPreferences: {

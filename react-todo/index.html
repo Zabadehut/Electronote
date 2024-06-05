@@ -1,13 +1,68 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + React + TS</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #titlebar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background-color: rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding-left: 10px;
+      padding-right: 10px;
+      -webkit-app-region: drag;
+      z-index: 9999;
+    }
+
+    .titlebar-button {
+      -webkit-app-region: no-drag;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      background-color: transparent;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    .titlebar-button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    #root {
+      height: 100vh;
+      background-color: transparent;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+<div id="titlebar">
+  <div style="-webkit-app-region: drag; flex-grow: 1;"></div>
+  <button id="minimize-btn" class="titlebar-button">-</button>
+  <button id="maximize-btn" class="titlebar-button">□</button>
+  <button id="close-btn" class="titlebar-button">×</button>
+</div>
+<div id="root"></div>
+<script type="module" src="/src/main.tsx"></script>
+</body>
 </html>

@@ -5,7 +5,7 @@
   --header-height: 60px;
 
   /* Modern Theme Colors */
-  --color-modern-background: #1b1f3b;
+  --color-modern-background: rgba(27, 31, 59, 0.8);
   --color-modern-text: #ffffff;
   --color-modern-primary: #29abe2;
   --color-modern-primary-hover: #1d8dbc;
@@ -27,7 +27,7 @@
   --color-stat-text: var(--color-modern-stat-text);
 
   /* Light Theme Colors */
-  --color-light-background: #ffffff;
+  --color-light-background: rgba(255, 255, 255, 0.8);
   --color-light-text: #213547;
   --color-light-primary: #646cff;
   --color-light-primary-hover: #535bf2;
@@ -38,7 +38,7 @@
   --color-light-stat-text: #213547;
 
   /* Dark Theme Colors */
-  --color-dark-background: #282c34;
+  --color-dark-background: rgba(40, 44, 52, 0.8);
   --color-dark-text: rgba(255, 255, 255, 0.87);
   --color-dark-primary: #646cff;
   --color-dark-primary-hover: #535bf2;
@@ -49,7 +49,7 @@
   --color-dark-stat-text: rgba(255, 255, 255, 0.87);
 
   /* Blue Theme Colors */
-  --color-blue-light-background: #e0f7fa;
+  --color-blue-light-background: rgba(224, 247, 250, 0.8);
   --color-blue-light-text: #00796b;
   --color-blue-light-primary: #009688;
   --color-blue-light-primary-hover: #00897b;
@@ -59,7 +59,7 @@
   --color-blue-light-stat-background: rgba(0, 150, 136, 0.1);
   --color-blue-light-stat-text: #00796b;
 
-  --color-blue-dark-background: #0a3430;
+  --color-blue-dark-background: rgba(10, 52, 48, 0.8);
   --color-blue-dark-text: #80cbc4;
   --color-blue-dark-primary: #00796b;
   --color-blue-dark-primary-hover: #004d40;
@@ -69,9 +69,9 @@
   --color-blue-dark-stat-background: rgba(0, 150, 136, 0.2);
   --color-blue-dark-stat-text: #80cbc4;
 
+
   /* Green Theme Colors */
-  /* Green Theme Colors */
-  --color-green-light-background: #e8f5e9;
+  --color-green-light-background: rgba(232, 245, 233, 0.8);
   --color-green-light-text: #2e7d32;
   --color-green-light-primary: #4caf50;
   --color-green-light-primary-hover: #388e3c;
@@ -81,7 +81,7 @@
   --color-green-light-stat-background: rgba(76, 175, 80, 0.1);
   --color-green-light-stat-text: #2e7d32;
 
-  --color-green-dark-background: #0f2d1e;
+  --color-green-dark-background: rgba(15, 45, 30, 0.8);
   --color-green-dark-text: #a5d6a7;
   --color-green-dark-primary: #2e7d32;
   --color-green-dark-primary-hover: #388e3c;
@@ -92,7 +92,7 @@
   --color-green-dark-stat-text: #a5d6a7;
 
   /* Red Theme Colors */
-  --color-red-light-background: #ffebee;
+  --color-red-light-background: rgba(255, 235, 238, 0.8);
   --color-red-light-text: #c62828;
   --color-red-light-primary: #f44336;
   --color-red-light-primary-hover: #d32f2f;
@@ -102,7 +102,7 @@
   --color-red-light-stat-background: rgba(244, 67, 54, 0.1);
   --color-red-light-stat-text: #c62828;
 
-  --color-red-dark-background: #3d0b0b;
+  --color-red-dark-background: rgba(61, 11, 11, 0.8);
   --color-red-dark-text: #ffcdd2;
   --color-red-dark-primary: #b71c1c;
   --color-red-dark-primary-hover: #d32f2f;
@@ -113,7 +113,7 @@
   --color-red-dark-stat-text: #ffcdd2;
 
   /* Pastel Theme Colors */
-  --color-pastel-light-background: #f8f4ff;
+  --color-pastel-light-background: rgba(248, 244, 255, 0.8);
   --color-pastel-light-text: #7e57c2;
   --color-pastel-light-primary: #b39ddb;
   --color-pastel-light-primary-hover: #9575cd;
@@ -123,7 +123,7 @@
   --color-pastel-light-stat-background: rgba(179, 157, 219, 0.1);
   --color-pastel-light-stat-text: #7e57c2;
 
-  --color-pastel-dark-background: #3b2767;
+  --color-pastel-dark-background: rgba(59, 39, 103, 0.8);
   --color-pastel-dark-text: #d1c4e9;
   --color-pastel-dark-primary: #7e57c2;
   --color-pastel-dark-primary-hover: #9575cd;
@@ -135,7 +135,7 @@
 
   /* Additional Themes */
   /* Theme 1 */
-  --color-theme1-background: #222831;
+  --color-theme1-background: rgba(34, 40, 49, 0.8);
   --color-theme1-text: #EEEEEE;
   --color-theme1-primary: #00ADB5;
   --color-theme1-primary-hover: #00796b;
@@ -145,7 +145,7 @@
   --color-theme1-stat-background: rgba(0, 150, 136, 0.1);
   --color-theme1-stat-text: #00ADB5;
 
-  --color-theme2-background: #E3FDFD;
+  --color-theme2-background: rgba(227, 253, 253, 0.8);
   --color-theme2-text: #71C9CE;
   --color-theme2-primary: #A6E3E9;
   --color-theme2-primary-hover: #00897b;
@@ -155,7 +155,7 @@
   --color-theme2-stat-background: rgba(0, 150, 136, 0.1);
   --color-theme2-stat-text: #00796b;
 
-  --color-theme3-background: #F9F7F7;
+  --color-theme3-background: rgba(249, 247, 247, 0.8);
   --color-theme3-text: #112D4E;
   --color-theme3-primary: #3F72AF;
   --color-theme3-primary-hover: #535bf2;
@@ -165,7 +165,7 @@
   --color-theme3-stat-background: rgba(0, 150, 136, 0.1);
   --color-theme3-stat-text: #213547;
 
-  --color-theme4-background: #FFC7C7;
+  --color-theme4-background: rgba(255, 199, 199, 0.8);
   --color-theme4-text: #8785A2;
   --color-theme4-primary: #F6F6F6;
   --color-theme4-primary-hover: #535bf2;
@@ -175,7 +175,7 @@
   --color-theme4-stat-background: rgba(0, 150, 136, 0.1);
   --color-theme4-stat-text: #213547;
 
-  --color-theme5-background: #FFF5E4;
+  --color-theme5-background: rgba(255, 245, 228, 0.8);
   --color-theme5-text: #FF9494;
   --color-theme5-primary: #FFD1D1;
   --color-theme5-primary-hover: #535bf2;
@@ -185,7 +185,7 @@
   --color-theme5-stat-background: rgba(0, 150, 136, 0.1);
   --color-theme5-stat-text: #213547;
 
-  --color-theme6-background: #AD8B73;
+  --color-theme6-background: rgba(173, 139, 115, 0.8);
   --color-theme6-text: #FFFBE9;
   --color-theme6-primary: #E3CAA5;
   --color-theme6-primary-hover: #535bf2;
@@ -195,7 +195,7 @@
   --color-theme6-stat-background: rgba(0, 150, 136, 0.1);
   --color-theme6-stat-text: #213547;
 
-  --color-theme7-background: #08D9D6;
+  --color-theme7-background: rgba(8, 217, 214, 0.8);
   --color-theme7-text: #EAEAEA;
   --color-theme7-primary: #FF2E63;
   --color-theme7-primary-hover: #535bf2;
@@ -205,7 +205,7 @@
   --color-theme7-stat-background: rgba(0, 150, 136, 0.1);
   --color-theme7-stat-text: #213547;
 
-  --color-theme8-background: #F9ED69;
+  --color-theme8-background: rgba(249, 237, 105, 0.8);
   --color-theme8-text: #6A2C70;
   --color-theme8-primary: #B83B5E;
   --color-theme8-primary-hover: #535bf2;
@@ -215,7 +215,7 @@
   --color-theme8-stat-background: rgba(0, 150, 136, 0.1);
   --color-theme8-stat-text: #213547;
 
-  --color-theme9-background: #F4EEFF;
+  --color-theme9-background: rgba(244, 238, 255, 0.8);
   --color-theme9-text: #424874;
   --color-theme9-primary: #A6B1E1;
   --color-theme9-primary-hover: #535bf2;
@@ -225,7 +225,7 @@
   --color-theme9-stat-background: rgba(0, 150, 136, 0.1);
   --color-theme9-stat-text: #213547;
 
-  --color-theme10-background: #F38181;
+  --color-theme10-background: rgba(243, 129, 129, 0.8);
   --color-theme10-text: #95E1D3;
   --color-theme10-primary: #EAFFD0;
   --color-theme10-primary-hover: #535bf2;
@@ -235,7 +235,7 @@
   --color-theme10-stat-background: rgba(0, 150, 136, 0.1);
   --color-theme10-stat-text: #213547;
 
-  --color-theme11-background: #1B262C;
+  --color-theme11-background: rgba(27, 38, 44, 0.8);
   --color-theme11-text: #f8faf8;
   --color-theme11-primary: #3282B8;
   --color-theme11-primary-hover: #535bf2;
@@ -245,7 +245,7 @@
   --color-theme11-stat-background: rgba(0, 150, 136, 0.1);
   --color-theme11-stat-text: #213547;
 
-  --color-theme12-background: #A8D8EA;
+  --color-theme12-background: rgba(168, 216, 234, 0.8);
   --color-theme12-text: #FFFFD2;
   --color-theme12-primary: #FCBAD3;
   --color-theme12-primary-hover: #535bf2;
@@ -256,7 +256,7 @@
   --color-theme12-stat-text: #213547;
 
 
-  --color-theme13-background: #FF6F61; /* Fond corail */
+  --color-theme13-background: rgba(255, 111, 97, 0.8);
   --color-theme13-text: #FAFAFA; /* Texte blanc cassé */
   --color-theme13-primary: #FFCCBC; /* Primaire corail clair */
   --color-theme13-primary-hover: #FF8A65; /* Primaire survol corail plus foncé */
@@ -560,17 +560,22 @@ body.modern-theme {
 
 /* General body styles */
 body {
+  background-color: transparent;
   font-family: var(--font-family), serif;
   line-height: var(--line-height);
   font-weight: var(--font-weight);
-  background-color: var(--color-background);
   color: var(--color-text);
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  transition: background-color 0.3s ease;
+  transition: color 0.3s ease;
+}
+
+#root {
+  background-color: transparent;
+  height: 100vh;
 }
 
 button {
@@ -607,4 +612,12 @@ input, textarea {
 
 input::placeholder, textarea::placeholder {
   color: var(--color-text);
+}
+
+html, body, #root {
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
 }

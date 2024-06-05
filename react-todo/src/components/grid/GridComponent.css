@@ -3,7 +3,7 @@
     justify-content: flex-start;
     align-items: center;
     position: fixed;
-    top: 0;
+    top: 30px;
     left: 0;
     width: 100%;
     background-color: var(--color-background);
@@ -15,19 +15,21 @@
     border-bottom: 1px solid var(--color-border);
 }
 
-.header-container-btn {
-    background-color: var(--color-primary);
-    color: var(--color-text);
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-    box-shadow: var(--color-shadow);
-    transition: background-color 0.3s ease, opacity 0.3s ease;
+.main-container {
+    width: 100vw;
+    height: calc(100vh - 30px);
+    padding-top: 30px;
+    transition: padding-top 0.3s ease;
 }
 
-.header-container-btn:hover {
-    background-color: var(--color-primary-hover);
-    opacity: 1;
+.layout {
+    width: 100%;
+    min-height: calc(100vh - 30px);
+    display: flex;
+    z-index: 100;
+    flex-wrap: wrap;
+    background-color: transparent;
+    margin-top: 30px;
 }
 
 .header-hidden {
@@ -39,22 +41,6 @@
 .grid-layout-container {
     background-color: var(--color-background);
     transition: padding-top 0.3s ease;
-}
-
-.main-container {
-    width: 100vw;
-    height: 100vh;
-    padding-top: var(--header-height, 60px); /* Use custom property for header height */
-    transition: padding-top 0.3s ease;
-}
-
-.layout {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    z-index: 100;
-    flex-wrap: wrap;
-    background-color: var(--color-background);
 }
 
 .react-grid-item {
@@ -114,4 +100,19 @@
 
 .select-container select option:hover {
     background-color: var(--color-shadow);
+}
+.main-container {
+    width: 100vw;
+    height: 100vh;
+    padding-top: var(--header-height, 60px); /* Use custom property for header height */
+    transition: padding-top 0.3s ease;
+}
+
+.layout {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    z-index: 100;
+    flex-wrap: wrap;
+    background-color: transparent;
 }
