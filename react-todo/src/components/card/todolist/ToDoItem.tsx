@@ -28,9 +28,9 @@ const ToDoItem: React.FC<ToDoItemProps> = ({
         if (!reminderTime) return;
 
         const parseReminderTime = (time: string) => {
-            const [hours, minutes] = time.split(':').map(Number);
+            const [hours, minutes] = time.split(/[:Hh]/).map(Number);
             const now = new Date();
-            const reminderDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0);
+            const reminderDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes || 0, 0, 0);
             return reminderDate;
         };
 
@@ -60,6 +60,11 @@ const ToDoItem: React.FC<ToDoItemProps> = ({
         onToggle(id);
     };
 
+    const handleDelete = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        onDelete(id);
+    };
+
     return (
         <div
             className={`todo-item ${isVibrating ? 'vibrating blinking' : ''}`}
@@ -82,7 +87,7 @@ const ToDoItem: React.FC<ToDoItemProps> = ({
                     <button
                         className="delete-button"
                         type="button"
-                        onClick={() => onDelete(id)}
+                        onClick={handleDelete}
                     >
                         Delete
                     </button>

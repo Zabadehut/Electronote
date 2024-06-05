@@ -130,6 +130,10 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         props.onClose?.(props.id);
     };
 
+    const handleStackClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        event.stopPropagation();
+    };
+
     const renderCard = () => {
         const cardProps = {
             ...props,
@@ -172,13 +176,13 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         <div className={`card ${selectedType} ${props.isResizing ? 'is-resizing' : ''} ${props.isDragging ? 'is-dragging' : ''}`} id={props.id}>
             {selectedType !== 'hourTime' && <h4>{props.title}</h4>}
             {renderCard()}
-            <Stack direction="row" spacing={1} sx={{ position: 'absolute', top: 5, right: 5 }}>
+            <Stack direction="row" spacing={1} sx={{ position: 'absolute', top: 5, right: 5 }} onClick={handleStackClick} className="MuiStack-root css-1r84q1u-MuiStack-root">
                 {selectedType !== 'hourTime' && (
-                    <IconButton onClick={handlePinClick} color="primary" aria-label="pin card">
+                    <IconButton onClick={handlePinClick} color="primary" aria-label="pin card" className="no-drag">
                         <PushPinIcon />
                     </IconButton>
                 )}
-                <IconButton onClick={handleClose} color="secondary" aria-label="close card">
+                <IconButton onClick={handleClose} color="secondary" aria-label="close card" className="no-drag">
                     <CloseIcon />
                 </IconButton>
                 {selectedType !== 'hourTime' && (
@@ -195,6 +199,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                             '& .MuiSelect-select': {
                                 backgroundColor: 'var(--color-button-bg)',
                                 color: 'var(--color-text)',
+                                padding: '8px 32px 8px 14px',
                             },
                             '& .MuiOutlinedInput-notchedOutline': {
                                 borderColor: 'var(--color-border)',
@@ -204,8 +209,12 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                             },
                             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                                 borderColor: 'var(--color-primary)',
-                            }
+                            },
+                            '& .MuiSelect-icon': {
+                                color: 'var(--color-text)',
+                            },
                         }}
+                        className="no-drag"
                     >
                         <MenuItem value=""><em>None</em></MenuItem>
                         <MenuItem value="search">Search</MenuItem>

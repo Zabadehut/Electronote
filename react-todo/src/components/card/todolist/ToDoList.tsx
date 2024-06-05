@@ -27,19 +27,19 @@ const ToDoList: React.FC<ToDoListProps> = ({ onDisableDrag, onEnableDrag }) => {
             return a.reminderTime.localeCompare(b.reminderTime);
         });
         setTodos(updatedTodos);
-        console.log("Task added:", newTask); // Ajout du log
+        console.log("Task added:", newTask);
     };
 
     const toggleTask = (id: string) => {
         setTodos(todos.map(todo => (
             todo.id === id ? { ...todo, completed: !todo.completed } : todo
         )));
-        console.log("Task toggled:", id); // Ajout du log
+        console.log("Task toggled:", id);
     };
 
     const deleteTask = (id: string) => {
         setTodos(todos.filter(todo => todo.id !== id));
-        console.log("Task deleted:", id); // Ajout du log
+        console.log("Task deleted:", id);
     };
 
     useEffect(() => {
@@ -66,12 +66,22 @@ const ToDoList: React.FC<ToDoListProps> = ({ onDisableDrag, onEnableDrag }) => {
         return () => clearInterval(interval);
     }, []);
 
+    const filteredTodos = todos.filter(todo => showCompleted || !todo.completed);
+
     return (
         <div className="todolist-container">
             <ToDoInput onAddTask={addTask} onDisableDrag={onDisableDrag} onEnableDrag={onEnableDrag} />
+            <div className="toggle-completed">
+                <input
+                    type="checkbox"
+                    checked={showCompleted}
+                    onChange={() => setShowCompleted(!showCompleted)}
+                />
+                <label>Show Completed Tasks</label>
+            </div>
             <div className="tasks-container" onMouseDown={onDisableDrag}>
-                {todos.length ? (
-                    todos.map((todo) => (
+                {filteredTodos.length ? (
+                    filteredTodos.map((todo) => (
                         <ToDoItem
                             key={todo.id}
                             id={todo.id}
@@ -87,14 +97,6 @@ const ToDoList: React.FC<ToDoListProps> = ({ onDisableDrag, onEnableDrag }) => {
                 ) : (
                     <span className="text-green-100">No tasks yet!</span>
                 )}
-            </div>
-            <div className="toggle-completed">
-                <input
-                    type="checkbox"
-                    checked={showCompleted}
-                    onChange={() => setShowCompleted(!showCompleted)}
-                />
-                <label>Show Completed Tasks</label>
             </div>
         </div>
     );

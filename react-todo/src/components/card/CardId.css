@@ -16,6 +16,24 @@
     transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
     cursor: default;
     color: var(--color-text);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.drag-handle {
+    cursor: move;
+    padding: 4px;
+    background-color: var(--color-button-bg);
+    color: var(--color-text);
+    text-align: center;
+    border-radius: 3px;
+    z-index: 1; /* Augmenter la valeur z-index pour prioriser la poignée */
+}
+
+.no-drag {
+    cursor: default;
 }
 
 .card:hover {
@@ -30,21 +48,7 @@
     background-color: rgba(41, 171, 226, 0.1); /* Subtle hover effect */
 }
 
-.drag-handle {
-    cursor: move;
-    padding: 4px;
-    background-color: var(--color-button-bg);
-    color: var(--color-text);
-    text-align: center;
-    border-radius: 3px;
-}
 
-.no-select {
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
 
 .hour-time-container .clock-navigation {
     display: none;
@@ -119,4 +123,12 @@
 .select-wrapper select:hover {
     background-color: var(--color-primary-hover);
     color: var(--color-background);
+}
+
+.MuiSelect-select {
+    pointer-events: auto;
+}
+
+.MuiSelect-icon {
+    pointer-events: none;
 }

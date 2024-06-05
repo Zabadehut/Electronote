@@ -11,9 +11,18 @@ const ToDoInput: React.FC<ToDoInputProps> = ({ onAddTask, onDisableDrag, onEnabl
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const timePattern = /\b(\d{1,2}[h:]\d{0,2})\b/i;
+        const timePattern = /\b(\d{1,2})[:Hh]?(\d{0,2})?\b/;
         const match = task.match(timePattern);
-        const reminderTime = match ? match[0].replace('h', ':').replace(/^(\d{1,2}):$/, '$1:00') : '';
+
+        let reminderTime = '';
+        if (match) {
+            let hours = match[1];
+            let minutes = match[2] || '00';
+            if (minutes.length === 1) {
+                minutes = `0${minutes}`;
+            }
+            reminderTime = `${hours.padStart(2, '0')}:${minutes}`;
+        }
 
         if (task.trim()) {
             onAddTask(task, reminderTime);
