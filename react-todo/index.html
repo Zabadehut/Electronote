@@ -10,7 +10,7 @@
       margin: 0;
       padding: 0;
       height: 100vh;
-      overflow: hidden;
+      overflow: hidden; /* Désactiver les ascenseurs par défaut */
     }
 
     #titlebar {
@@ -25,8 +25,9 @@
       align-items: center;
       padding-left: 10px;
       padding-right: 10px;
-      -webkit-app-region: drag;
       z-index: 9999;
+      /* Ces propriétés sont spécifiques à Electron */
+      -webkit-app-region: drag;
     }
 
     .titlebar-button {
@@ -49,9 +50,10 @@
     }
 
     #root {
-      height: 100vh;
+      height: calc(100vh - 30px); /* Ajuster la hauteur pour prendre en compte la barre de titre */
       background-color: transparent;
       margin-top: 30px;
+      overflow: hidden; /* Désactiver les ascenseurs par défaut */
     }
   </style>
 </head>
@@ -63,6 +65,6 @@
   <button id="close-btn" class="titlebar-button">×</button>
 </div>
 <div id="root"></div>
-<script type="module" src="/src/main.tsx"></script>
+<script type="module" src="./src/main.tsx"></script> <!-- Vérifiez que ce chemin est correct -->
 </body>
 </html>

@@ -18,18 +18,26 @@
 .main-container {
     width: 100vw;
     height: calc(100vh - 30px);
-    padding-top: 30px;
+    padding-top: 60px;
     transition: padding-top 0.3s ease;
+    overflow: hidden;
+}
+
+.grid-container {
+    width: 100%;
+    height: calc(100vh - var(--header-height, 60px));
+    overflow: auto;
+    position: relative;
+    margin-top: 30px;
 }
 
 .layout {
     width: 100%;
-    min-height: calc(100vh - 30px);
+    min-height: 100vh;
     display: flex;
     z-index: 100;
     flex-wrap: wrap;
     background-color: transparent;
-    margin-top: 30px;
 }
 
 .header-hidden {
@@ -38,17 +46,19 @@
     transition: top 0.3s ease, height 0.3s ease;
 }
 
-.grid-layout-container {
-    background-color: var(--color-background);
-    transition: padding-top 0.3s ease;
-}
-
 .react-grid-item {
+    padding: 3px; /* Ajustement de l'espacement */
+    position: absolute;
+    transition: transform 0.01s ease;
     box-shadow: 5px 5px 15px var(--color-shadow);
     border-radius: 10px;
     overflow: hidden;
     background-color: var(--color-background);
     color: var(--color-text);
+}
+
+.react-resizable-handle {
+    cursor: se-resize;
 }
 
 .react-grid-item.react-grid-placeholder {
@@ -100,19 +110,4 @@
 
 .select-container select option:hover {
     background-color: var(--color-shadow);
-}
-.main-container {
-    width: 100vw;
-    height: 100vh;
-    padding-top: var(--header-height, 60px); /* Use custom property for header height */
-    transition: padding-top 0.3s ease;
-}
-
-.layout {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    z-index: 100;
-    flex-wrap: wrap;
-    background-color: transparent;
 }

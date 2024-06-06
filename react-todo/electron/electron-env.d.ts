@@ -15,13 +15,21 @@ declare namespace NodeJS {
      * │
      * ```
      */
-    APP_ROOT: string
+    APP_ROOT: string;
     /** /dist/ or /public/ */
-    VITE_PUBLIC: string
+    VITE_PUBLIC: string;
   }
 }
 
 // Used in Renderer process, expose in `preload.ts`
 interface Window {
-  ipcRenderer: import('electron').IpcRenderer
+  electron: {
+    ipcRenderer: {
+      on(channel: string, listener: (...args: any[]) => void): void;
+      off(channel: string, listener: (...args: any[]) => void): void;
+      send(channel: string, ...args: any[]): void;
+      invoke(channel: string, ...args: any[]): Promise<any>;
+      once(channel: string, listener: (...args: any[]) => void): void;
+    };
+  };
 }

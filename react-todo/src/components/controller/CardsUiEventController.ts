@@ -1,8 +1,6 @@
 import React from 'react';
-import {CardIdProps, defaultCardIdProps} from "../card/CardId.tsx"; // Assurez-vous que le chemin d'importation est correct
+import { CardIdProps, defaultCardIdProps } from "../card/CardId.tsx";
 import { v4 as uuidv4 } from 'uuid';
-
-
 
 export class CardsUiEventController {
     private readonly cards: CardIdProps[];
@@ -15,18 +13,15 @@ export class CardsUiEventController {
 
     getNextPosition = () => {
         const maxY = Math.max(...this.cards.map(card => card.y + card.h), 0);
-        return {x: 0, y: maxY};
+        return { x: 0, y: maxY };
     }
 
-    // Méthodes
-
     resizeCard = (id: string, dx: number, dy: number) => {
-        console.log("resizeCard")
         const newData = this.cards.map(item => {
             if (item.id === id) {
                 const newW = Math.max(item.minW, Math.min(item.maxW || Infinity, item.w + dx));
                 const newH = Math.max(item.minH, Math.min(item.maxH || Infinity, item.h + dy));
-                return {...item, w: newW, h: newH};
+                return { ...item, w: newW, h: newH };
             }
             return item;
         });
@@ -34,8 +29,6 @@ export class CardsUiEventController {
     };
 
     addCard = (): void => {
-        console.log("addCard");
-
         const id: string = uuidv4();
         const minW = 1;
         const minH = 1;
@@ -80,17 +73,14 @@ export class CardsUiEventController {
         this.setCards(newCards);
     };
 
-
     moveCardsToTopLeft = (): void => {
         const cols = 12;
         let filledPositions = Array.from({ length: 100 }, () => Array(cols).fill(false));
         const pinnedCards = this.cards.filter(card => card.isPinned);
         const unpinnedCards = this.cards.filter(card => !card.isPinned);
 
-        // Trier les cartes non épinglées par taille (les plus grandes d'abord)
         unpinnedCards.sort((a, b) => (b.w * b.h) - (a.w * a.h));
 
-        // Conserver les positions des cartes épinglées
         pinnedCards.forEach(card => {
             for (let x = card.x; x < card.x + card.w; x++) {
                 for (let y = card.y; y < card.y + card.h; y++) {
@@ -123,7 +113,6 @@ export class CardsUiEventController {
             return { ...card, x: minX, y: minY };
         });
 
-        // Compact the layout by moving cards up into empty spaces
         filledPositions = Array.from({ length: 100 }, () => Array(cols).fill(false));
         pinnedCards.forEach(card => {
             for (let x = card.x; x < card.x + card.w; x++) {
@@ -153,5 +142,4 @@ export class CardsUiEventController {
 
         this.setCards([...pinnedCards, ...compactedCards]);
     };
-
 }
