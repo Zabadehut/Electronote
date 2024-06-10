@@ -8,6 +8,7 @@ interface ToDo {
     task: string;
     completed: boolean;
     reminderTime: string;
+    shouldTrigger?: boolean; // Ajoutez cette ligne
 }
 
 interface ToDoListProps {
@@ -57,7 +58,10 @@ const ToDoList: React.FC<ToDoListProps> = ({ onDisableDrag, onEnableDrag }) => {
                 const now = new Date();
                 if (reminderDate <= now && !todo.completed) {
                     console.log(`Alarm triggered for task: ${todo.task}`);
-                    return { ...todo, shouldTrigger: true };
+                    if (!todo.shouldTrigger) {
+                        window.electron.ipcRenderer.send('trigger-alarm');
+                        return { ...todo, shouldTrigger: true };
+                    }
                 }
                 return todo;
             }));

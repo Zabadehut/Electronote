@@ -25,6 +25,9 @@ contextBridge.exposeInMainWorld('electron', {
     getZoomFactor: () => {
       return ipcRenderer.invoke('get-zoom-factor');
     }
+  },
+  triggerAlarm: () => {
+    ipcRenderer.send('trigger-alarm');
   }
 });
 

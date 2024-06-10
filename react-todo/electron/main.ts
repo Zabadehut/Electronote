@@ -1,33 +1,46 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
-import { fileURLToPath } from 'node:url';
-import path from 'node:path';
+import { app, BrowserWindow, ipcMain, Tray, nativeImage, Notification } from 'electron';
+import { fileURLToPath } from 'url';
+import path from 'path';
 import os from 'os';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 process.env.APP_ROOT = path.join(__dirname, '..');
 
-export const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL'];
-export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist');
+const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL'];
+const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist');
 
 process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 'public') : RENDERER_DIST;
 
-let win: BrowserWindow | null;
+let tray: Tray | null = null;
+let win: BrowserWindow | null = null;
+let blinkInterval: NodeJS.Timeout | null = null;
+
+const iconPath = path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'); // Chemin de l'icône
 
 function createWindow() {
+  let icon = nativeImage.createFromPath(iconPath);
+  if (icon.isEmpty()) {
+    console.error(`Failed to load icon from path: ${iconPath}, using default Electron icon.`);
+    icon = nativeImage.createFromNamedImage('electron', [32, 64, 128, 256, 512]);
+  }
+
   win = new BrowserWindow({
     transparent: true,
     frame: false,
     titleBarStyle: 'hidden',
     resizable: true,
-    icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
+    icon,
     webPreferences: {
       preload: path.join(__dirname, 'preload.mjs'),
     },
   });
 
+  tray = new Tray(icon);
+  tray.setToolTip('Your App Name');
+
   win.webContents.on('did-finish-load', () => {
-    win?.webContents.send('main-process-message', (new Date()).toLocaleString());
+    win?.webContents.send('main-process-message', new Date().toLocaleString());
   });
 
   if (VITE_DEV_SERVER_URL) {
@@ -70,10 +83,37 @@ function createWindow() {
     if (win) {
       return win.webContents.getZoomFactor();
     }
-    return 1; // Valeur par défaut si la fenêtre n'existe pas
+    return 1;
   });
 
-  // Envoi de l'utilisation de la mémoire toutes les secondes
+  ipcMain.on('trigger-alarm', () => {
+    if (win && tray) {
+      const emptyIcon = nativeImage.createEmpty(); // Utiliser une icône vide pour clignoter
+
+      new Notification({
+        title: 'Alarme',
+        body: 'Votre alarme a sonné!',
+        icon
+      }).show();
+
+      if (blinkInterval) clearInterval(blinkInterval);
+
+      let isOriginalIcon = true;
+      blinkInterval = setInterval(() => {
+        if (tray) {
+          tray.setImage(isOriginalIcon ? emptyIcon : icon);
+          isOriginalIcon = !isOriginalIcon;
+        }
+      }, 500);
+
+      // Arrêter le clignotement après une certaine période (par exemple, 10 secondes)
+      setTimeout(() => {
+        if (blinkInterval) clearInterval(blinkInterval);
+        tray.setImage(icon); // Réinitialiser à l'icône originale
+      }, 10000);
+    }
+  });
+
   setInterval(() => {
     if (win) {
       const memoryUsage = process.memoryUsage();
