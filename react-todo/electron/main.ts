@@ -109,7 +109,7 @@ function createWindow() {
       // Arrêter le clignotement après une certaine période (par exemple, 10 secondes)
       setTimeout(() => {
         if (blinkInterval) clearInterval(blinkInterval);
-        tray.setImage(icon); // Réinitialiser à l'icône originale
+        if (tray) tray.setImage(icon); // Réinitialiser à l'icône originale
       }, 10000);
     }
   });

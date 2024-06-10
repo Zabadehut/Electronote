@@ -1,5 +1,3 @@
-// GridComponent.tsx
-
 import React, { useState, useEffect, useRef } from 'react';
 import './GridComponent.css';
 import { Responsive, WidthProvider, Layout, ItemCallback } from 'react-grid-layout';
@@ -81,15 +79,6 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData, zoomFactor })
         setTimeout(() => setCollisionAllowed(true), 1000);
     };
 
-    const handleDrag: ItemCallback = (_layout, _oldItem, _newItem, _placeholder, e, element) => {
-        if (element && mainContainerRef.current) {
-            const rect = mainContainerRef.current.getBoundingClientRect();
-            const zoomAdjustedX = (e.clientX - rect.left) / zoomFactor;
-            const zoomAdjustedY = (e.clientY - rect.top) / zoomFactor;
-            element.style.transform = `translate(${zoomAdjustedX}px, ${zoomAdjustedY}px)`;
-        }
-    };
-
     const handleDragStop: ItemCallback = () => {
         setDraggingCardId(null);
         document.body.classList.remove('no-select');
@@ -139,7 +128,6 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData, zoomFactor })
                         compactType={null}
                         preventCollision={!collisionAllowed}
                         onDragStart={handleDragStart}
-                        onDrag={handleDrag}
                         onDragStop={handleDragStop}
                         onResizeStart={handleResizeStart}
                         onResizeStop={handleResizeStop}

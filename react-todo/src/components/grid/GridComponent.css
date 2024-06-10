@@ -1,11 +1,11 @@
 :root {
     --zoom-factor: 1;
-    --header-height: 60px; /* Ajout de cette ligne */
+    --header-height: 60px;
 }
 
 .header-container {
     display: flex;
-    justify-content: space-between; /* Ajuste les éléments pour qu'ils soient bien espacés */
+    justify-content: space-between;
     align-items: center;
     position: fixed;
     top: 30px;
@@ -46,7 +46,7 @@
 }
 
 .react-grid-item {
-    padding: 3px; /* Ajustement de l'espacement */
+    padding: 3px;
     position: absolute;
     transition: transform 0.01s ease;
     box-shadow: 5px 5px 15px var(--color-shadow);
