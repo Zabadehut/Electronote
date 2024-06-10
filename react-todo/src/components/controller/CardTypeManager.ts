@@ -28,6 +28,7 @@ import FluxRssReader from '../card/models/FluxRssReader';
 import LoadContentCard from '../card/models/LoadContentCard';
 import ToDoList from '../card/todolist/ToDoList';
 import HourTime from '../card/times/HourTime';
+import ThreadManager from '../thread/ThreadManager'; // Import du ThreadManager
 
 const cardComponentMap = {
     text: TextContentCard,
@@ -42,6 +43,7 @@ const cardComponentMap = {
     loadContent: LoadContentCard,
     hourTime: HourTime,
     toDoList: ToDoList,
+    threadManager: ThreadManager, // Ajout du ThreadManager
 };
 
 const cardComponentProps: Record<string, any> = {

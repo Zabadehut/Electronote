@@ -36,6 +36,7 @@ export type CardIdProps = {
     cards: CardProps[];
     isResizing: boolean;
     isDragging: boolean;
+    memoryUsage?: number;
 };
 
 export const defaultCardIdProps: CardIdProps = {
@@ -54,7 +55,11 @@ export const defaultCardIdProps: CardIdProps = {
     cards: [],
     isResizing: false,
     isDragging: false,
+    memoryUsage: 0,
 };
+
+// Créez une liste globale pour suivre les threads
+const activeThreads = new Map<string, { id: string, type: string, content: string, result: string, memoryUsage: number }>();
 
 const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: CardIdProps['type']) => void }> = (props) => {
     const [pinned, setPinned] = useState(props.isPinned);
@@ -62,6 +67,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
     const [isDraggable, setIsDraggable] = useState(true);
     const workerRef = useRef<Worker | null>(null);
     const memoryManagerRef = useRef(new MemoryManager());
+    const [memoryUsage, setMemoryUsage] = useState<number>(0);
 
     useEffect(() => {
         const initializeWorker = () => {
@@ -71,6 +77,12 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                 console.log(`Card ${id} processed result:`, result);
                 console.log(`Memory usage for card ${id}: ${memoryUsage} bytes`);
                 memoryManagerRef.current.allocateCard(id, props.content, memoryUsage);
+
+                // Mettez à jour le thread actif
+                activeThreads.set(props.id, { id: props.id, type: selectedType, content: props.content, result, memoryUsage });
+
+                // Mettez à jour la mémoire de la carte
+                setMemoryUsage(memoryUsage);
             };
             workerRef.current = worker;
         };
@@ -80,6 +92,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         return () => {
             if (workerRef.current) {
                 workerRef.current.terminate();
+                activeThreads.delete(props.id); // Supprimez le thread actif
             }
         };
     }, [props.id]);
@@ -109,6 +122,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
     const handleClose = () => {
         if (workerRef.current) {
             workerRef.current.terminate();
+            activeThreads.delete(props.id); // Supprimez le thread actif
         }
         props.onClose?.(props.id);
     };
@@ -126,7 +140,8 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
             isDraggable,
             onDisableDrag: () => setIsDraggable(false),
             onEnableDrag: () => setIsDraggable(true),
-            memoryManager: memoryManagerRef.current
+            memoryManager: memoryManagerRef.current,
+            memoryUsage
         };
         return <CardComponent {...cardProps} />;
     };
@@ -187,3 +202,5 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
 };
 
 export default memo(CardId);
+
+export { activeThreads };

@@ -1,0 +1,47 @@
+.thread-manager {
+    padding: 16px;
+    background-color: var(--color-background);
+    border-radius: 8px;
+    box-shadow: 0 0 10px var(--color-shadow);
+    overflow-y: auto; /* Ajoute un ascenseur si nécessaire */
+    max-height: 100%; /* S'assure que le composant ne dépasse pas la taille de la carte */
+}
+
+.thread-manager h2 {
+    margin-bottom: 16px;
+    color: var(--color-text);
+}
+
+.thread {
+    margin-top: 8px;
+    padding: 8px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background-color: var(--color-button-bg);
+    box-shadow: 0 0 5px var(--color-shadow);
+}
+
+.thread h4 {
+    margin: 0 0 8px 0;
+    color: var(--color-text);
+}
+
+.thread p {
+    margin: 4px 0;
+    color: var(--color-text);
+}
+
+.thread button {
+    margin: 4px;
+    padding: 8px 16px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.thread button:hover {
+    background-color: #c82333;
+}

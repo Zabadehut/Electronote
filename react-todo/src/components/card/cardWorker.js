@@ -18,7 +18,7 @@ self.onmessage = function(event) {
             result = null;
     }
 
-    // Simulate memory usage calculation
+    // Calculer la mémoire utilisée par le contenu
     memoryUsage = new Blob([content]).size;
 
     self.postMessage({ id, result, memoryUsage });

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import GridComponent from './components/grid/GridComponent';
 import { CardIdProps } from "./components/card/CardId";
+import ThreadManager from './components/thread/ThreadManager';
 
 const App: React.FC = () => {
     const [data, setData] = useState<CardIdProps[]>([]);
@@ -15,12 +16,18 @@ const App: React.FC = () => {
             });
         };
 
-        window.electron.ipcRenderer.on('zoom', handleZoom);
+        if (window.electron && window.electron.ipcRenderer) {
+            window.electron.ipcRenderer.on('zoom', handleZoom);
 
-        return () => {
-            window.electron.ipcRenderer.off('zoom', handleZoom);
-        };
+            return () => {
+                window.electron.ipcRenderer.off('zoom', handleZoom);
+            };
+        }
     }, []);
+
+    const handleTerminateThread = (id: string) => {
+        setData(prevData => prevData.filter(card => card.id !== id));
+    };
 
     return (
         <div>
@@ -29,6 +36,7 @@ const App: React.FC = () => {
                 setData={setData}
                 zoomFactor={zoomFactor} // Pass the zoomFactor prop
             />
+            <ThreadManager onTerminateThread={handleTerminateThread} />
         </div>
     );
 };
