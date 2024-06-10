@@ -3,23 +3,11 @@ import { IconButton, Stack, Select, MenuItem, SelectChangeEvent } from '@mui/mat
 import PushPinIcon from '@mui/icons-material/PushPin';
 import CloseIcon from '@mui/icons-material/Close';
 import { v4 as uuidv4 } from 'uuid';
-import TextContentCard from './models/TextContentCard';
-import CodeContentCard from './models/CodeContentCard';
-import FileContentCard from './models/FileContentCard';
-import WebContentCard from './models/WebContentCard';
-import YouTubeVideoCard from './models/YouTubeVideoCard';
-import WeatherContentCard from './models/WeatherContentCard';
-import SearchContentInApp from './models/SearchContentInApp';
-import NoteTakingCard from './notes/NoteTakingCard';
-import FluxRssReader from './models/FluxRssReader';
-import LoadContentCard from './models/LoadContentCard';
-import ToDoList from './todolist/ToDoList';
-import { MemoryManager } from './MemoryManager';
+import { cardComponentMap, cardComponentProps, CardType } from '../controller/CardTypeManager';
+import { MemoryManager } from './memory/MemoryManager';
 import "react-resizable/css/styles.css";
 import './CardId.css';
-
 import Worker from './cardWorker?worker';
-import HourTime from './times/HourTime.tsx';
 
 export type CardProps = {
     id: string;
@@ -44,7 +32,7 @@ export type CardIdProps = {
     disableDragAndDrop?: boolean;
     onPinClicked?: (id: string) => void;
     onClose?: (id: string) => void;
-    type: 'text' | 'code' | 'file' | 'web' | 'weather' | 'search' | 'note' | 'none' | 'rss' | 'you' | 'loadContent' | 'hourTime' | 'toDoList' | 'winapp';
+    type: CardType;
     cards: CardProps[];
     isResizing: boolean;
     isDragging: boolean;
@@ -79,8 +67,10 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         const initializeWorker = () => {
             const worker = new Worker();
             worker.onmessage = (event) => {
-                const { id, result } = event.data;
+                const { id, result, memoryUsage } = event.data;
                 console.log(`Card ${id} processed result:`, result);
+                console.log(`Memory usage for card ${id}: ${memoryUsage} bytes`);
+                memoryManagerRef.current.allocateCard(id, props.content, memoryUsage);
             };
             workerRef.current = worker;
         };
@@ -116,13 +106,6 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         props.changeCardType(props.id, newType);
     };
 
-    const disableDrag = () => setIsDraggable(false);
-    const enableDrag = () => setIsDraggable(true);
-
-    const handleTimeUpdate = (time: Date) => {
-        console.log("Current Time Updated: ", time);
-    };
-
     const handleClose = () => {
         if (workerRef.current) {
             workerRef.current.terminate();
@@ -135,41 +118,17 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
     };
 
     const renderCard = () => {
+        const CardComponent = cardComponentMap[selectedType];
+        const additionalProps = cardComponentProps[selectedType] || {};
         const cardProps = {
             ...props,
+            ...additionalProps,
             isDraggable,
-            onDisableDrag: disableDrag,
-            onEnableDrag: enableDrag,
+            onDisableDrag: () => setIsDraggable(false),
+            onEnableDrag: () => setIsDraggable(true),
             memoryManager: memoryManagerRef.current
         };
-        switch (selectedType) {
-            case 'text':
-                return <TextContentCard {...cardProps} />;
-            case 'code':
-                return <CodeContentCard {...cardProps} />;
-            case 'file':
-                return <FileContentCard {...cardProps} />;
-            case 'web':
-                return <WebContentCard query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag} />;
-            case 'you':
-                return <YouTubeVideoCard url={props.content} />;
-            case 'weather':
-                return <WeatherContentCard query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag} />;
-            case 'note':
-                return <NoteTakingCard {...cardProps} />;
-            case 'search':
-                return <SearchContentInApp {...cardProps} />;
-            case 'rss':
-                return <FluxRssReader query={props.content} onDisableDrag={disableDrag} onEnableDrag={enableDrag} />;
-            case 'loadContent':
-                return <LoadContentCard title={props.title} content={props.content} />;
-            case 'hourTime':
-                return <HourTime onTimeUpdate={handleTimeUpdate} />;
-            case 'toDoList':
-                return <ToDoList onDisableDrag={disableDrag} onEnableDrag={enableDrag} />;
-            default:
-                return <div>Unsupported card type</div>;
-        }
+        return <CardComponent {...cardProps} />;
     };
 
     return (
@@ -217,18 +176,9 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                         className="no-drag"
                     >
                         <MenuItem value=""><em>None</em></MenuItem>
-                        <MenuItem value="search">Search</MenuItem>
-                        <MenuItem value="note">Note</MenuItem>
-                        <MenuItem value="text">Text</MenuItem>
-                        <MenuItem value="code">Code</MenuItem>
-                        <MenuItem value="file">File</MenuItem>
-                        <MenuItem value="web">Web</MenuItem>
-                        <MenuItem value="you">Youtube</MenuItem>
-                        <MenuItem value="weather">Weather</MenuItem>
-                        <MenuItem value="rss">RSS</MenuItem>
-                        <MenuItem value="loadContent">Load Content</MenuItem>
-                        <MenuItem value="hourTime">Hour Time</MenuItem>
-                        <MenuItem value="toDoList">To-Do List</MenuItem>
+                        {Object.keys(cardComponentMap).map((type) => (
+                            <MenuItem key={type} value={type}>{type}</MenuItem>
+                        ))}
                     </Select>
                 )}
             </Stack>

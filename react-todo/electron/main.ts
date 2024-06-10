@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import os from 'os';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -71,6 +72,15 @@ function createWindow() {
     }
     return 1; // Valeur par défaut si la fenêtre n'existe pas
   });
+
+  // Envoi de l'utilisation de la mémoire toutes les secondes
+  setInterval(() => {
+    if (win) {
+      const memoryUsage = process.memoryUsage();
+      const totalMemory = os.totalmem();
+      win.webContents.send('update-memory-usage', { memoryUsage, totalMemory });
+    }
+  }, 1000);
 }
 
 app.on('window-all-closed', () => {

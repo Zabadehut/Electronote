@@ -2,6 +2,8 @@ self.onmessage = function(event) {
     const { id, type, content } = event.data;
 
     let result;
+    let memoryUsage;
+
     switch (type) {
         case 'text':
             result = handleTextCard(content);
@@ -16,7 +18,10 @@ self.onmessage = function(event) {
             result = null;
     }
 
-    self.postMessage({ id, result });
+    // Simulate memory usage calculation
+    memoryUsage = new Blob([content]).size;
+
+    self.postMessage({ id, result, memoryUsage });
 };
 
 function handleTextCard(content) {

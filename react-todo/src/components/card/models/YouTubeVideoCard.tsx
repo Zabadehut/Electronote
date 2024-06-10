@@ -25,7 +25,7 @@ const isValidUrl = (urlString: string): boolean => {
     }
 };
 
-const YouTubeVideoCard: React.FC<YouTubeVideoCardProps> = ({ url, onDisableDrag, onEnableDrag }) => {
+const YouTubeVideoCard: React.FC<YouTubeVideoCardProps> = ({ url }) => {
     const [videoData, setVideoData] = useState<VideoData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -40,7 +40,6 @@ const YouTubeVideoCard: React.FC<YouTubeVideoCardProps> = ({ url, onDisableDrag,
                 return;
             }
 
-            onDisableDrag?.();
             setLoading(true);
 
             try {
@@ -66,7 +65,6 @@ const YouTubeVideoCard: React.FC<YouTubeVideoCardProps> = ({ url, onDisableDrag,
                 }
             } finally {
                 setLoading(false);
-                onEnableDrag?.();
             }
         };
 
@@ -76,7 +74,7 @@ const YouTubeVideoCard: React.FC<YouTubeVideoCardProps> = ({ url, onDisableDrag,
             setLoading(false);
         });
 
-    }, [url, onDisableDrag, onEnableDrag]);
+    }, [url]);
 
     return (
         <Card raised className="YouTubeVideoCard">

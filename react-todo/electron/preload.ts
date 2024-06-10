@@ -1,11 +1,11 @@
-import { contextBridge, ipcRenderer } from 'electron';
+import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
-    on: (channel: string, listener: (...args: any[]) => void) => {
+    on: (channel: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) => {
       ipcRenderer.on(channel, listener);
     },
-    off: (channel: string, listener: (...args: any[]) => void) => {
+    off: (channel: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) => {
       ipcRenderer.off(channel, listener);
     },
     send: (channel: string, ...args: any[]) => {
@@ -14,7 +14,7 @@ contextBridge.exposeInMainWorld('electron', {
     invoke: (channel: string, ...args: any[]) => {
       return ipcRenderer.invoke(channel, ...args);
     },
-    once: (channel: string, listener: (...args: any[]) => void) => {
+    once: (channel: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) => {
       ipcRenderer.once(channel, listener);
     }
   },

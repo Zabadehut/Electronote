@@ -1,6 +1,11 @@
+:root {
+    --zoom-factor: 1;
+    --header-height: 60px; /* Ajout de cette ligne */
+}
+
 .header-container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between; /* Ajuste les éléments pour qu'ils soient bien espacés */
     align-items: center;
     position: fixed;
     top: 30px;
@@ -8,27 +13,21 @@
     width: 100%;
     background-color: var(--color-background);
     color: var(--color-text);
-    padding: 10px;
+    padding: 2px;
     z-index: 1000;
     transition: top 0.3s ease;
     box-shadow: 0 2px 4px var(--color-shadow);
     border-bottom: 1px solid var(--color-border);
 }
 
-.main-container {
-    width: 100vw;
-    height: calc(100vh - 30px);
-    padding-top: 60px;
-    transition: padding-top 0.3s ease;
-    overflow: hidden;
-}
-
 .grid-container {
     width: 100%;
-    height: calc(100vh - var(--header-height, 60px));
+    height: calc(100vh - var(--header-height));
     overflow: auto;
     position: relative;
     margin-top: 30px;
+    transform: scale(var(--zoom-factor));
+    transform-origin: top left;
 }
 
 .layout {

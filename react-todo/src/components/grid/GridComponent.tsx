@@ -1,33 +1,36 @@
+// GridComponent.tsx
+
 import React, { useState, useEffect, useRef } from 'react';
 import './GridComponent.css';
-import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
+import { Responsive, WidthProvider, Layout, ItemCallback } from 'react-grid-layout';
 import CardId, { CardIdProps } from "../card/CardId";
 import { CardsUiEventController } from "../controller/CardsUiEventController";
 import LoadContentCard from "../card/models/LoadContentCard";
 import ThemeSwitcher from '../theme/ThemeSwitcher';
+import MemoryUsageComponent from '../card/memory/MemoryUsageComponent';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 type GridLayoutProps = {
     data: CardIdProps[];
     setData: React.Dispatch<React.SetStateAction<CardIdProps[]>>;
-    zoomFactor: number; // Add zoomFactor prop
+    zoomFactor: number;
 };
 
 const GridComponent: React.FC<GridLayoutProps> = ({ data, setData, zoomFactor }) => {
     const controller = new CardsUiEventController(data, setData);
     const [headerVisible, setHeaderVisible] = useState(true);
-    const [headerHeight] = useState(60); // Default height
+    const [headerHeight] = useState(60);
     let timeoutId: NodeJS.Timeout;
     let showHeaderTimeoutId: NodeJS.Timeout;
-    const mainContainerRef = useRef<HTMLDivElement>(null); // Ref for the main container
-    const [isDraggable, setIsDraggable] = useState(true); // State to control dragging
+    const mainContainerRef = useRef<HTMLDivElement>(null);
+    const [isDraggable, setIsDraggable] = useState(true);
     const [resizingCardId, setResizingCardId] = useState<string | null>(null);
     const [draggingCardId, setDraggingCardId] = useState<string | null>(null);
-    const [collisionAllowed, setCollisionAllowed] = useState(false); // State to control collision
+    const [collisionAllowed, setCollisionAllowed] = useState(false);
 
     const toggleDraggable = () => {
-        setIsDraggable(!isDraggable); // Toggle the draggable state
+        setIsDraggable(!isDraggable);
     };
 
     const changeCardType = (id: string, newType: CardIdProps['type']) => {
@@ -51,7 +54,7 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData, zoomFactor })
         if (e.clientY < 100) {
             showHeaderTimeoutId = setTimeout(() => {
                 setHeaderVisible(true);
-            }, 500); // Delay of 1 second before showing the header
+            }, 500);
         } else {
             timeoutId = setTimeout(() => {
                 setHeaderVisible(false);
@@ -71,32 +74,33 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData, zoomFactor })
         };
     }, [headerVisible, headerHeight]);
 
-    const handleDragStart = (_layout: Layout[], _oldItem: Layout, newItem: Layout) => {
+    const handleDragStart: ItemCallback = (_layout, _oldItem, newItem) => {
         setDraggingCardId(newItem.i);
         document.body.classList.add('no-select');
-        setCollisionAllowed(false); // Initially, collision is not allowed
-        setTimeout(() => setCollisionAllowed(true), 1000); // Allow collision after 1 second
+        setCollisionAllowed(false);
+        setTimeout(() => setCollisionAllowed(true), 1000);
     };
 
-    const handleDrag = (_layout: Layout[], _oldItem: Layout, newItem: Layout, _placeholder: Layout, e: any, element: HTMLElement) => {
-        if (element) {
-            const zoomAdjustedX = e.clientX / zoomFactor;
-            const zoomAdjustedY = e.clientY / zoomFactor;
-            element.style.transform = `translate(${zoomAdjustedX - newItem.w * 25}px, ${zoomAdjustedY - newItem.h * 25}px)`;
+    const handleDrag: ItemCallback = (_layout, _oldItem, _newItem, _placeholder, e, element) => {
+        if (element && mainContainerRef.current) {
+            const rect = mainContainerRef.current.getBoundingClientRect();
+            const zoomAdjustedX = (e.clientX - rect.left) / zoomFactor;
+            const zoomAdjustedY = (e.clientY - rect.top) / zoomFactor;
+            element.style.transform = `translate(${zoomAdjustedX}px, ${zoomAdjustedY}px)`;
         }
     };
 
-    const handleDragStop = () => {
+    const handleDragStop: ItemCallback = () => {
         setDraggingCardId(null);
         document.body.classList.remove('no-select');
     };
 
-    const handleResizeStart = (_layout: Layout[], _oldItem: Layout, newItem: Layout): void => {
+    const handleResizeStart: ItemCallback = (_layout, _oldItem, newItem) => {
         setResizingCardId(newItem.i);
         document.body.classList.add('no-select');
     };
 
-    const handleResizeStop = (_layout: Layout[], _oldItem: Layout, _newItem: Layout): void => {
+    const handleResizeStop: ItemCallback = () => {
         setResizingCardId(null);
         document.body.classList.remove('no-select');
     };
@@ -109,17 +113,21 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData, zoomFactor })
     return (
         <div>
             <div className={`header-container ${headerVisible ? "" : "header-hidden"}`}>
-                <button className="header-container-btn" onClick={toggleDraggable}>
-                    {isDraggable ? "Locked Cards" : "Unlocked Cards"}
-                </button>
-                <button className="header-container-btn" onClick={() => controller.addCard()}>
-                    Add New Card
-                </button>
-                <button className="header-container-btn" onClick={handleMoveCards}>
-                    Gather Cards
-                </button>
-                <ThemeSwitcher isHeaderVisible={headerVisible} />
+                <div style={{ display: 'flex' }}>
+                    <button className="header-container-btn" onClick={toggleDraggable}>
+                        {isDraggable ? "Locked Cards" : "Unlocked Cards"}
+                    </button>
+                    <button className="header-container-btn" onClick={() => controller.addCard()}>
+                        Add New Card
+                    </button>
+                    <button className="header-container-btn" onClick={handleMoveCards}>
+                        Gather Cards
+                    </button>
+                    <ThemeSwitcher isHeaderVisible={headerVisible} />
+                </div>
+                <MemoryUsageComponent />
             </div>
+
             <div ref={mainContainerRef} className="main-container">
                 <div className="grid-container" style={{ transform: `scale(${zoomFactor})`, transformOrigin: 'top left', width: `calc(100% / ${zoomFactor})`, height: `calc(100% / ${zoomFactor})` }}>
                     <ResponsiveGridLayout

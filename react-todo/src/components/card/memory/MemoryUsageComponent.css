@@ -1,0 +1,32 @@
+.memory-usage-container {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    color: var(--color-text);
+    width: 60px;
+    margin-left: auto;
+    margin-right: 30px;
+}
+
+.memory-usage-progressbar .CircularProgressbar-path {
+    stroke: var(--color-primary);
+}
+
+.memory-usage-progressbar .CircularProgressbar-trail {
+    stroke: var(--color-border);
+}
+
+.memory-usage-progressbar .CircularProgressbar-text {
+    fill: var(--color-text);
+    font-size: 14px;
+    white-space: pre-wrap; /* Permet l'affichage multi-lignes */
+    text-align: center;
+    line-height: 1.2; /* Ajuste l'espacement entre les lignes */
+    display: flex;
+    flex-direction: column; /* Affiche le texte en colonne */
+    justify-content: center; /* Centre le texte verticalement */
+    align-items: center; /* Centre le texte horizontalement */
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
