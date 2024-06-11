@@ -21,6 +21,9 @@ self.onmessage = function(event) {
     // Calculer la mémoire utilisée par le contenu
     memoryUsage = new Blob([content]).size;
 
+    console.log(`Worker: Calculated memory usage for card ${id}: ${memoryUsage} bytes with content:`, content);
+
+    // Envoyer les données calculées au thread parent
     self.postMessage({ id, result, memoryUsage });
 };
 

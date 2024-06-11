@@ -66,7 +66,9 @@ const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
     });
 
     const debouncedCalculateCounts = useCallback(debounce((content) => {
-        setCounts(calculateCounts(content));
+        const newCounts = calculateCounts(content);
+        setCounts(newCounts);
+        console.log('Updated counts:', newCounts);
     }, 300), [calculateCounts]);
 
     useEffect(() => {
@@ -110,7 +112,7 @@ const NoteTakingCard: React.FC<NoteTakingCardProps> = (props) => {
         } else if (quillInstanceRef.current) {
             quillInstanceRef.current.disable();
         }
-    }, [isEditing, debouncedCalculateCounts]);
+    }, [isEditing, debouncedCalculateCounts, editedContent]);
 
     const handleEditClick = useCallback(() => {
         setIsEditing(true);

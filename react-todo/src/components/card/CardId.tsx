@@ -76,7 +76,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                 const { id, result, memoryUsage } = event.data;
                 console.log(`Card ${id} processed result:`, result);
                 console.log(`Memory usage for card ${id}: ${memoryUsage} bytes`);
-                memoryManagerRef.current.allocateCard(id, props.content, memoryUsage);
+                memoryManagerRef.current.allocateCard(id, memoryUsage);
 
                 // Mettez à jour le thread actif
                 activeThreads.set(props.id, { id: props.id, type: selectedType, content: props.content, result, memoryUsage });
@@ -93,6 +93,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
             if (workerRef.current) {
                 workerRef.current.terminate();
                 activeThreads.delete(props.id); // Supprimez le thread actif
+                memoryManagerRef.current.deallocateCard(props.id); // Libérez la mémoire
             }
         };
     }, [props.id]);
@@ -107,13 +108,17 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         }
     }, [props.content, selectedType]);
 
+    useEffect(() => {
+        setMemoryUsage(memoryManagerRef.current.getMemoryUsage(props.id));
+    }, [props.id]);
+
     const handlePinClick = (e: React.MouseEvent<HTMLElement>) => {
         e.stopPropagation();
         setPinned(!pinned);
         props.onPinClicked?.(props.id);
     };
 
-    const handleChangeType = (event: SelectChangeEvent<string>) => {
+    const handleChangeType = (event: SelectChangeEvent) => {
         const newType = event.target.value as CardIdProps['type'];
         setSelectedType(newType);
         props.changeCardType(props.id, newType);
@@ -123,6 +128,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         if (workerRef.current) {
             workerRef.current.terminate();
             activeThreads.delete(props.id); // Supprimez le thread actif
+            memoryManagerRef.current.deallocateCard(props.id); // Libérez la mémoire
         }
         props.onClose?.(props.id);
     };
