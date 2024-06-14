@@ -6,6 +6,7 @@ import { CardsUiEventController } from "../controller/CardsUiEventController";
 import LoadContentCard from "../card/models/LoadContentCard";
 import ThemeSwitcher from '../theme/ThemeSwitcher';
 import MemoryUsageComponent from '../card/memory/MemoryUsageComponent';
+import ThreadManager from '../thread/ThreadManager';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -99,6 +100,10 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData, zoomFactor })
         setData(updatedCards);
     };
 
+    const terminateThread = (id: string) => {
+        handleCloseCard(id);
+    };
+
     return (
         <div>
             <div className={`header-container ${headerVisible ? "" : "header-hidden"}`}>
@@ -157,12 +162,13 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData, zoomFactor })
                                 {item.type === 'loadContent' ? (
                                     <LoadContentCard title={item.title} content={item.content} />
                                 ) : (
-                                    <CardId {...item} changeCardType={changeCardType} isResizing={resizingCardId === item.id} isDragging={draggingCardId === item.id} onClose={handleCloseCard} />
+                                    <CardId {...item} changeCardType={changeCardType} isResizing={resizingCardId === item.id} isDragging={draggingCardId === item.id} onClose={handleCloseCard} onTerminateThread={terminateThread} />
                                 )}
                             </div>
                         ))}
                     </ResponsiveGridLayout>
                 </div>
+                <ThreadManager onTerminateThread={terminateThread} />
             </div>
         </div>
     );

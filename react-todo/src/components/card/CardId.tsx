@@ -32,6 +32,7 @@ export type CardIdProps = {
     disableDragAndDrop?: boolean;
     onPinClicked?: (id: string) => void;
     onClose?: (id: string) => void;
+    onTerminateThread: (id: string) => void; // Ajoutez cette ligne
     type: CardType;
     cards: CardProps[];
     isResizing: boolean;
@@ -56,12 +57,12 @@ export const defaultCardIdProps: CardIdProps = {
     isResizing: false,
     isDragging: false,
     memoryUsage: 0,
+    onTerminateThread: () => {},
 };
 
-// Créez une liste globale pour suivre les threads
 const activeThreads = new Map<string, { id: string, type: string, content: string, result: string, memoryUsage: number }>();
 
-const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: CardIdProps['type']) => void }> = (props) => {
+const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: CardIdProps['type']) => void, onClose: (id: string) => void }> = (props) => {
     const [pinned, setPinned] = useState(props.isPinned);
     const [selectedType, setSelectedType] = useState(props.type);
     const [isDraggable, setIsDraggable] = useState(true);
@@ -77,11 +78,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                 console.log(`Card ${id} processed result:`, result);
                 console.log(`Memory usage for card ${id}: ${memoryUsage} bytes`);
                 memoryManagerRef.current.allocateCard(id, memoryUsage);
-
-                // Mettez à jour le thread actif
                 activeThreads.set(props.id, { id: props.id, type: selectedType, content: props.content, result, memoryUsage });
-
-                // Mettez à jour la mémoire de la carte
                 setMemoryUsage(memoryUsage);
             };
             workerRef.current = worker;
@@ -92,8 +89,8 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         return () => {
             if (workerRef.current) {
                 workerRef.current.terminate();
-                activeThreads.delete(props.id); // Supprimez le thread actif
-                memoryManagerRef.current.deallocateCard(props.id); // Libérez la mémoire
+                activeThreads.delete(props.id);
+                memoryManagerRef.current.deallocateCard(props.id);
             }
         };
     }, [props.id]);
@@ -127,14 +124,10 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
     const handleClose = () => {
         if (workerRef.current) {
             workerRef.current.terminate();
-            activeThreads.delete(props.id); // Supprimez le thread actif
-            memoryManagerRef.current.deallocateCard(props.id); // Libérez la mémoire
+            activeThreads.delete(props.id);
+            memoryManagerRef.current.deallocateCard(props.id);
         }
         props.onClose?.(props.id);
-    };
-
-    const handleStackClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        event.stopPropagation();
     };
 
     const renderCard = () => {
@@ -156,7 +149,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         <div className={`card ${selectedType} ${props.isResizing ? 'is-resizing' : ''} ${props.isDragging ? 'is-dragging' : ''}`} id={props.id}>
             {selectedType !== 'hourTime' && <h4>{props.title}</h4>}
             {renderCard()}
-            <Stack direction="row" spacing={1} sx={{ position: 'absolute', top: 5, right: 5 }} onClick={handleStackClick} className="MuiStack-root css-1r84q1u-MuiStack-root">
+            <Stack direction="row" spacing={1} sx={{ position: 'absolute', top: 5, right: 5 }} className="MuiStack-root css-1r84q1u-MuiStack-root">
                 {selectedType !== 'hourTime' && (
                     <IconButton onClick={handlePinClick} color="primary" aria-label="pin card" className="no-drag">
                         <PushPinIcon />
