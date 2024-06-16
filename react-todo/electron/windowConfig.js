@@ -42,6 +42,7 @@ export default {
         java: true,
         textAreasAreResizable: true,
         webgl: true,
+        webviewTag: true,
         webaudio: true,
         plugins: true,
         experimentalFeatures: false,

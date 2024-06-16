@@ -1,21 +1,3 @@
-import { CardIdProps } from '../card/CardId'; // Assurez-vous que le chemin est correct
-import React from 'react';
-
-export const updateCardType = (
-    cards: CardIdProps[],
-    setCards: React.Dispatch<React.SetStateAction<CardIdProps[]>>,
-    id: string,
-    newType: CardIdProps['type']
-) => {
-    const updatedCards = cards.map(card => {
-        if (card.id === id) {
-            return { ...card, type: newType };
-        }
-        return card;
-    });
-    setCards(updatedCards);
-};
-
 import TextContentCard from '../card/models/TextContentCard';
 import CodeContentCard from '../card/models/CodeContentCard';
 import FileContentCard from '../card/models/FileContentCard';
@@ -28,7 +10,8 @@ import FluxRssReader from '../card/models/FluxRssReader';
 import LoadContentCard from '../card/models/LoadContentCard';
 import ToDoList from '../card/todolist/ToDoList';
 import HourTime from '../card/times/HourTime';
-import ThreadManager from '../thread/ThreadManager'; // Import du ThreadManager
+import ThreadManager from '../thread/ThreadManager';
+import DiscordActivity from '../card/appliextern/discord/DiscordActivity';
 
 const cardComponentMap = {
     text: TextContentCard,
@@ -43,12 +26,18 @@ const cardComponentMap = {
     loadContent: LoadContentCard,
     hourTime: HourTime,
     toDoList: ToDoList,
-    threadManager: ThreadManager, // Ajout du ThreadManager
+    threadManager: ThreadManager,
+    discordActivity: DiscordActivity,
 };
 
 const cardComponentProps: Record<string, any> = {
     web: { query: '' },
     you: { url: '' },
+    weather: {},
+    text: {},
+    rss: {},
+    hourTime: {},
+    discordActivity: {},
 };
 
 export type CardType = keyof typeof cardComponentMap;
