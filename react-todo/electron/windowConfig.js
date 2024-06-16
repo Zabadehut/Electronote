@@ -20,7 +20,7 @@ export default {
     icon: undefined,
     show: true,
     transparent: true, // Désactivez la transparence pour voir le cadre
-    frame: false,        // Activez le cadre pour voir la barre de menu
+    frame: true,        // Activez le cadre pour voir la barre de menu
     resizable: true,
     acceptFirstMouse: false,
     disableAutoHideCursor: true,

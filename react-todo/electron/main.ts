@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, Tray, nativeImage, Notification, Menu } from 'electron';
+import { app, BrowserWindow, ipcMain, Tray, nativeImage, Notification, Menu, session } from 'electron';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import os from 'os'; // Importer os ici
@@ -34,6 +34,8 @@ function createWindow() {
     webPreferences: {
       ...windowConfig.webPreferences,
       preload: path.join(__dirname, 'preload.mjs'), // Assurez-vous que le chemin est correct
+      plugins: true,
+      webSecurity: false,
     },
   });
 
@@ -162,6 +164,29 @@ function createWindow() {
       win.webContents.send('update-memory-usage', { memoryUsage, totalMemory });
     }
   }, 1000);
+
+  // Ajouter les en-têtes CORS et activer le support des contenus protégés
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        'Access-Control-Allow-Origin': ['*']
+      }
+    });
+  });
+
+  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+    details.requestHeaders['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36';
+    callback({ requestHeaders: details.requestHeaders });
+  });
+
+  session.defaultSession.webRequest.onBeforeRequest((details, callback) => {
+    if (details.url.includes('spotify') || details.url.includes('whatsapp')) {
+      callback({ cancel: false });
+    } else {
+      callback({ cancel: false });
+    }
+  });
 }
 
 app.on('window-all-closed', () => {
@@ -178,4 +203,3 @@ app.on('activate', () => {
 });
 
 app.whenReady().then(createWindow);
-
