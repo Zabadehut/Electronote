@@ -10,8 +10,10 @@ declare namespace NodeJS {
      * │ │ └── index.html
      * │ │
      * │ ├─┬ dist-electron
-     * │ │ ├── main.js
-     * │ │ └── preload.js
+     * │ │ └── main.ts
+     * │ │ └── preload.ts
+     * │ │ └── windowConfig.d.ts
+     * │ │ └── windowConfig.js
      * │
      * ```
      */

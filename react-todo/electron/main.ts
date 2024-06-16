@@ -1,9 +1,12 @@
-import { app, BrowserWindow, ipcMain, Tray, nativeImage, Notification } from 'electron';
+import { app, BrowserWindow, ipcMain, Tray, nativeImage, Notification, Menu } from 'electron';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import os from 'os';
+import os from 'os'; // Importer os ici
+// @ts-ignore
+import windowConfig from './windowConfig'; // Assurez-vous que le chemin est correct
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 process.env.APP_ROOT = path.join(__dirname, '..');
 
@@ -26,13 +29,11 @@ function createWindow() {
   }
 
   win = new BrowserWindow({
-    transparent: true,
-    frame: false,
-    titleBarStyle: 'hidden',
-    resizable: true,
+    ...windowConfig,
     icon,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.mjs'),
+      ...windowConfig.webPreferences,
+      preload: path.join(__dirname, 'preload.mjs'), // Assurez-vous que le chemin est correct
     },
   });
 
@@ -49,7 +50,45 @@ function createWindow() {
     win.loadFile(path.join(RENDERER_DIST, 'index.html')).catch(console.error);
   }
 
-  // Handle window controls via IPC
+  // Créer le menu d'application
+  const menu = Menu.buildFromTemplate([
+    {
+      label: app.name,
+      submenu: [
+        { role: 'about' },
+        { type: 'separator' },
+        { role: 'quit' }
+      ]
+    },
+    {
+      label: 'Edit',
+      submenu: [
+        { role: 'undo' },
+        { role: 'redo' },
+        { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' }
+      ]
+    },
+    {
+      label: 'View',
+      submenu: [
+        { role: 'reload' },
+        { role: 'forceReload' },
+        { role: 'toggleDevTools' },
+        { type: 'separator' },
+        { role: 'resetZoom' },
+        { role: 'zoomIn' },
+        { role: 'zoomOut' },
+        { type: 'separator' },
+        { role: 'togglefullscreen' }
+      ]
+    }
+  ]);
+  Menu.setApplicationMenu(menu);
+
+  // Gestion des commandes de la fenêtre via IPC
   ipcMain.on('window-control', (_event: Electron.IpcMainEvent, action: string) => {
     if (!win) return;
     switch (action) {
@@ -72,7 +111,7 @@ function createWindow() {
     }
   });
 
-  // IPC pour zoom
+  // IPC pour définir le facteur de zoom
   ipcMain.on('set-zoom-factor', (_event: Electron.IpcMainEvent, factor: number) => {
     if (win) {
       win.webContents.setZoomFactor(factor);
@@ -86,6 +125,7 @@ function createWindow() {
     return 1;
   });
 
+  // Alarme
   ipcMain.on('trigger-alarm', () => {
     if (win && tray) {
       const emptyIcon = nativeImage.createEmpty(); // Utiliser une icône vide pour clignoter
@@ -114,6 +154,7 @@ function createWindow() {
     }
   });
 
+  // Mise à jour de l'utilisation de la mémoire
   setInterval(() => {
     if (win) {
       const memoryUsage = process.memoryUsage();
@@ -137,3 +178,4 @@ app.on('activate', () => {
 });
 
 app.whenReady().then(createWindow);
+
