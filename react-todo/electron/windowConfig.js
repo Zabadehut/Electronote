@@ -28,7 +28,7 @@ export default {
     enableLargerThanScreen: false,
     backgroundColor: 'rgba(255,255,255,0)',
     darkTheme: true,
-
+    titleBarStyle: 'default', // Utiliser une valeur valide ici
     webPreferences: {
         nodeIntegration: true,
         preload: path.join(__dirname, 'preload.mjs'), // Assurez-vous que le chemin est correct

@@ -14,6 +14,7 @@ import ThreadManager from '../thread/ThreadManager';
 import DiscordActivity from '../card/appliextern/discord/DiscordActivity';
 import WhatsAppActivity from '../card/appliextern/whatsapp/WhatsAppActivity';
 import SpotifyActivity from '../card/appliextern/spotify/SpotifyActivity';
+import WindowsAPI from '../card/appliextern/threadextern/windows-api'; // Ajouter cette ligne
 
 const cardComponentMap = {
     text: TextContentCard,
@@ -30,8 +31,9 @@ const cardComponentMap = {
     toDoList: ToDoList,
     threadManager: ThreadManager,
     discordActivity: DiscordActivity,
-    whatsappActivity: WhatsAppActivity, // Ajouter cette ligne
-    spotifyActivity: SpotifyActivity, // Ajouter cette ligne
+    whatsappActivity: WhatsAppActivity,
+    spotifyActivity: SpotifyActivity,
+    windowsAPI: WindowsAPI // Ajouter cette ligne
 };
 
 const cardComponentProps: Record<string, any> = {
@@ -42,8 +44,9 @@ const cardComponentProps: Record<string, any> = {
     rss: {},
     hourTime: {},
     discordActivity: {},
-    whatsappActivity: {}, // Ajouter cette ligne
-    spotifyActivity: {}, // Ajouter cette ligne
+    whatsappActivity: {},
+    spotifyActivity: {},
+    windowsAPI: {} // Ajouter cette ligne
 };
 
 export type CardType = keyof typeof cardComponentMap;

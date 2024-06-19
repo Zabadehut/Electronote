@@ -4,6 +4,8 @@ import './SpotifyActivity.css';
 const SpotifyActivity: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
+
+
     useEffect(() => {
         const webview: Electron.WebviewTag | null = document.querySelector('.spotify-webview');
 

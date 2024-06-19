@@ -21,7 +21,7 @@
       "@utils/*": ["utils/*"]
     },
     "allowSyntheticDefaultImports": true,
-    "typeRoots": ["./node_modules/@types", "./src/@types", "./electron"], // Assurez-vous que les types personnalisés sont inclus
+    "typeRoots": ["./node_modules/@types", "./src/@types", "./electron"],
     "types": ["quill", "quill-image-resize-module-react"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "electron/**/*.ts", "electron/**/*.js"],

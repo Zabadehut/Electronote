@@ -1,9 +1,9 @@
 import { app, BrowserWindow, ipcMain, Tray, nativeImage, Notification, Menu, session } from 'electron';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import os from 'os'; // Importer os ici
-// @ts-ignore
-import windowConfig from './windowConfig'; // Assurez-vous que le chemin est correct
+import os from 'os';
+import windowConfig from './windowConfig';
+import { getProcesses } from './processManager';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,7 +19,7 @@ let tray: Tray | null = null;
 let win: BrowserWindow | null = null;
 let blinkInterval: NodeJS.Timeout | null = null;
 
-const iconPath = path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'); // Chemin de l'icône
+const iconPath = path.join(process.env.VITE_PUBLIC, 'electron-vite.svg');
 
 function createWindow() {
   let icon = nativeImage.createFromPath(iconPath);
@@ -33,7 +33,7 @@ function createWindow() {
     icon,
     webPreferences: {
       ...windowConfig.webPreferences,
-      preload: path.join(__dirname, 'preload.mjs'), // Assurez-vous que le chemin est correct
+      preload: path.join(__dirname, 'preload.mjs'),
       plugins: true,
       webSecurity: false,
     },
@@ -52,7 +52,6 @@ function createWindow() {
     win.loadFile(path.join(RENDERER_DIST, 'index.html')).catch(console.error);
   }
 
-  // Créer le menu d'application
   const menu = Menu.buildFromTemplate([
     {
       label: app.name,
@@ -90,8 +89,7 @@ function createWindow() {
   ]);
   Menu.setApplicationMenu(menu);
 
-  // Gestion des commandes de la fenêtre via IPC
-  ipcMain.on('window-control', (_event: Electron.IpcMainEvent, action: string) => {
+  ipcMain.on('window-control', (_event, action) => {
     if (!win) return;
     switch (action) {
       case 'minimize':
@@ -106,15 +104,13 @@ function createWindow() {
     }
   });
 
-  // Gestion du zoom via IPC
   ipcMain.on('zoom', (_event, deltaY) => {
     if (win) {
       win.webContents.send('zoom', deltaY);
     }
   });
 
-  // IPC pour définir le facteur de zoom
-  ipcMain.on('set-zoom-factor', (_event: Electron.IpcMainEvent, factor: number) => {
+  ipcMain.on('set-zoom-factor', (_event, factor) => {
     if (win) {
       win.webContents.setZoomFactor(factor);
     }
@@ -127,10 +123,30 @@ function createWindow() {
     return 1;
   });
 
-  // Alarme
+  ipcMain.handle('open-window', async (_event, url) => {
+    const externalWin = new BrowserWindow({
+      width: 800,
+      height: 600,
+      webPreferences: {
+        nodeIntegration: false,
+        contextIsolation: true,
+        enableRemoteModule: false,
+      },
+    });
+    await externalWin.loadURL(url);
+  });
+
+  ipcMain.handle('get-process-list', async () => {
+    return getProcesses(); // Fonction pour récupérer la liste des processus
+  });
+
+  ipcMain.handle('open-process', async (_event, processName) => {
+    // Code pour dockeriser le processus sélectionné
+  });
+
   ipcMain.on('trigger-alarm', () => {
     if (win && tray) {
-      const emptyIcon = nativeImage.createEmpty(); // Utiliser une icône vide pour clignoter
+      const emptyIcon = nativeImage.createEmpty();
 
       new Notification({
         title: 'Alarme',
@@ -148,15 +164,13 @@ function createWindow() {
         }
       }, 500);
 
-      // Arrêter le clignotement après une certaine période (par exemple, 10 secondes)
       setTimeout(() => {
         if (blinkInterval) clearInterval(blinkInterval);
-        if (tray) tray.setImage(icon); // Réinitialiser à l'icône originale
+        if (tray) tray.setImage(icon);
       }, 10000);
     }
   });
 
-  // Mise à jour de l'utilisation de la mémoire
   setInterval(() => {
     if (win) {
       const memoryUsage = process.memoryUsage();
@@ -165,7 +179,6 @@ function createWindow() {
     }
   }, 1000);
 
-  // Ajouter les en-têtes CORS et activer le support des contenus protégés
   session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
     callback({
       responseHeaders: {
