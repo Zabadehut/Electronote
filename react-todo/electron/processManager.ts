@@ -2,7 +2,7 @@ import { exec } from 'child_process';
 
 export const getProcesses = (): Promise<string[]> => {
     return new Promise((resolve, reject) => {
-        exec('tasklist', (err, stdout, stderr) => {
+        exec('tasklist', (err, stdout) => {
             if (err) {
                 reject(err);
                 return;

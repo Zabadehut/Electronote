@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import os from 'os';
 import windowConfig from './windowConfig';
-import { getProcesses } from './processManager';
+import { exec } from 'child_process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,6 +36,8 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.mjs'),
       plugins: true,
       webSecurity: false,
+      nodeIntegration: false,
+      contextIsolation: true
     },
   });
 
@@ -129,8 +131,7 @@ function createWindow() {
       height: 600,
       webPreferences: {
         nodeIntegration: false,
-        contextIsolation: true,
-        enableRemoteModule: false,
+        contextIsolation: true
       },
     });
     await externalWin.loadURL(url);
@@ -141,7 +142,18 @@ function createWindow() {
   });
 
   ipcMain.handle('open-process', async (_event, processName) => {
-    // Code pour dockeriser le processus sélectionné
+    return new Promise((resolve, reject) => {
+      const command = `start ${processName}`; // Utilisation de `start` pour lancer Notepad++ sous Windows
+      exec(command, (error, stdout) => {
+        if (error) {
+          console.error(`Error starting process: ${error.message}`);
+          reject(error);
+          return;
+        }
+        console.log(`stdout: ${stdout}`);
+        resolve(stdout);
+      });
+    });
   });
 
   ipcMain.on('trigger-alarm', () => {
@@ -216,3 +228,17 @@ app.on('activate', () => {
 });
 
 app.whenReady().then(createWindow);
+
+// Fonction pour récupérer la liste des processus
+export const getProcesses = (): Promise<string[]> => {
+  return new Promise((resolve, reject) => {
+    exec('tasklist', (err, stdout) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      const processList = stdout.split('\n').slice(3).map(line => line.trim().split(/\s+/)[0]);
+      resolve(processList);
+    });
+  });
+};
