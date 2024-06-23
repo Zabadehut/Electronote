@@ -14,7 +14,7 @@ import ThreadManager from '../thread/ThreadManager';
 import DiscordActivity from '../card/appliextern/discord/DiscordActivity';
 import WhatsAppActivity from '../card/appliextern/whatsapp/WhatsAppActivity';
 import SpotifyActivity from '../card/appliextern/spotify/SpotifyActivity';
-import WindowsAPI from '../card/appliextern/threadextern/windows-api'; // Ajouter cette ligne
+import WindowsAPI from '../card/appliextern/threadextern/WindowsAPI'; // Ajouter cette ligne
 
 const cardComponentMap = {
     text: TextContentCard,

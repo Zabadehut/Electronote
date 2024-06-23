@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Select, MenuItem, SelectChangeEvent } from '@mui/material';
-import './windows-api.css';
+import './WindowsAPI.css';
 
 const { ipcRenderer } = window.electron;
 
@@ -24,6 +24,12 @@ const WindowsApi: React.FC = () => {
     const handleOpenWindow = () => {
         if (selectedProcess) {
             ipcRenderer.invoke('open-process', selectedProcess);
+        }
+    };
+
+    const handleEncapsulateInCard = () => {
+        if (selectedProcess) {
+            ipcRenderer.send('encapsulate-process-in-card', selectedProcess);
         }
     };
 
@@ -52,6 +58,9 @@ const WindowsApi: React.FC = () => {
             </Select>
             <Button variant="contained" color="primary" onClick={handleOpenWindow}>
                 Open Window
+            </Button>
+            <Button variant="contained" color="secondary" onClick={handleEncapsulateInCard}>
+                Encapsulate in Card
             </Button>
         </div>
     );
