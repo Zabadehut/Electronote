@@ -1,5 +1,7 @@
 {
   "name": "electronote",
+  "description": "Une description",
+  "license": "UNLICENSED",
   "private": true,
   "version": "0.2.1",
   "type": "module",
@@ -56,7 +58,12 @@
     "typescript": "^5.2.2",
     "vite": "^5.1.6",
     "vite-plugin-electron": "^0.28.6",
-    "vite-plugin-electron-renderer": "^0.14.5"
+    "vite-plugin-electron-renderer": "^0.14.5",
+    "@rollup/rollup-linux-x64-gnu":  "^4.18.0",
+    "@electron-forge/maker-squirrel": "^7.4.0",
+    "@electron-forge/maker-zip": "^7.4.0",
+    "@electron-forge/maker-deb": "^7.4.0",
+    "@electron-forge/maker-rpm": "^7.4.0"
   },
   "main": "dist-electron/main.js"
 }
