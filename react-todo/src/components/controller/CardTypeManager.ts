@@ -14,6 +14,7 @@ import ThreadManager from '../thread/ThreadManager';
 import DiscordActivity from '../card/appliextern/discord/DiscordActivity';
 import WhatsAppActivity from '../card/appliextern/whatsapp/WhatsAppActivity';
 import SpotifyActivity from '../card/appliextern/spotify/SpotifyActivity';
+import DuckcloudActivity from "../card/appliextern/duckcloud/DuckcloudActivity.tsx";
 import WindowsAPI from '../card/appliextern/threadextern/WindowsAPI'; // Ajouter cette ligne
 
 const cardComponentMap = {
@@ -33,6 +34,7 @@ const cardComponentMap = {
     discordActivity: DiscordActivity,
     whatsappActivity: WhatsAppActivity,
     spotifyActivity: SpotifyActivity,
+    duckcloudActiviti: DuckcloudActivity,
     windowsAPI: WindowsAPI // Ajouter cette ligne
 };
 
@@ -46,6 +48,7 @@ const cardComponentProps: Record<string, any> = {
     discordActivity: {},
     whatsappActivity: {},
     spotifyActivity: {},
+    duckcloudActiviti: {},
     windowsAPI: {} // Ajouter cette ligne
 };
 
