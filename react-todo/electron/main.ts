@@ -9,7 +9,7 @@ import windowConfig from './windowConfig';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const server = require('../src/backend/server.cjs');
-
+server.start();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
