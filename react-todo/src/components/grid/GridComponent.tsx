@@ -7,6 +7,7 @@ import LoadContentCard from "../card/models/LoadContentCard";
 import ThemeSwitcher from '../theme/ThemeSwitcher';
 import MemoryUsageComponent from '../card/memory/MemoryUsageComponent';
 import ThreadManager from '../thread/ThreadManager';
+import axios from 'axios';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -27,6 +28,19 @@ const GridComponent: React.FC<GridLayoutProps> = ({ data, setData, zoomFactor })
     const [resizingCardId, setResizingCardId] = useState<string | null>(null);
     const [draggingCardId, setDraggingCardId] = useState<string | null>(null);
     const [collisionAllowed, setCollisionAllowed] = useState(false);
+
+    useEffect(() => {
+        const fetchCards = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/api/cards');
+                setData(response.data);
+            } catch (error) {
+                console.error('Error fetching cards:', error);
+            }
+        };
+
+        fetchCards();
+    }, [setData]);
 
     const toggleDraggable = () => {
         setIsDraggable(!isDraggable);
