@@ -1,4 +1,3 @@
-// server.cjs
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Client } = require('pg');
@@ -98,6 +97,10 @@ app.post('/api/cards_archive/:id/restore', async (req, res) => {
     }
 });
 
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-});
+const startServer = () => {
+    app.listen(port, () => {
+        console.log(`Server running on port ${port}`);
+    });
+};
+
+module.exports = { start: startServer };
