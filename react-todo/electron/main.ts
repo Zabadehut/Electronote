@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import os from 'os';
 import { execSync, exec } from 'child_process';
+import fs from 'fs';
 import axios from 'axios';
 import windowConfig from './windowConfig';
 import { createRequire } from 'module';
@@ -26,8 +27,17 @@ let blinkInterval: NodeJS.Timeout | null = null;
 const iconPath = path.join(__dirname, '..', 'public', 'electron-vite.svg');
 
 const startPostgres = () => {
+  const postgresPath = 'C:\\Program Files\\PostgreSQL\\13\\bin\\initdb.exe';
+  const dataPath = 'C:\\Users\\zaba8\\IdeaProjects\\Electronote\\react-todo\\postgres\\data';
+  if (!fs.existsSync(postgresPath)) {
+    console.error(`PostgreSQL path not found: ${postgresPath}`);
+    return;
+  }
+  if (!fs.existsSync(dataPath)) {
+    fs.mkdirSync(dataPath, { recursive: true });
+  }
   try {
-    execSync(`"C:\\Program Files\\PostgreSQL\\13\\bin\\initdb.exe" -D "C:\\Users\\zaba8\\IdeaProjects\\Electronote\\react-todo\\postgres\\data"`);
+    execSync(`"${postgresPath}" -D "${dataPath}"`);
     console.log('PostgreSQL initialized');
   } catch (error) {
     console.error('Error starting PostgreSQL:', error);
@@ -35,8 +45,13 @@ const startPostgres = () => {
 };
 
 const startPgAdmin = () => {
+  const pgAdminPath = 'C:\\Program Files\\pgAdmin 4\\runtime\\pgAdmin4.exe';
+  if (!fs.existsSync(pgAdminPath)) {
+    console.error(`pgAdmin path not found: ${pgAdminPath}`);
+    return;
+  }
   try {
-    execSync('"C:\\Program Files\\pgAdmin 4\\runtime\\pgAdmin4.exe"');
+    execSync(`"${pgAdminPath}"`);
     console.log('pgAdmin started');
   } catch (error) {
     console.error('Error starting pgAdmin:', error);
