@@ -16,7 +16,23 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      '@components': '/src/components',
+      '@utils': '/src/utils',
       'quill-image-resize-module-react': 'node_modules/quill-image-resize-module-react'
+    }
+  },
+  build: {
+    rollupOptions: {
+      external: ['express', 'pg']
+    }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '/api')
+      }
     }
   }
 });

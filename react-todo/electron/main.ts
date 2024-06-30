@@ -2,8 +2,12 @@ import { app, BrowserWindow, ipcMain, Tray, nativeImage, Notification, Menu, ses
 import { fileURLToPath } from 'url';
 import path from 'path';
 import os from 'os';
+import { execSync, exec } from 'child_process';
+import axios from 'axios';
 import windowConfig from './windowConfig';
-import { exec } from 'child_process';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const server = require('../src/backend/server.cjs');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,9 +23,40 @@ let tray: Tray | null = null;
 let win: BrowserWindow | null = null;
 let blinkInterval: NodeJS.Timeout | null = null;
 
-const iconPath = path.join(process.env.VITE_PUBLIC, 'electron-vite.svg');
+const iconPath = path.join(__dirname, '..', 'public', 'electron-vite.svg');
 
-function createWindow() {
+const startPostgres = () => {
+  try {
+    execSync(`"C:\\Program Files\\PostgreSQL\\13\\bin\\initdb.exe" -D "C:\\Users\\zaba8\\IdeaProjects\\Electronote\\react-todo\\postgres\\data"`);
+    console.log('PostgreSQL initialized');
+  } catch (error) {
+    console.error('Error starting PostgreSQL:', error);
+  }
+};
+
+const startPgAdmin = () => {
+  try {
+    execSync('"C:\\Program Files\\pgAdmin 4\\runtime\\pgAdmin4.exe"');
+    console.log('pgAdmin started');
+  } catch (error) {
+    console.error('Error starting pgAdmin:', error);
+  }
+};
+
+const loadCardsFromDatabase = async () => {
+  try {
+    const response = await axios.get('http://localhost:3000/api/cards');
+    return response.data;
+  } catch (error) {
+    console.error('Error loading cards from database:', error);
+    return [];
+  }
+};
+
+async function createWindow() {
+  startPostgres();
+  startPgAdmin();
+
   let icon = nativeImage.createFromPath(iconPath);
   if (icon.isEmpty()) {
     console.error(`Failed to load icon from path: ${iconPath}, using default Electron icon.`);
@@ -44,7 +79,9 @@ function createWindow() {
   tray = new Tray(icon);
   tray.setToolTip('Your App Name');
 
-  win.webContents.on('did-finish-load', () => {
+  win.webContents.on('did-finish-load', async () => {
+    const cards = await loadCardsFromDatabase();
+    win?.webContents.send('load-cards', cards);
     win?.webContents.send('main-process-message', new Date().toLocaleString());
   });
 

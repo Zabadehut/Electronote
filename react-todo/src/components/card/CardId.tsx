@@ -8,6 +8,7 @@ import { MemoryManager } from './memory/MemoryManager';
 import "react-resizable/css/styles.css";
 import './CardId.css';
 import Worker from './cardWorker?worker';
+import axios from 'axios';
 
 export type CardProps = {
     id: string;
@@ -32,7 +33,7 @@ export type CardIdProps = {
     disableDragAndDrop?: boolean;
     onPinClicked?: (id: string) => void;
     onClose?: (id: string) => void;
-    onTerminateThread: (id: string) => void; // Ajoutez cette ligne
+    onTerminateThread: (id: string) => void;
     type: CardType;
     cards: CardProps[];
     isResizing: boolean;
@@ -69,6 +70,18 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
     const workerRef = useRef<Worker | null>(null);
     const memoryManagerRef = useRef(new MemoryManager());
     const [memoryUsage, setMemoryUsage] = useState<number>(0);
+    const [cardId, setCardId] = useState<string>(props.id);
+    const [isCreated, setIsCreated] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (props.isNew && !isCreated) {
+            const newId = uuidv4();
+            setCardId(newId);
+            setIsCreated(true);
+        } else {
+            setCardId(props.id);
+        }
+    }, [props.isNew, isCreated, props.id]);
 
     useEffect(() => {
         const initializeWorker = () => {
@@ -78,7 +91,7 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
                 console.log(`Card ${id} processed result:`, result);
                 console.log(`Memory usage for card ${id}: ${memoryUsage} bytes`);
                 memoryManagerRef.current.allocateCard(id, memoryUsage);
-                activeThreads.set(props.id, { id: props.id, type: selectedType, content: props.content, result, memoryUsage });
+                activeThreads.set(id, { id, type: selectedType, content: props.content, result, memoryUsage });
                 setMemoryUsage(memoryUsage);
             };
             workerRef.current = worker;
@@ -98,16 +111,39 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
     useEffect(() => {
         if (workerRef.current) {
             workerRef.current.postMessage({
-                id: props.id,
+                id: cardId,
                 type: selectedType,
                 content: props.content
             });
         }
-    }, [props.content, selectedType]);
+    }, [props.content, selectedType, cardId]);
 
     useEffect(() => {
         setMemoryUsage(memoryManagerRef.current.getMemoryUsage(props.id));
     }, [props.id]);
+
+    useEffect(() => {
+        const createOrUpdateCard = async () => {
+            try {
+                const cardData = {
+                    ...props,
+                    id: cardId,
+                    type: selectedType,
+                };
+                if (props.isNew && !isCreated) {
+                    const response = await axios.post('http://localhost:3000/api/cards', cardData);
+                    console.log('Card created:', response.data);
+                    setIsCreated(true);
+                } else {
+                    const response = await axios.put(`http://localhost:3000/api/cards/${cardId}`, cardData);
+                    console.log('Card updated:', response.data);
+                }
+            } catch (error) {
+                console.error('Error saving card:', error);
+            }
+        };
+        createOrUpdateCard();
+    }, [cardId, props.title, props.content, props.x, props.y, props.w, props.h, props.type, selectedType, isCreated, props.isNew]);
 
     const handlePinClick = (e: React.MouseEvent<HTMLElement>) => {
         e.stopPropagation();
@@ -121,13 +157,20 @@ const CardId: React.FC<CardIdProps & { changeCardType: (id: string, newType: Car
         props.changeCardType(props.id, newType);
     };
 
-    const handleClose = () => {
+    const handleClose = async () => {
         if (workerRef.current) {
             workerRef.current.terminate();
             activeThreads.delete(props.id);
             memoryManagerRef.current.deallocateCard(props.id);
         }
         props.onClose?.(props.id);
+
+        try {
+            await axios.delete(`/api/cards/${props.id}`);
+            console.log('Card deleted:', props.id);
+        } catch (error) {
+            console.error('Error deleting card:', error);
+        }
     };
 
     const renderCard = () => {

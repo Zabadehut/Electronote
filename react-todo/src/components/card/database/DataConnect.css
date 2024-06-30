@@ -1,0 +1,19 @@
+/* src/components/card/database/DataConnect.css */
+.data-connect {
+    padding: 20px;
+}
+
+.data-connect h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.data-connect ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.data-connect li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}

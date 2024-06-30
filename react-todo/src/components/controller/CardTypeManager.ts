@@ -1,3 +1,4 @@
+// src/controller/CardTypeManager.ts
 import TextContentCard from '../card/models/TextContentCard';
 import CodeContentCard from '../card/models/CodeContentCard';
 import FileContentCard from '../card/models/FileContentCard';
@@ -14,8 +15,9 @@ import ThreadManager from '../thread/ThreadManager';
 import DiscordActivity from '../card/appliextern/discord/DiscordActivity';
 import WhatsAppActivity from '../card/appliextern/whatsapp/WhatsAppActivity';
 import SpotifyActivity from '../card/appliextern/spotify/SpotifyActivity';
-import DuckcloudActivity from "../card/appliextern/duckcloud/DuckcloudActivity.tsx";
-import WindowsAPI from '../card/appliextern/threadextern/WindowsAPI'; // Ajouter cette ligne
+import DuckcloudActivity from "../card/appliextern/duckcloud/DuckcloudActivity";
+import WindowsAPI from '../card/appliextern/threadextern/WindowsAPI';
+import DataConnect from '../card/database/DataConnect';
 
 const cardComponentMap = {
     text: TextContentCard,
@@ -35,7 +37,8 @@ const cardComponentMap = {
     whatsappActivity: WhatsAppActivity,
     spotifyActivity: SpotifyActivity,
     duckcloudActiviti: DuckcloudActivity,
-    windowsAPI: WindowsAPI // Ajouter cette ligne
+    windowsAPI: WindowsAPI,
+    dataConnect: DataConnect
 };
 
 const cardComponentProps: Record<string, any> = {
@@ -49,7 +52,8 @@ const cardComponentProps: Record<string, any> = {
     whatsappActivity: {},
     spotifyActivity: {},
     duckcloudActiviti: {},
-    windowsAPI: {} // Ajouter cette ligne
+    windowsAPI: {},
+    dataConnect: {}
 };
 
 export type CardType = keyof typeof cardComponentMap;

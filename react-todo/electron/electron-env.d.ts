@@ -12,6 +12,7 @@ declare namespace NodeJS {
      * │ ├─┬ dist-electron
      * │ │ └── main.ts
      * │ │ └── preload.ts
+     * │ │ └── processManager.ts
      * │ │ └── windowConfig.d.ts
      * │ │ └── windowConfig.js
      * │
