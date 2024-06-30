@@ -1,9 +1,9 @@
 {
-  "name": "electronote",
-  "description": "Une description",
+  "name": "unigrid",
+  "description": "UniGrid est une application révolutionnaire qui combine flexibilité, modularité et connectivité globale.",
   "license": "UNLICENSED",
   "private": true,
-  "version": "0.2.1",
+  "version": "0.2.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
