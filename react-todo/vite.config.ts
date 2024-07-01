@@ -23,16 +23,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['express', 'pg']
-    }
-  },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '/api')
-      }
+      external: ['express', 'pg'] // Exclure express et pg du bundle
     }
   }
 });

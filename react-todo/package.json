@@ -76,5 +76,16 @@
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.18.0"
   },
-  "main": "dist-electron/main.js"
+  "main": "dist-electron/main.js",
+  "build": {
+    "files": [
+      "dist/",
+      "dist-electron/",
+      "node_modules/",
+      "src/backend/server.cjs"
+    ],
+    "directories": {
+      "output": "release/${version}"
+    }
+  }
 }

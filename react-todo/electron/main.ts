@@ -8,12 +8,18 @@ import axios from 'axios';
 import windowConfig from './windowConfig';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const server = require('../src/backend/server.cjs');
-server.start();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 process.env.APP_ROOT = path.join(__dirname, '..');
+
+// Utilisez un chemin relatif depuis l'emplacement de l'application packagée
+const serverPath = path.resolve(__dirname, '..', 'src', 'backend', 'server.cjs');
+console.log(`Requiring server from: ${serverPath}`); // Ajoutez ceci pour vérifier le chemin
+const server = require(serverPath);
+
+server.start();
 
 const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL'];
 const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist');
@@ -28,7 +34,7 @@ const iconPath = path.join(__dirname, '..', 'public', 'electron-vite.svg');
 
 const startPostgres = () => {
   const postgresPath = 'C:\\Program Files\\PostgreSQL\\13\\bin\\initdb.exe';
-  const dataPath = 'C:\\Users\\zaba8\\IdeaProjects\\Electronote\\react-todo\\postgres\\data';
+  const dataPath = path.resolve(__dirname, '..', 'postgres', 'data');
   if (!fs.existsSync(postgresPath)) {
     console.error(`PostgreSQL path not found: ${postgresPath}`);
     return;
